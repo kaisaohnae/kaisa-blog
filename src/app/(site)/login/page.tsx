@@ -1,15 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import {useRouter} from 'next/navigation';
-import {useEffect, useRef, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
 import {clearSavedMemberEmail, getSavedMemberEmail, saveMemberEmail} from '@/lib/auth-storage';
 import useMemberStore from '@/store/use-member-store';
 import {Ex3Button, Ex3Checkbox, Ex3Field, Ex3Input} from '@/ui-kit';
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const login = useMemberStore((s) => s.login);
   const recaptchaKeyRef = useRef(0);
   const [captchaKey, setCaptchaKey] = useState(0);
@@ -44,7 +45,7 @@ export default function LoginPage() {
       await login(email, pwd, captcha || undefined);
       if (saveId) saveMemberEmail(email.trim());
       else clearSavedMemberEmail();
-      router.push('/');
+      router.push(searchParams.get('returnUrl') || '/');
     } catch (err: any) {
       setError(err.message || '로그인에 실패했습니다.');
       resetCaptcha();
@@ -99,5 +100,13 @@ export default function LoginPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -1,15 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import {useRouter} from 'next/navigation';
-import {useRef, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
+import {Suspense, useRef, useState} from 'react';
 import {apiPost} from '@/config/api-config';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
 import useMemberStore from '@/store/use-member-store';
 import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const register = useMemberStore((s) => s.register);
   const recaptchaKeyRef = useRef(0);
   const [captchaKey, setCaptchaKey] = useState(0);
@@ -71,7 +72,7 @@ export default function RegisterPage() {
 
     try {
       await register({email, pwd, pwdConfirm, certNumber, memberName});
-      router.push('/');
+      router.push(searchParams.get('returnUrl') || '/');
     } catch (err: any) {
       setError(err.message || '회원가입에 실패했습니다.');
     }
@@ -159,5 +160,13 @@ export default function RegisterPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={null}>
+      <RegisterForm />
+    </Suspense>
   );
 }

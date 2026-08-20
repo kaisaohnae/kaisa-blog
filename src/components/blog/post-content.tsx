@@ -1,7 +1,17 @@
 'use client';
 
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import {useMemo} from 'react';
+import dynamic from 'next/dynamic';
+import gfm from '@bytemd/plugin-gfm';
+import highlight from '@bytemd/plugin-highlight';
+import type {BytemdPlugin} from 'bytemd';
+import 'bytemd/dist/index.css';
+import 'github-markdown-css/github-markdown-light.css';
+import 'highlight.js/styles/github.css';
+
+const ByteMdViewer = dynamic(() => import('@bytemd/react').then((m) => m.Viewer), {
+  ssr: false,
+});
 
 function looksLikeHtml(content: string) {
   const trimmed = content.trim();
@@ -14,6 +24,8 @@ type PostContentProps = {
 };
 
 export default function PostContent({content, className = 'blog-post__body'}: PostContentProps) {
+  const plugins = useMemo<BytemdPlugin[]>(() => [gfm(), highlight()], []);
+
   if (!content.trim()) return null;
 
   if (looksLikeHtml(content)) {
@@ -22,7 +34,7 @@ export default function PostContent({content, className = 'blog-post__body'}: Po
 
   return (
     <div className={`${className} blog-post__body--markdown`}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+      <ByteMdViewer value={content} plugins={plugins} />
     </div>
   );
 }

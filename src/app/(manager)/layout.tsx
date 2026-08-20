@@ -17,6 +17,7 @@ import '@/ui-kit/kit.css';
 const NAV = [
   {id: 'dashboard', href: '/manager/', label: '대시보드'},
   {id: 'posts', href: '/manager/posts/', label: '글 관리'},
+  {id: 'categories', href: '/manager/categories/', label: '카테고리'},
   {id: 'write', href: '/manager/posts/write/', label: '글쓰기'},
   {id: 'members', href: '/manager/members/', label: '회원 관리'},
   {id: 'issues', href: '/manager/issues/', label: '이슈탐색'},
@@ -27,6 +28,9 @@ function isNavActive(href: string, pathname: string | null) {
   if (href === '/manager/') return pathname === '/manager' || pathname === '/manager/';
   if (href === '/manager/posts/') {
     return pathname === '/manager/posts' || pathname === '/manager/posts/';
+  }
+  if (href === '/manager/categories/') {
+    return pathname === '/manager/categories' || pathname === '/manager/categories/';
   }
   return pathname === href || pathname.startsWith(href);
 }

@@ -1,11 +1,17 @@
 'use client';
 
+import {useMemo} from 'react';
 import dynamic from 'next/dynamic';
+import gfm from '@bytemd/plugin-gfm';
+import highlight from '@bytemd/plugin-highlight';
+import type {BytemdPlugin} from 'bytemd';
+import ko from 'bytemd/locales/ko.json';
 import {LoadingFallback} from '@/ui-components';
-import '@uiw/react-md-editor/markdown-editor.css';
+import 'bytemd/dist/index.css';
+import 'highlight.js/styles/github.css';
 import './post-editor.css';
 
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
+const ByteMdEditor = dynamic(() => import('@bytemd/react').then((m) => m.Editor), {
   ssr: false,
   loading: () => <LoadingFallback className="post-editor post-editor--loading" />,
 });
@@ -16,17 +22,17 @@ type PostEditorProps = {
 };
 
 export default function PostEditor({value, onChange}: PostEditorProps) {
+  const plugins = useMemo<BytemdPlugin[]>(() => [gfm(), highlight()], []);
+
   return (
-    <div className="post-editor" data-color-mode="light">
-      <MDEditor
+    <div className="post-editor">
+      <ByteMdEditor
         value={value}
-        onChange={(next) => onChange(next || '')}
-        preview="live"
-        height={560}
-        visibleDragbar={false}
-        textareaProps={{
-          placeholder: '마크다운으로 본문을 작성하세요. `# 제목`, **굵게**, ```코드``` 등을 사용할 수 있습니다.',
-        }}
+        plugins={plugins}
+        locale={ko}
+        mode="split"
+        placeholder="마크다운으로 본문을 작성하세요"
+        onChange={onChange}
       />
     </div>
   );

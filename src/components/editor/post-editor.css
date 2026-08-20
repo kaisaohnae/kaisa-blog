@@ -10,61 +10,51 @@
   min-height: min(68vh, 720px);
 }
 
-.post-editor .w-md-editor {
+.post-editor .bytemd {
+  height: min(68vh, 720px);
   border: 0;
-  box-shadow: none;
-  background: #fff;
-  font-family: inherit;
+  border-radius: 0;
 }
 
-.post-editor .w-md-editor-toolbar {
-  padding: 8px 10px;
+.post-editor .bytemd-toolbar {
+  padding: 6px 8px;
   border-bottom: 1px solid var(--ex1-border, #e6e0d6);
   background: #f7f5f2;
 }
 
-.post-editor .w-md-editor-toolbar li > button {
-  border-radius: 8px;
-}
-
-.post-editor .w-md-editor-toolbar li > button:hover,
-.post-editor .w-md-editor-toolbar li > button:focus {
-  background: rgba(255, 77, 0, 0.08);
+.post-editor .bytemd-toolbar-icon:hover,
+.post-editor .bytemd-toolbar-icon-active {
+  background: rgba(255, 77, 0, 0.1);
   color: #ff4d00;
 }
 
-.post-editor .w-md-editor-toolbar li.active > button {
-  background: rgba(255, 77, 0, 0.12);
-  color: #ff4d00;
+.post-editor .bytemd-body {
+  height: calc(100% - 42px);
 }
 
-.post-editor .w-md-editor-content {
-  min-height: min(58vh, 620px);
-}
-
-.post-editor .w-md-editor-text-pre,
-.post-editor .w-md-editor-text-input,
-.post-editor .w-md-editor-preview {
+.post-editor .CodeMirror,
+.post-editor .bytemd-preview {
   font-size: 15px;
   line-height: 1.8;
 }
 
-.post-editor .w-md-editor-preview {
+.post-editor .bytemd-preview {
   padding: 18px 20px 28px;
 }
 
-.post-editor .w-md-editor-text-input {
-  padding: 18px 16px 28px;
-}
-
-.post-editor .wmde-markdown h2 {
+.post-editor .bytemd-preview h2 {
   font-size: 24px;
   margin: 1.2em 0 0.6em;
 }
 
-.post-editor .wmde-markdown blockquote {
+.post-editor .bytemd-preview blockquote {
   border-left: 3px solid #ff4d00;
   color: #6f6a62;
+}
+
+.post-editor .bytemd-preview img {
+  max-width: 100%;
+  border-radius: 10px;
 }
 
 .post-write {
