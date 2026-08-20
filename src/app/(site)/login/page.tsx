@@ -81,7 +81,9 @@ export default function LoginPage() {
             />
           </Ex3Field>
           <Ex3Checkbox label="아이디 저장" checked={saveId} onChange={(e) => setSaveId(e.target.checked)} />
-          {captchaRequired && !captcha ? <RecaptchaField key={captchaKey} onChange={setCaptcha} /> : null}
+          {captchaRequired ? (
+            <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
+          ) : null}
           {error && <p className="form-error">{error}</p>}
           <Ex3Button type="submit" fullWidth>
             로그인

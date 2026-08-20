@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import PostContent from '@/components/blog/post-content';
 import type {BlogPost} from '@/data/blog-posts';
 
 export default function BlogPostPage({post}: {post: BlogPost}) {
@@ -15,7 +16,7 @@ export default function BlogPostPage({post}: {post: BlogPost}) {
             <span>{post.readingMinutes} min read</span>
           </div>
           <h1 className="blog-post__title">{post.title}</h1>
-          <div className="blog-post__body" dangerouslySetInnerHTML={{__html: post.content.trim()}} />
+          <PostContent content={post.content.trim()} />
         </article>
       </div>
     </main>

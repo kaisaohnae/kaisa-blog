@@ -50,6 +50,14 @@ export default function ManagerNavIcon({name, className}: ManagerNavIconProps) {
           <path d="M21 19c0-2.2-1.6-3.8-4-4.2" />
         </svg>
       );
+    case 'issues':
+      return (
+        <svg {...props}>
+          <circle cx="11" cy="11" r="6.5" />
+          <path d="M20 20l-3.5-3.5" />
+          <path d="M8.7 11h4.6M11 8.7v4.6" />
+        </svg>
+      );
     case 'settings':
       return (
         <svg {...props}>

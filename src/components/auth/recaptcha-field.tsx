@@ -1,53 +1,38 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect} from 'react';
 
 const ReCAPTCHA = dynamic(() => import('react-google-recaptcha'), {ssr: false});
 
-const WIDGET_WIDTH = 304;
-const WIDGET_HEIGHT = 78;
-
 type RecaptchaFieldProps = {
   onChange: (token: string | null) => void;
+  /** 체크 성공 후 숨김. 언마운트하지 않아 Timeout 방지 */
+  hidden?: boolean;
 };
 
 export const isRecaptchaEnabled = () => Boolean(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
 
-export function RecaptchaField({onChange}: RecaptchaFieldProps) {
+export function RecaptchaField({onChange, hidden = false}: RecaptchaFieldProps) {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const update = () => {
-      const width = el.clientWidth;
-      if (width <= 0) return;
-      setScale(Math.min(1.18, Math.max(0.82, width / WIDGET_WIDTH)));
+    const onRejection = (event: PromiseRejectionEvent) => {
+      const reason = event.reason;
+      const message = typeof reason === 'string' ? reason : reason?.message;
+      if (typeof message === 'string' && message.includes('reCAPTCHA Timeout')) {
+        event.preventDefault();
+      }
     };
-
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(el);
-    return () => observer.disconnect();
+    window.addEventListener('unhandledrejection', onRejection);
+    return () => window.removeEventListener('unhandledrejection', onRejection);
   }, []);
 
   if (!siteKey) return null;
 
   return (
-    <div className="auth-captcha" ref={containerRef}>
-      <div
-        className="auth-captcha__widget"
-        style={{
-          height: WIDGET_HEIGHT * scale,
-          ['--recaptcha-scale' as string]: scale,
-        }}
-      >
-        <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
-      </div>
+    <div className={`auth-captcha${hidden ? ' auth-captcha--hidden' : ''}`} aria-hidden={hidden}>
+      <ReCAPTCHA sitekey={siteKey} onChange={onChange} />
     </div>
   );
 }

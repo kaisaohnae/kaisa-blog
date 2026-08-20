@@ -27,6 +27,11 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: 'Kaisa Blog',
   description: 'Kaisa Blog - 개발, 디자인, 기록',
+  icons: {
+    icon: '/img/common/favicon.svg',
+    shortcut: '/img/common/favicon.svg',
+    apple: '/img/common/favicon.svg',
+  },
 };
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {

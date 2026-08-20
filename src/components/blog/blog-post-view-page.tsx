@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react';
 import {useSearchParams} from 'next/navigation';
 import {apiPost} from '@/config/api-config';
 import CommentSection from '@/components/blog/comment-section';
+import PostContent from '@/components/blog/post-content';
 import {isPostRead, markPostAsRead} from '@/lib/read-posts-storage';
 type Post = {
   postNo: number;
@@ -70,7 +71,7 @@ export default function BlogPostViewPage() {
             <span>{post.category?.categoryName}</span>
           </div>
           <h1 className="blog-post__title">{post.title}</h1>
-          <div className="blog-post__body" dangerouslySetInnerHTML={{__html: post.content || ''}} />
+          <PostContent content={post.content || ''} />
           <CommentSection postNo={post.postNo} />
         </article>
       </div>

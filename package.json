@@ -21,21 +21,20 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@tiptap/extension-image": "^3.30.2",
-    "@tiptap/extension-link": "^3.30.2",
-    "@tiptap/extension-placeholder": "^3.30.2",
-    "@tiptap/extension-underline": "^3.30.2",
-    "@tiptap/pm": "^3.30.2",
-    "@tiptap/react": "^3.30.2",
-    "@tiptap/starter-kit": "^3.30.2",
+    "@bytemd/plugin-gfm": "^1.22.0",
+    "@bytemd/plugin-highlight": "^1.22.0",
+    "@bytemd/react": "^1.22.0",
     "ag-grid-community": "^36.0.0",
     "ag-grid-react": "^36.0.0",
     "axios": "^1.18.1",
+    "bytemd": "^1.22.0",
     "next": "16.2.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-google-recaptcha": "^3.1.0",
+    "react-markdown": "^10.1.0",
     "recharts": "^3.10.1",
+    "remark-gfm": "^4.0.1",
     "zustand": "^5.0.6"
   }
 }

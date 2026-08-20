@@ -19,6 +19,7 @@ const NAV = [
   {id: 'posts', href: '/manager/posts/', label: '글 관리'},
   {id: 'write', href: '/manager/posts/write/', label: '글쓰기'},
   {id: 'members', href: '/manager/members/', label: '회원 관리'},
+  {id: 'issues', href: '/manager/issues/', label: '이슈탐색'},
 ];
 
 function isNavActive(href: string, pathname: string | null) {

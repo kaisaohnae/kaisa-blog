@@ -10,6 +10,9 @@ export default function MetaTags() {
       <meta name="viewport" content="initial-scale=1.0,minimum-scale=0,maximum-scale=1.0,user-scalable=no" />
       <meta name="format-detection" content="telephone=no, address=no, email=no" />
       <meta name="application-name" content="Kaisa Blog" />
+      <link rel="icon" href="/img/common/favicon.svg" type="image/svg+xml" />
+      <link rel="shortcut icon" href="/img/common/favicon.svg" />
+      <link rel="apple-touch-icon" href="/img/common/favicon.svg" />
     </Head>
   );
 }

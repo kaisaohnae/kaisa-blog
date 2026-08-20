@@ -29,9 +29,21 @@ const useAdminStore = create<State & Actions>((set) => ({
     try {
       const body = await apiPost<{userInfo: AdminInfo}>('auth/me', {}, 'admin');
       set({admin: body.data.userInfo, hydrated: true});
-    } catch {
-      clearToken('admin');
-      set({admin: null, hydrated: true});
+    } catch (err: any) {
+      const message = String(err?.message || '');
+      const isAuthError =
+        message.includes('Unauthenticated') ||
+        message.includes('인증') ||
+        message.includes('Token') ||
+        message.includes('token') ||
+        message.includes('401');
+      if (isAuthError) {
+        clearToken('admin');
+        set({admin: null, hydrated: true});
+        return;
+      }
+      // 일시적 API 오류면 토큰을 유지하고 hydrated만 통과
+      set({hydrated: true});
     }
   },
   login: async (userId, pwd) => {

@@ -74,7 +74,6 @@ export default function FindIdPage() {
   };
 
   const canSendCert = Boolean(email) && (!captchaRequired || Boolean(captcha));
-  const showCaptcha = captchaRequired && !captcha && !certSent && !done;
 
   return (
     <main className="blog-main">
@@ -95,7 +94,9 @@ export default function FindIdPage() {
           </Ex3Field>
           {!done ? (
             <>
-              {showCaptcha ? <RecaptchaField key={captchaKey} onChange={setCaptcha} /> : null}
+              {captchaRequired ? (
+                <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
+              ) : null}
               <Ex3Button type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
                 인증번호 받기
               </Ex3Button>
