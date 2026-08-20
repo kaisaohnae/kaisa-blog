@@ -6,6 +6,7 @@ import {Syne, DM_Sans} from 'next/font/google';
 import '@/assets/css/reset.css';
 import '@/assets/css/styles.css';
 import '@/ui-components/styles/ui-components.css';
+import '@/ui-kit/kit.css';
 import MetaTags from '@/components/layout/meta-tags';
 import {UiAlert, UiLoading, UiPopup} from '@/ui-components';
 import ThemeProvider from '@/components/layout/theme-provider';

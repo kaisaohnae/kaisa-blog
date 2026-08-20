@@ -46,4 +46,5 @@ export type {UiColorpickerProps, UiColorpickerSize} from './colorpicker/ui-color
 
 export {default as UiAlert} from './alert/alert';
 export {default as UiLoading} from './loading/loading';
+export {default as LoadingFallback} from './loading/loading-fallback';
 export {default as UiPopup} from './popup/ui-popup';

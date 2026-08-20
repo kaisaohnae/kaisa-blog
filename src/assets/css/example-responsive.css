@@ -1,0 +1,245 @@
+.ex1-sidebar__toggle,
+.ex2-sidebar__toggle,
+.ex3-sidebar__toggle,
+.ex4-sidebar__toggle {
+  display: none;
+}
+
+@media screen and (max-width: 960px) {
+  .ex1,
+  .ex2,
+  .ex3,
+  .ex4 {
+    --ex-mobile-bar-height: 48px;
+    display: block;
+    width: 100%;
+    max-width: none;
+    min-height: 100vh;
+    padding-top: var(--ex-mobile-bar-height);
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .ex1-sidebar,
+  .ex2-sidebar,
+  .ex3-sidebar,
+  .ex4-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 120;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+  }
+
+  .ex1-sidebar__brand,
+  .ex2-sidebar__brand,
+  .ex3-sidebar__brand,
+  .ex4-sidebar__brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: var(--ex-mobile-bar-height);
+    min-height: var(--ex-mobile-bar-height);
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .ex1-sidebar__logo,
+  .ex2-sidebar__logo,
+  .ex3-sidebar__logo,
+  .ex4-sidebar__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+    margin-right: auto;
+    line-height: 0;
+  }
+
+  .ex1-sidebar__logo svg,
+  .ex2-sidebar__logo svg,
+  .ex3-sidebar__logo svg,
+  .ex4-sidebar__logo svg {
+    display: block;
+    width: 72px;
+    height: auto;
+  }
+
+  .ex1-sidebar__toggle,
+  .ex2-sidebar__toggle,
+  .ex3-sidebar__toggle,
+  .ex4-sidebar__toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 28px;
+    height: 28px;
+    min-height: 28px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+    font: inherit;
+    font-weight: inherit;
+    text-shadow: none;
+    line-height: normal;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .ex1-sidebar__toggle:hover,
+  .ex2-sidebar__toggle:hover,
+  .ex3-sidebar__toggle:hover,
+  .ex4-sidebar__toggle:hover {
+    opacity: 0.82;
+  }
+
+  .ex1-sidebar__toggle-bar,
+  .ex2-sidebar__toggle-bar,
+  .ex3-sidebar__toggle-bar,
+  .ex4-sidebar__toggle-bar {
+    display: block;
+    width: 16px;
+    height: 2px;
+    margin: 0 auto;
+    border-radius: 999px;
+    background: currentColor;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .ex1-sidebar__toggle[aria-expanded='true'] .ex1-sidebar__toggle-bar:nth-child(1),
+  .ex2-sidebar__toggle[aria-expanded='true'] .ex2-sidebar__toggle-bar:nth-child(1),
+  .ex3-sidebar__toggle[aria-expanded='true'] .ex3-sidebar__toggle-bar:nth-child(1),
+  .ex4-sidebar__toggle[aria-expanded='true'] .ex4-sidebar__toggle-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .ex1-sidebar__toggle[aria-expanded='true'] .ex1-sidebar__toggle-bar:nth-child(2),
+  .ex2-sidebar__toggle[aria-expanded='true'] .ex2-sidebar__toggle-bar:nth-child(2),
+  .ex3-sidebar__toggle[aria-expanded='true'] .ex3-sidebar__toggle-bar:nth-child(2),
+  .ex4-sidebar__toggle[aria-expanded='true'] .ex4-sidebar__toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .ex1-sidebar__toggle[aria-expanded='true'] .ex1-sidebar__toggle-bar:nth-child(3),
+  .ex2-sidebar__toggle[aria-expanded='true'] .ex2-sidebar__toggle-bar:nth-child(3),
+  .ex3-sidebar__toggle[aria-expanded='true'] .ex3-sidebar__toggle-bar:nth-child(3),
+  .ex4-sidebar__toggle[aria-expanded='true'] .ex4-sidebar__toggle-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .ex1-sidebar__nav,
+  .ex2-sidebar__nav,
+  .ex3-sidebar__nav,
+  .ex4-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 12px;
+    pointer-events: none;
+    transition:
+      max-height 0.28s ease,
+      opacity 0.22s ease,
+      padding 0.28s ease;
+  }
+
+  .ex1-sidebar--open .ex1-sidebar__nav,
+  .ex2-sidebar--open .ex2-sidebar__nav,
+  .ex3-sidebar--open .ex3-sidebar__nav,
+  .ex4-sidebar--open .ex4-sidebar__nav {
+    max-height: min(70vh, 560px);
+    opacity: 1;
+    overflow-y: auto;
+    padding: 8px 12px 12px;
+    pointer-events: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .ex1-main,
+  .ex2-main,
+  .ex3-main,
+  .ex4-main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 28px 16px 32px;
+  }
+
+  .ex1-main > *,
+  .ex2-main > *,
+  .ex3-main > *,
+  .ex4-main > *,
+  .ex3-content,
+  .ex3-panel,
+  .ex4-panel {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .ex1-panel--grid,
+  .ex2-panel--grid {
+    margin-top: 8px;
+  }
+
+  .ex1-grid,
+  .ex1-stats,
+  .ex1-insights__row,
+  .ex1-rooms,
+  .ex1-grid--2,
+  .ex2-grid,
+  .ex2-stats,
+  .ex2-insights__row,
+  .ex2-rooms,
+  .ex2-grid--2 {
+    grid-template-columns: 1fr;
+  }
+
+  .ex1-grid--2 > *,
+  .ex2-grid--2 > *,
+  .ex1-settings__group,
+  .ex2-settings__group {
+    grid-column: auto;
+  }
+
+  .ex3-topbar,
+  .ex4-topbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ex4-stats,
+  .ex4-split,
+  .ex4-split--wide,
+  .ex4-split--3,
+  .ex4-radials,
+  .ex4-yard__row,
+  .ex4-tree-grid,
+  .ex4-tree-pair,
+  .ex4-meter-grid {
+    grid-template-columns: 1fr;
+  }
+}

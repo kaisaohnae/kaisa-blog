@@ -1,17 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import {usePathname} from 'next/navigation';
+import {useEffect} from 'react';
 import ThemeToggle from './theme-toggle';
 import IconLogo from '@/components/icons/common/icon-logo';
-
-const MENU_ITEMS = [
-  {href: '/', label: 'Home'},
-  {href: '/about/', label: 'About'},
-];
+import useMemberStore from '@/store/use-member-store';
 
 export default function Header() {
-  const pathname = usePathname();
+  const {member, hydrated, hydrate, logout} = useMemberStore();
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
 
   return (
     <header id="header">
@@ -23,20 +23,23 @@ export default function Header() {
             </Link>
           </h1>
           <div className="header__actions">
-            <nav id="menu" aria-label="Main navigation">
-              <ul className="menu__list">
-                {MENU_ITEMS.map((item) => {
-                  const active = pathname === item.href || pathname === item.href.replace(/\/$/, '');
-                  return (
-                    <li key={item.href} className={active ? 'menu__item menu__item--active' : 'menu__item'}>
-                      <Link href={item.href} className="menu__link">
-                        {item.label}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+            {hydrated && member ? (
+              <div className="auth-chip">
+                <span>{member.memberName}</span>
+                <button type="button" className="text-btn" onClick={() => logout()}>
+                  로그아웃
+                </button>
+              </div>
+            ) : (
+              <div className="auth-chip">
+                <Link href="/login/" className="menu__link">
+                  로그인
+                </Link>
+                <Link href="/register/" className="menu__link">
+                  회원가입
+                </Link>
+              </div>
+            )}
             <ThemeToggle />
           </div>
         </div>

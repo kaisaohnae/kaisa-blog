@@ -1,12 +1,12 @@
 import axios, {AxiosInstance, AxiosError} from 'axios';
 import useLoadingStore from '@/store/use-loading-store';
 
-let baseURL = process.env.NEXT_PUBLIC_API_URL;
+let baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
 
 const { startLoading, stopLoading } = useLoadingStore.getState();
 
 const service: AxiosInstance = axios.create({
-  timeout: 10000,
+  timeout: 20000,
   baseURL: baseURL,
 });
 service.interceptors.request.use(
@@ -32,14 +32,10 @@ service.interceptors.response.use(
   (error: AxiosError) => {
     stopLoading();
     const data: any = error.response?.data;
-    if (error.response?.status === 401 || error.response?.status === 403) {
-      //alert.open({title: null, message: data.message, redirect: '/login'});
-      return Promise.reject();
-    }
     if (data && data.message) {
-      //alert.open({title: null, message: data.message});
+      return Promise.reject(new Error(data.message));
     }
-    return Promise.reject();
+    return Promise.reject(error);
   }
 );
 export function axiosOnLoad() {
