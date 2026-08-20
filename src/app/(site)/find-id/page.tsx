@@ -5,23 +5,19 @@ import {useRouter} from 'next/navigation';
 import {useRef, useState} from 'react';
 import {apiPost} from '@/config/api-config';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
-import useMemberStore from '@/store/use-member-store';
 import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
 
-export default function RegisterPage() {
+export default function FindIdPage() {
   const router = useRouter();
-  const register = useMemberStore((s) => s.register);
   const recaptchaKeyRef = useRef(0);
   const [captchaKey, setCaptchaKey] = useState(0);
   const [email, setEmail] = useState('');
-  const [pwd, setPwd] = useState('');
-  const [pwdConfirm, setPwdConfirm] = useState('');
-  const [memberName, setMemberName] = useState('');
   const [certNumber, setCertNumber] = useState('');
   const [captcha, setCaptcha] = useState<string | null>(null);
   const [certSent, setCertSent] = useState(false);
   const [hint, setHint] = useState('');
   const [error, setError] = useState('');
+  const [done, setDone] = useState(false);
   const captchaRequired = isRecaptchaEnabled();
 
   const resetCaptcha = () => {
@@ -35,6 +31,7 @@ export default function RegisterPage() {
     setCertSent(false);
     setCertNumber('');
     setHint('');
+    setDone(false);
     resetCaptcha();
   };
 
@@ -46,7 +43,7 @@ export default function RegisterPage() {
       return;
     }
     try {
-      const body = await apiPost<{certNumber?: string}>('bl/send-cert', {email, captcha});
+      const body = await apiPost<{certNumber?: string}>('bl/send-find-id-cert', {email, captcha});
       setCertSent(true);
       setHint(body.data?.certNumber ? `개발모드 인증번호: ${body.data.certNumber}` : '인증번호를 메일로 보냈습니다. 5분 안에 입력해 주세요.');
     } catch (err: any) {
@@ -59,101 +56,78 @@ export default function RegisterPage() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-
     if (!certSent) {
       setError('인증번호 받기를 먼저 진행해 주세요.');
       return;
     }
-    if (pwd !== pwdConfirm) {
-      setError('비밀번호가 일치하지 않습니다.');
-      return;
-    }
-
     try {
-      await register({email, pwd, pwdConfirm, certNumber, memberName});
-      router.push('/');
+      const body = await apiPost<{memberId?: string}>('bl/find-id', {email, certNumber});
+      setDone(true);
+      setHint(
+        body.data?.memberId
+          ? `개발모드 아이디: ${body.data.memberId} (운영에서는 이메일로만 안내됩니다)`
+          : '가입 아이디를 이메일로 보냈습니다. 메일함을 확인해 주세요.'
+      );
     } catch (err: any) {
-      setError(err.message || '회원가입에 실패했습니다.');
+      setError(err.message || '아이디 찾기에 실패했습니다.');
     }
   };
 
   const canSendCert = Boolean(email) && (!captchaRequired || Boolean(captcha));
-  const showCaptcha = captchaRequired && !captcha && !certSent;
+  const showCaptcha = captchaRequired && !captcha && !certSent && !done;
 
   return (
     <main className="blog-main">
       <div className="site-shell">
         <form className="auth-card ex3-kit" onSubmit={onSubmit}>
           <p className="blog-hero__eyebrow">Member</p>
-          <h1>회원가입</h1>
-          <Ex3Field label="이메일" htmlFor="reg-email" required>
+          <h1>아이디 찾기</h1>
+          <p className="muted">가입 시 사용한 이메일로 인증 후, 로그인 아이디를 메일로 안내합니다.</p>
+          <Ex3Field label="이메일" htmlFor="find-id-email" required>
             <Ex3Input
-              id="reg-email"
+              id="find-id-email"
               type="email"
               value={email}
               onChange={(e) => onEmailChange(e.target.value)}
               required
-              disabled={certSent}
+              disabled={done}
             />
           </Ex3Field>
-          {!certSent ? (
+          {!done ? (
             <>
               {showCaptcha ? <RecaptchaField key={captchaKey} onChange={setCaptcha} /> : null}
               <Ex3Button type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
                 인증번호 받기
               </Ex3Button>
-            </>
-          ) : null}
-          {certSent ? (
-            <>
-              <Ex3Field label="인증번호 6자리" htmlFor="reg-cert" required>
-                <Ex3Input
-                  id="reg-cert"
-                  value={certNumber}
-                  onChange={(e) => setCertNumber(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                  inputMode="numeric"
-                  maxLength={6}
-                  required
-                />
-              </Ex3Field>
-              <Ex3Field label="닉네임" htmlFor="reg-nickname" required>
-                <Ex3Input
-                  id="reg-nickname"
-                  value={memberName}
-                  onChange={(e) => setMemberName(e.target.value)}
-                  maxLength={50}
-                  required
-                />
-              </Ex3Field>
-              <Ex3Field label="비밀번호" htmlFor="reg-pwd" required>
-                <Ex3Input
-                  id="reg-pwd"
-                  type="password"
-                  value={pwd}
-                  onChange={(e) => setPwd(e.target.value)}
-                  minLength={6}
-                  required
-                />
-              </Ex3Field>
-              <Ex3Field label="비밀번호 확인" htmlFor="reg-pwd-confirm" required>
-                <Ex3Input
-                  id="reg-pwd-confirm"
-                  type="password"
-                  value={pwdConfirm}
-                  onChange={(e) => setPwdConfirm(e.target.value)}
-                  minLength={6}
-                  required
-                />
-              </Ex3Field>
+              {certSent ? (
+                <Ex3Field label="인증번호 6자리" htmlFor="find-id-cert" required>
+                  <Ex3Input
+                    id="find-id-cert"
+                    value={certNumber}
+                    onChange={(e) => setCertNumber(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    inputMode="numeric"
+                    maxLength={6}
+                    required
+                  />
+                </Ex3Field>
+              ) : null}
             </>
           ) : null}
           {hint && <p className="muted">{hint}</p>}
           {error && <p className="form-error">{error}</p>}
-          <Ex3Button type="submit" fullWidth disabled={!certSent}>
-            가입하기
-          </Ex3Button>
+          {!done ? (
+            <Ex3Button type="submit" fullWidth disabled={!certSent}>
+              아이디 메일로 받기
+            </Ex3Button>
+          ) : (
+            <Ex3Button type="button" fullWidth onClick={() => router.push('/login/')}>
+              로그인으로 이동
+            </Ex3Button>
+          )}
           <p className="auth-card__hint">
-            이미 계정이 있으면 <Link href="/login/">로그인</Link>
+            <Link href="/login/">로그인</Link>
+            {' · '}
+            <Link href="/reset-password/">비밀번호 찾기</Link>
           </p>
         </form>
       </div>

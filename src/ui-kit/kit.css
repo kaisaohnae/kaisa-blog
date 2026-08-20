@@ -494,6 +494,7 @@
   background: #fff;
   color: var(--ex3k-ink);
   font-weight: 600;
+  text-shadow: none;
   cursor: pointer;
   transition:
     transform 0.12s ease,

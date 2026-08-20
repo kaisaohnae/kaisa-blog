@@ -23,7 +23,7 @@ export default function BlogHomePage() {
             {posts.map((post) => (
               <BlogPostCard key={post.postNo} post={post} />
             ))}
-            {!error && posts.length === 0 && <p className="muted">아직 공개된 글이 없습니다.</p>}
+            {!error && posts.length === 0 && <p className="muted empty-state">아직 공개된 글이 없습니다.</p>}
           </section>
         </div>
       </div>

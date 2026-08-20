@@ -65,6 +65,7 @@ export default function CommentSection({postNo}: {postNo: number}) {
           </li>
         ))}
       </ul>
+      {list.length === 0 ? <p className="muted empty-state">아직 댓글이 없습니다.</p> : null}
     </section>
   );
 }

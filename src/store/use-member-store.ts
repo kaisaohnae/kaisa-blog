@@ -15,8 +15,8 @@ type State = {
 
 type Actions = {
   hydrate: () => Promise<void>;
-  login: (email: string, pwd: string) => Promise<void>;
-  register: (payload: {email: string; pwd: string; certNumber: string; memberName?: string}) => Promise<void>;
+  login: (email: string, pwd: string, captcha?: string) => Promise<void>;
+  register: (payload: {email: string; pwd: string; pwdConfirm: string; certNumber: string; memberName: string}) => Promise<void>;
   logout: () => Promise<void>;
 };
 
@@ -36,13 +36,19 @@ const useMemberStore = create<State & Actions>((set) => ({
       set({member: null, hydrated: true});
     }
   },
-  login: async (email, pwd) => {
-    const body = await apiPost<{memberInfo: MemberInfo; token: string}>('bl/login', {email, pwd});
+  login: async (email, pwd, captcha) => {
+    const body = await apiPost<{memberInfo: MemberInfo; token: string}>('bl/login', {email, pwd, captcha});
     setToken('member', body.data.token);
     set({member: body.data.memberInfo, hydrated: true});
   },
   register: async (payload) => {
-    const body = await apiPost<{memberInfo: MemberInfo; token: string}>('bl/register', payload);
+    const body = await apiPost<{memberInfo: MemberInfo; token: string}>('bl/register', {
+      email: payload.email,
+      pwd: payload.pwd,
+      pwd_confirmation: payload.pwdConfirm,
+      certNumber: payload.certNumber,
+      memberName: payload.memberName,
+    });
     setToken('member', body.data.token);
     set({member: body.data.memberInfo, hydrated: true});
   },

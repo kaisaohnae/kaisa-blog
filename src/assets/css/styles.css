@@ -382,10 +382,14 @@ body {
 .text-btn {background: none; border: 0; color: var(--color-text-muted); cursor: pointer; padding: 0; height: auto; text-shadow: none;}
 .text-btn:hover {color: var(--color-accent);}
 .muted {color: var(--color-text-muted);}
+.empty-state {
+  margin: 100px 0;
+  text-align: center;
+}
 .auth-card__hint {
   margin: 0;
   text-align: center;
-  font-size: calc(1em - 1px);
+  font-size: calc(1em - 2px);
   color: var(--color-text-muted);
 }
 .auth-card__hint a {
@@ -404,6 +408,16 @@ body {
   gap: 14px;
 }
 .auth-card h1 {margin: 0; font-family: var(--font-display);}
+.auth-captcha {
+  width: 100%;
+}
+.auth-captcha__widget {
+  width: 304px;
+  max-width: 100%;
+  margin-inline: auto;
+  transform: scale(var(--recaptcha-scale, 1));
+  transform-origin: top center;
+}
 .comment-box {margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--color-border);}
 .comment-form {display: grid; gap: 12px; margin: 16px 0 24px;}
 .comment-list {list-style: none; padding: 0; margin: 0; display: grid; gap: 16px;}

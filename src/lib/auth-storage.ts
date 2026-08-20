@@ -1,6 +1,7 @@
 export const MEMBER_TOKEN_KEY = 'kaisa_blog_member_token';
 export const ADMIN_TOKEN_KEY = 'kaisa_blog_admin_token';
 export const MANAGER_SAVED_ID_KEY = 'kaisa_blog_manager_user_id';
+export const MEMBER_SAVED_EMAIL_KEY = 'kaisa_blog_member_email';
 
 export function getSavedManagerId(): string {
   if (typeof window === 'undefined') return '';
@@ -13,6 +14,19 @@ export function saveManagerId(userId: string) {
 
 export function clearSavedManagerId() {
   localStorage.removeItem(MANAGER_SAVED_ID_KEY);
+}
+
+export function getSavedMemberEmail(): string {
+  if (typeof window === 'undefined') return '';
+  return localStorage.getItem(MEMBER_SAVED_EMAIL_KEY) || '';
+}
+
+export function saveMemberEmail(email: string) {
+  localStorage.setItem(MEMBER_SAVED_EMAIL_KEY, email);
+}
+
+export function clearSavedMemberEmail() {
+  localStorage.removeItem(MEMBER_SAVED_EMAIL_KEY);
 }
 
 export function getToken(kind: 'member' | 'admin'): string | null {
