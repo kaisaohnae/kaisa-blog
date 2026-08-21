@@ -5,6 +5,7 @@ import {clearToken, getToken, setToken} from '@/lib/auth-storage';
 export type AdminInfo = {
   userId: string;
   userName: string;
+  email?: string | null;
 };
 
 type State = {

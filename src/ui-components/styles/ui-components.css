@@ -16,7 +16,7 @@
   --ui-disabled-border: rgba(0, 0, 0, 0.06);
   --ui-readonly-bg: #f7f7f5;
   --ui-readonly-text: #6b6964;
-  --ui-radius: 10px;
+  --ui-radius: 8px;
   --ui-radius-sm: 8px;
   --ui-font: var(--font-body), 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --ui-transition: 0.18s ease;
@@ -289,7 +289,7 @@
 }
 
 .ui-check__control {
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .ui-radio__control {
@@ -495,7 +495,7 @@
   justify-content: center;
   gap: 8px;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 8px;
   font: inherit;
   font-weight: 600;
   line-height: 1;
@@ -615,7 +615,7 @@
 #alert .box {
   width: min(100%, 360px);
   padding: 24px 20px 16px;
-  border-radius: 16px;
+  border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 20px 48px rgba(26, 26, 24, 0.18);
 }
@@ -638,7 +638,7 @@
   flex: 1;
   min-height: 42px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   font: inherit;
   font-size: 14px;
   font-weight: 600;
@@ -1028,7 +1028,7 @@
   padding: 0;
   margin: 0;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--ui-bg-muted);
   color: var(--ui-text);
   font: inherit;
@@ -1049,7 +1049,7 @@
 
 .ui-calendar--lg .ui-calendar__day {
   font-size: 14px;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .ui-calendar__day:hover:not(:disabled):not(.ui-calendar__day--empty) {
@@ -1278,7 +1278,7 @@
   margin-top: -11px;
   padding: 0;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 6px;
+  border-radius: 8px;
   background: #fff;
   color: inherit;
   cursor: pointer;
@@ -1411,7 +1411,7 @@
 .ui-colorpicker__sv {
   position: relative;
   height: 160px;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   cursor: crosshair;
   touch-action: none;
@@ -1508,7 +1508,7 @@
   height: 36px;
   flex-shrink: 0;
   border: 1px solid var(--ui-border);
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .ui-colorpicker__hex {
@@ -1575,7 +1575,7 @@
   position: relative;
   width: min(100%, 420px);
   padding: 24px 20px 16px;
-  border-radius: 16px;
+  border-radius: 8px;
   background: #ffffff;
   box-shadow: 0 20px 48px rgba(26, 26, 24, 0.18);
 }
@@ -1605,7 +1605,7 @@
   min-height: 40px;
   padding: 0 16px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 8px;
   font: inherit;
   font-size: 14px;
   font-weight: 600;

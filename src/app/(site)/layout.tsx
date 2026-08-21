@@ -4,10 +4,10 @@ import Footer from '@/components/layout/footer';
 
 export default function SiteLayout({children}: {children: React.ReactNode}) {
   return (
-    <>
+    <div className="site-layout">
       <Header />
       <LayoutSub>{children}</LayoutSub>
       <Footer />
-    </>
+    </div>
   );
 }

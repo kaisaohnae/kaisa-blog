@@ -20,6 +20,7 @@ const NAV = [
   {id: 'categories', href: '/manager/categories/', label: '카테고리'},
   {id: 'write', href: '/manager/posts/write/', label: '글쓰기'},
   {id: 'members', href: '/manager/members/', label: '회원 관리'},
+  {id: 'users', href: '/manager/users/', label: '사용자 관리'},
   {id: 'issues', href: '/manager/issues/', label: '이슈탐색'},
 ];
 
@@ -31,6 +32,9 @@ function isNavActive(href: string, pathname: string | null) {
   }
   if (href === '/manager/categories/') {
     return pathname === '/manager/categories' || pathname === '/manager/categories/';
+  }
+  if (href === '/manager/users/') {
+    return pathname === '/manager/users' || pathname === '/manager/users/';
   }
   return pathname === href || pathname.startsWith(href);
 }
@@ -53,11 +57,11 @@ export default function ManagerLayout({children}: {children: React.ReactNode}) {
 
   if (isLogin) {
     return (
-      <>
+      <div className="site-layout">
         <Header />
-        <div className="ex3-kit">{children}</div>
+        <div className="site-layout__body ex3-kit">{children}</div>
         <Footer />
-      </>
+      </div>
     );
   }
 

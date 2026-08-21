@@ -36,7 +36,7 @@ export default function ResetPasswordPage() {
     setPwdConfirm('');
     setHint('');
     setDone(false);
-    resetCaptcha();
+    if (captcha) resetCaptcha();
   };
 
   const sendCert = async () => {
@@ -47,9 +47,9 @@ export default function ResetPasswordPage() {
       return;
     }
     try {
-      const body = await apiPost<{certNumber?: string}>('bl/send-reset-pwd-cert', {email, captcha});
+      await apiPost('bl/send-reset-pwd-cert', {email, captcha});
       setCertSent(true);
-      setHint(body.data?.certNumber ? `개발모드 인증번호: ${body.data.certNumber}` : '인증번호를 메일로 보냈습니다. 5분 안에 입력해 주세요.');
+      setHint('인증번호를 메일로 보냈습니다. 5분 안에 입력해 주세요. 메일이 없으면 스팸함을 확인해 주세요.');
     } catch (err: any) {
       setCertSent(false);
       setError(err.message || '인증번호 발송에 실패했습니다.');
@@ -145,7 +145,7 @@ export default function ResetPasswordPage() {
               ) : null}
             </>
           ) : null}
-          {hint && <p className="muted">{hint}</p>}
+          {hint && <p className="auth-card__notice">{hint}</p>}
           {error && <p className="form-error">{error}</p>}
           {!done ? (
             <Ex3Button type="submit" fullWidth disabled={!certSent}>

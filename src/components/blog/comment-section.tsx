@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import {usePathname, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo, useState} from 'react';
 import {Ex3Button, Ex3Textarea} from '@/ui-kit';
 import {apiPost} from '@/config/api-config';
@@ -9,6 +7,7 @@ import useMemberStore from '@/store/use-member-store';
 
 type CommentItem = {
   commentNo: number;
+  parentCommentNo?: number | null;
   memberId?: string;
   content: string;
   createDt?: string;
@@ -16,9 +15,24 @@ type CommentItem = {
   member?: {memberName?: string; email?: string};
 };
 
+function buildThreads(list: CommentItem[]) {
+  const roots: CommentItem[] = [];
+  const replies = new Map<number, CommentItem[]>();
+
+  for (const item of list) {
+    if (item.parentCommentNo) {
+      const bucket = replies.get(item.parentCommentNo) || [];
+      bucket.push(item);
+      replies.set(item.parentCommentNo, bucket);
+    } else {
+      roots.push(item);
+    }
+  }
+
+  return {roots, replies};
+}
+
 export default function CommentSection({postNo}: {postNo: number}) {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
   const member = useMemberStore((s) => s.member);
   const hydrated = useMemberStore((s) => s.hydrated);
   const [list, setList] = useState<CommentItem[]>([]);
@@ -26,15 +40,11 @@ export default function CommentSection({postNo}: {postNo: number}) {
   const [message, setMessage] = useState('');
   const [editingNo, setEditingNo] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState('');
+  const [replyingNo, setReplyingNo] = useState<number | null>(null);
+  const [replyContent, setReplyContent] = useState('');
   const [busyNo, setBusyNo] = useState<number | null>(null);
 
-  const returnUrl = useMemo(() => {
-    const query = searchParams.toString();
-    return query ? `${pathname}?${query}` : pathname;
-  }, [pathname, searchParams]);
-
-  const loginHref = `/login/?returnUrl=${encodeURIComponent(returnUrl)}`;
-  const registerHref = `/register/?returnUrl=${encodeURIComponent(returnUrl)}`;
+  const threads = useMemo(() => buildThreads(list), [list]);
 
   const load = () => {
     apiPost<{list: CommentItem[]}>('bl/get-comment-list', {postNo})
@@ -57,15 +67,48 @@ export default function CommentSection({postNo}: {postNo: number}) {
     }
   };
 
+  const submitReply = async (parentCommentNo: number) => {
+    if (!replyContent.trim()) return;
+    setBusyNo(parentCommentNo);
+    setMessage('');
+    try {
+      await apiPost(
+        'bl/set-comment',
+        {postNo, content: replyContent.trim(), parentCommentNo, mode: 'C'},
+        'member',
+      );
+      setReplyingNo(null);
+      setReplyContent('');
+      load();
+    } catch (e: any) {
+      setMessage(e.message || '답글 등록에 실패했습니다.');
+    } finally {
+      setBusyNo(null);
+    }
+  };
+
   const startEdit = (item: CommentItem) => {
     setEditingNo(item.commentNo);
     setEditingContent(item.content);
+    setReplyingNo(null);
     setMessage('');
   };
 
   const cancelEdit = () => {
     setEditingNo(null);
     setEditingContent('');
+  };
+
+  const startReply = (commentNo: number) => {
+    setReplyingNo(commentNo);
+    setReplyContent('');
+    cancelEdit();
+    setMessage('');
+  };
+
+  const cancelReply = () => {
+    setReplyingNo(null);
+    setReplyContent('');
   };
 
   const saveEdit = async (commentNo: number) => {
@@ -90,6 +133,7 @@ export default function CommentSection({postNo}: {postNo: number}) {
     try {
       await apiPost('bl/set-comment', {commentNo, mode: 'D'}, 'member');
       if (editingNo === commentNo) cancelEdit();
+      if (replyingNo === commentNo) cancelReply();
       load();
     } catch (e: any) {
       setMessage(e.message || '댓글 삭제에 실패했습니다.');
@@ -99,6 +143,87 @@ export default function CommentSection({postNo}: {postNo: number}) {
   };
 
   const formatDate = (value?: string) => (value ? String(value).slice(0, 16).replace('T', ' ') : '');
+
+  const renderComment = (item: CommentItem, isReply = false) => {
+    const isOwner = member?.memberId && item.memberId === member.memberId;
+    const isEditing = editingNo === item.commentNo;
+    const isReplying = replyingNo === item.commentNo;
+    const isBusy = busyNo === item.commentNo;
+    const canReply = Boolean(member) && !item.parentCommentNo;
+
+    return (
+      <li key={item.commentNo} className={isReply ? 'comment-item comment-item--reply' : 'comment-item'}>
+        <div className="comment-item__head">
+          <div className="comment-item__meta">
+            <strong>{item.member?.memberName || '회원'}</strong>
+            {isReply ? <span className="comment-item__badge">답글</span> : null}
+            <time dateTime={item.createDt}>{formatDate(item.createDt)}</time>
+            {item.updateDt && item.updateDt !== item.createDt ? (
+              <span className="comment-item__edited">수정됨</span>
+            ) : null}
+          </div>
+          <div className="comment-item__actions">
+            {canReply && !isEditing ? (
+              <button type="button" className="text-btn" onClick={() => startReply(item.commentNo)} disabled={isBusy}>
+                답글
+              </button>
+            ) : null}
+            {isOwner && !isEditing ? (
+              <>
+                <button type="button" className="text-btn" onClick={() => startEdit(item)} disabled={isBusy}>
+                  수정
+                </button>
+                <button type="button" className="text-btn text-btn--danger" onClick={() => remove(item.commentNo)} disabled={isBusy}>
+                  삭제
+                </button>
+              </>
+            ) : null}
+          </div>
+        </div>
+
+        {isEditing ? (
+          <div className="comment-edit ex3-kit">
+            <Ex3Textarea
+              value={editingContent}
+              onChange={(e) => setEditingContent(e.target.value)}
+              rows={3}
+              disabled={isBusy}
+            />
+            <div className="comment-edit__actions">
+              <Ex3Button variant="secondary" uiSize="sm" onClick={cancelEdit} disabled={isBusy}>
+                취소
+              </Ex3Button>
+              <Ex3Button uiSize="sm" onClick={() => saveEdit(item.commentNo)} disabled={isBusy || !editingContent.trim()}>
+                저장
+              </Ex3Button>
+            </div>
+          </div>
+        ) : (
+          <p className="comment-item__content">{item.content}</p>
+        )}
+
+        {isReplying ? (
+          <div className="comment-reply-form ex3-kit">
+            <Ex3Textarea
+              value={replyContent}
+              onChange={(e) => setReplyContent(e.target.value)}
+              placeholder="답글을 입력해 주세요"
+              rows={3}
+              disabled={isBusy}
+            />
+            <div className="comment-edit__actions">
+              <Ex3Button variant="secondary" uiSize="sm" onClick={cancelReply} disabled={isBusy}>
+                취소
+              </Ex3Button>
+              <Ex3Button uiSize="sm" onClick={() => submitReply(item.commentNo)} disabled={isBusy || !replyContent.trim()}>
+                답글 등록
+              </Ex3Button>
+            </div>
+          </div>
+        ) : null}
+      </li>
+    );
+  };
 
   return (
     <section className="comment-box">
@@ -126,29 +251,7 @@ export default function CommentSection({postNo}: {postNo: number}) {
         </div>
       ) : (
         <div className="comment-guest">
-          <div className="comment-guest__icon" aria-hidden>
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M7 9h10M7 13h6M21 12c0 4.418-4.03 8-9 8-1.05 0-2.06-.15-3-.42L3 21l1.42-5.01C3.52 14.6 3 13.34 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-          <div className="comment-guest__body">
-            <p className="comment-guest__title">로그인하고 댓글을 남겨보세요</p>
-            <p className="comment-guest__desc">댓글은 회원만 작성할 수 있습니다.</p>
-          </div>
-          <div className="comment-guest__actions">
-            <Link href={loginHref} className="comment-guest__btn comment-guest__btn--primary">
-              로그인
-            </Link>
-            <Link href={registerHref} className="comment-guest__btn">
-              회원가입
-            </Link>
-          </div>
+          <p className="comment-guest__text">댓글은 회원만 작성할 수 있습니다.</p>
         </div>
       )}
 
@@ -158,53 +261,18 @@ export default function CommentSection({postNo}: {postNo: number}) {
         <p className="comment-empty">아직 댓글이 없습니다. 첫 댓글을 남겨보세요.</p>
       ) : (
         <ul className="comment-list">
-          {list.map((item) => {
-            const isOwner = member?.memberId && item.memberId === member.memberId;
-            const isEditing = editingNo === item.commentNo;
-            const isBusy = busyNo === item.commentNo;
-
+          {threads.roots.map((item) => {
+            const replies = threads.replies.get(item.commentNo) || [];
             return (
-              <li key={item.commentNo} className="comment-item">
-                <div className="comment-item__head">
-                  <div className="comment-item__meta">
-                    <strong>{item.member?.memberName || '회원'}</strong>
-                    <time dateTime={item.createDt}>{formatDate(item.createDt)}</time>
-                    {item.updateDt && item.updateDt !== item.createDt ? (
-                      <span className="comment-item__edited">수정됨</span>
-                    ) : null}
-                  </div>
-                  {isOwner && !isEditing ? (
-                    <div className="comment-item__actions">
-                      <button type="button" className="text-btn" onClick={() => startEdit(item)} disabled={isBusy}>
-                        수정
-                      </button>
-                      <button type="button" className="text-btn text-btn--danger" onClick={() => remove(item.commentNo)} disabled={isBusy}>
-                        삭제
-                      </button>
-                    </div>
-                  ) : null}
-                </div>
-
-                {isEditing ? (
-                  <div className="comment-edit ex3-kit">
-                    <Ex3Textarea
-                      value={editingContent}
-                      onChange={(e) => setEditingContent(e.target.value)}
-                      rows={3}
-                      disabled={isBusy}
-                    />
-                    <div className="comment-edit__actions">
-                      <Ex3Button variant="secondary" uiSize="sm" onClick={cancelEdit} disabled={isBusy}>
-                        취소
-                      </Ex3Button>
-                      <Ex3Button uiSize="sm" onClick={() => saveEdit(item.commentNo)} disabled={isBusy || !editingContent.trim()}>
-                        저장
-                      </Ex3Button>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="comment-item__content">{item.content}</p>
-                )}
+              <li key={item.commentNo} className="comment-thread">
+                <ul className="comment-list comment-list--flat">
+                  {renderComment(item)}
+                </ul>
+                {replies.length ? (
+                  <ul className="comment-replies">
+                    {replies.map((reply) => renderComment(reply, true))}
+                  </ul>
+                ) : null}
               </li>
             );
           })}

@@ -12,16 +12,20 @@ type Member = {
   memberName: string;
   email: string;
   memberStateCode: string;
+  passwordUpdateDt?: string | null;
   createDt?: string;
 };
 
 export default function ManagerMembersPage() {
   const [list, setList] = useState<Member[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const load = useCallback(() => {
+    setLoading(true);
     apiPost<{list: Member[]}>('bl/get-member-list', {totalPage: 50}, 'admin')
       .then((body) => setList(body.data.list || []))
-      .catch(() => setList([]));
+      .catch(() => setList([]))
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {
@@ -61,6 +65,12 @@ export default function ManagerMembersPage() {
         },
       },
       {
+        headerName: '비밀번호 수정일시',
+        minWidth: 160,
+        valueGetter: (p) =>
+          p.data?.passwordUpdateDt ? String(p.data.passwordUpdateDt).slice(0, 16).replace('T', ' ') : '',
+      },
+      {
         headerName: '가입일',
         maxWidth: 140,
         valueGetter: (p) => (p.data?.createDt ? String(p.data.createDt).slice(0, 10) : ''),
@@ -76,6 +86,7 @@ export default function ManagerMembersPage() {
         <ManagerAgGrid
           rowData={list}
           columnDefs={columnDefs}
+          loading={loading}
           cellSelection
           getRowId={(p) => p.data.memberId}
           height={720}

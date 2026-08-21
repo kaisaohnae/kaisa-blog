@@ -36,7 +36,7 @@ function RegisterForm() {
     setCertSent(false);
     setCertNumber('');
     setHint('');
-    resetCaptcha();
+    if (captcha) resetCaptcha();
   };
 
   const sendCert = async () => {
@@ -47,14 +47,25 @@ function RegisterForm() {
       return;
     }
     try {
-      const body = await apiPost<{certNumber?: string}>('bl/send-cert', {email, captcha});
+      const normalizedEmail = email.trim().toLowerCase();
+      setEmail(normalizedEmail);
+      await apiPost('bl/send-cert', {email: normalizedEmail, captcha});
       setCertSent(true);
-      setHint(body.data?.certNumber ? `개발모드 인증번호: ${body.data.certNumber}` : '인증번호를 메일로 보냈습니다. 5분 안에 입력해 주세요.');
+      setCertNumber('');
+      setHint('인증번호를 메일로 보냈습니다. 5분 안에 입력해 주세요. 메일이 없으면 스팸함을 확인해 주세요.');
     } catch (err: any) {
       setCertSent(false);
       setError(err.message || '인증번호 발송에 실패했습니다.');
       resetCaptcha();
     }
+  };
+
+  const resendCert = () => {
+    setCertSent(false);
+    setCertNumber('');
+    setHint('');
+    setError('');
+    resetCaptcha();
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -71,7 +82,13 @@ function RegisterForm() {
     }
 
     try {
-      await register({email, pwd, pwdConfirm, certNumber, memberName});
+      await register({
+        email: email.trim().toLowerCase(),
+        pwd,
+        pwdConfirm,
+        certNumber,
+        memberName,
+      });
       router.push(searchParams.get('returnUrl') || '/');
     } catch (err: any) {
       setError(err.message || '회원가입에 실패했습니다.');
@@ -118,6 +135,12 @@ function RegisterForm() {
                   required
                 />
               </Ex3Field>
+              <p className="auth-card__notice">
+                인증번호를 다시 받으면 이전 번호는 사용할 수 없습니다.{' '}
+                <button type="button" className="text-btn" onClick={resendCert}>
+                  다시 받기
+                </button>
+              </p>
               <Ex3Field label="닉네임" htmlFor="reg-nickname" required>
                 <Ex3Input
                   id="reg-nickname"
@@ -149,7 +172,7 @@ function RegisterForm() {
               </Ex3Field>
             </>
           ) : null}
-          {hint && <p className="muted">{hint}</p>}
+          {hint && <p className="auth-card__notice">{hint}</p>}
           {error && <p className="form-error">{error}</p>}
           <Ex3Button type="submit" fullWidth disabled={!certSent}>
             가입하기

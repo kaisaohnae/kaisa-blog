@@ -5,7 +5,7 @@ import {useRouter, useSearchParams} from 'next/navigation';
 import PostEditor, {isEditorEmpty} from '@/components/editor/post-editor';
 import {apiPost} from '@/config/api-config';
 import {LoadingFallback} from '@/ui-components';
-import {Ex3Button, Ex3Field, Ex3Input, Ex3Select} from '@/ui-kit';
+import {Ex3Button, Ex3Field, Ex3Input, Ex3Select, Ex3Toggle} from '@/ui-kit';
 
 type Category = {categoryId: number; categoryName: string};
 
@@ -110,12 +110,14 @@ function PostWriteForm() {
             ))}
           </Ex3Select>
         </Ex3Field>
-        <Ex3Field label="공개" htmlFor="post-display">
-          <Ex3Select id="post-display" value={isDisplay} onChange={(e) => setIsDisplay(e.target.value)}>
-            <option value="Y">공개</option>
-            <option value="N">비공개</option>
-          </Ex3Select>
-        </Ex3Field>
+        <div className="post-write__display">
+          <Ex3Toggle
+            id="post-display"
+            label="공개"
+            checked={isDisplay === 'Y'}
+            onChange={(e) => setIsDisplay(e.target.checked ? 'Y' : 'N')}
+          />
+        </div>
         <Ex3Button type="submit">저장</Ex3Button>
       </div>
       <Ex3Field label="요약" htmlFor="post-excerpt">

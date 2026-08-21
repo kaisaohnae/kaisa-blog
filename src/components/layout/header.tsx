@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {useEffect} from 'react';
 import ThemeToggle from './theme-toggle';
 import IconLogo from '@/components/icons/common/icon-logo';
+import MemberHeaderActions from '@/components/layout/member-header-actions';
 import useMemberStore from '@/store/use-member-store';
 
 export default function Header() {
@@ -24,18 +25,13 @@ export default function Header() {
           </h1>
           <div className="header__actions">
             {hydrated && member ? (
-              <div className="auth-chip">
-                <span>{member.memberName}</span>
-                <button type="button" className="text-btn" onClick={() => logout()}>
-                  로그아웃
-                </button>
-              </div>
+              <MemberHeaderActions member={member} onLogout={() => logout()} />
             ) : (
               <div className="auth-chip">
-                <Link href="/login/" className="menu__link">
+                <Link href="/login/" className="auth-chip__link">
                   로그인
                 </Link>
-                <Link href="/register/" className="menu__link">
+                <Link href="/register/" className="auth-chip__link">
                   회원가입
                 </Link>
               </div>

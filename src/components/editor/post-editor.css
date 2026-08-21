@@ -1,7 +1,7 @@
 .post-editor {
   min-height: min(68vh, 720px);
   border: 1px solid var(--ex1-border, #e6e0d6);
-  border-radius: 14px;
+  border-radius: 8px;
   background: #fff;
   overflow: hidden;
 }
@@ -54,7 +54,7 @@
 
 .post-editor .bytemd-preview img {
   max-width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .post-write {
@@ -72,6 +72,17 @@
 
 .post-write__meta .ex3k-field {
   margin: 0;
+}
+
+.post-write__display {
+  display: flex;
+  align-items: flex-end;
+  min-height: 100%;
+  padding-bottom: 2px;
+}
+
+.post-write__display .ex3k-toggle {
+  width: 100%;
 }
 
 @media (max-width: 960px) {

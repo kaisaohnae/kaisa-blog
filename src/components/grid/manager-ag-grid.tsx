@@ -17,7 +17,7 @@ import {useCellRangeSelect} from './use-cell-range-select';
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 const EX1_GRID_THEME = themeQuartz.withParams({
-  accentColor: '#ff4d00',
+  accentColor: '#0090ff',
   backgroundColor: '#ffffff',
   borderColor: 'transparent',
   borderRadius: 10,
@@ -31,7 +31,7 @@ const EX1_GRID_THEME = themeQuartz.withParams({
   foregroundColor: '#171717',
   oddRowBackgroundColor: '#ffffff',
   rowHoverColor: 'transparent',
-  selectedRowBackgroundColor: 'rgba(255, 77, 0, 0.07)',
+  selectedRowBackgroundColor: 'rgba(0, 144, 255, 0.08)',
   rowBorder: false,
   columnBorder: false,
   headerColumnBorder: false,
@@ -59,6 +59,7 @@ type ManagerAgGridProps<T> = {
   columnDefs: ColDef<T>[];
   height?: number;
   className?: string;
+  loading?: boolean;
   editable?: boolean;
   filterable?: boolean;
   selectable?: boolean;
@@ -74,6 +75,7 @@ function ManagerAgGridInner<T>(
     columnDefs,
     height = 480,
     className,
+    loading = false,
     editable = false,
     filterable = false,
     selectable = false,
@@ -138,6 +140,8 @@ function ManagerAgGridInner<T>(
         getRowId={getRowId}
         rowHeight={ROW_HEIGHT}
         headerHeight={HEADER_HEIGHT}
+        loading={loading}
+        suppressNoRowsOverlay={loading}
         animateRows
         rowSelection={selectable ? ROW_SELECTION : undefined}
         enableCellTextSelection={!cellSelection}

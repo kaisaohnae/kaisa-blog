@@ -94,7 +94,7 @@ button.gray.on {background:#ff5500; color:#fff; border:1px solid #ff5500;}
 input,
 select,
 textarea,
-button {border-radius:5px; outline:0;}
+button {border-radius:8px; outline:0;}
 
 button .icon {font-size:16px;}
 

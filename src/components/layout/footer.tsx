@@ -9,13 +9,22 @@ export default function Footer() {
       <div className="site-shell">
         <div className="site-footer__inner site-shell__inner">
           <p className="site-footer__copy">
-            © 2005 Kaisa. All Rights Reserved
+            © 2005 Kaisa ·{' '}
+            <a
+              href="https://kaisa.co.kr"
+              className="site-footer__copy-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              kaisa.co.kr
+            </a>
+            . All Rights Reserved
             <Link href="/manager/" className="footer-admin-dot" aria-label="관리자">
               .
             </Link>
           </p>
-          <a href="mailto:7083620@hanmail.net" className="site-footer__link">
-            7083620@hanmail.net
+          <a href="mailto:kaisa@kaisa.co.kr" className="site-footer__link">
+            kaisa@kaisa.co.kr
           </a>
         </div>
       </div>

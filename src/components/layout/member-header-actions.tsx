@@ -2,9 +2,8 @@
 
 import {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
-import {useRouter} from 'next/navigation';
 import {apiPost} from '@/config/api-config';
-import useAdminStore from '@/store/use-admin-store';
+import type {MemberInfo} from '@/store/use-member-store';
 import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
 
 function SettingsIcon() {
@@ -26,10 +25,18 @@ function LogoutIcon() {
   );
 }
 
-function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => void}) {
-  const admin = useAdminStore((s) => s.admin);
+function MemberSettingsLayer({
+  open,
+  member,
+  onClose,
+}: {
+  open: boolean;
+  member: MemberInfo;
+  onClose: () => void;
+}) {
   const [pwd, setPwd] = useState('');
   const [newPwd, setNewPwd] = useState('');
+  const [newPwdConfirm, setNewPwdConfirm] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -46,6 +53,7 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
     if (!open) return;
     setPwd('');
     setNewPwd('');
+    setNewPwdConfirm('');
     setMessage('');
     setError('');
   }, [open]);
@@ -54,11 +62,16 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
     e.preventDefault();
     setError('');
     setMessage('');
+    if (newPwd !== newPwdConfirm) {
+      setError('새 비밀번호가 일치하지 않습니다.');
+      return;
+    }
     try {
-      const body = await apiPost('auth/change-password', {pwd, newPwd}, 'admin');
-      setMessage(body.message);
+      const body = await apiPost('bl/change-password', {pwd, newPwd}, 'member');
+      setMessage(body.message || '비밀번호가 변경되었습니다.');
       setPwd('');
       setNewPwd('');
+      setNewPwdConfirm('');
     } catch (err: any) {
       setError(err.message || '변경에 실패했습니다.');
     }
@@ -69,41 +82,33 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
   return createPortal(
     <div className="ex3k-overlay" role="presentation" onClick={onClose}>
       <div
-        className="ex3k-dialog ex3k-dialog--popup manager-settings-layer"
+        className="ex3k-dialog ex3k-dialog--popup member-settings-layer"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="manager-settings-title"
+        aria-labelledby="member-settings-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <h3 id="manager-settings-title" className="ex3k-dialog__title">
-          설정
+        <h3 id="member-settings-title" className="ex3k-dialog__title">
+          회원 설정
         </h3>
-        {admin ? (
-          <dl className="manager-settings-layer__profile">
-            <div className="manager-settings-layer__profile-row">
-              <dt>아이디</dt>
-              <dd>{admin.userId}</dd>
-            </div>
-            <div className="manager-settings-layer__profile-row">
-              <dt>이름</dt>
-              <dd>{admin.userName}</dd>
-            </div>
-            {admin.email ? (
-              <div className="manager-settings-layer__profile-row">
-                <dt>이메일</dt>
-                <dd>{admin.email}</dd>
-              </div>
-            ) : null}
-          </dl>
-        ) : null}
-        <h4 className="manager-settings-layer__section-title">비밀번호 변경</h4>
-        <form className="manager-settings-layer__form" onSubmit={save}>
-          <Ex3Field label="현재 비밀번호" htmlFor="layer-cur-pwd" required>
-            <Ex3Input id="layer-cur-pwd" type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} required />
+        <dl className="member-settings-layer__info">
+          <div>
+            <dt>닉네임</dt>
+            <dd>{member.memberName}</dd>
+          </div>
+          <div>
+            <dt>이메일</dt>
+            <dd>{member.email}</dd>
+          </div>
+        </dl>
+        <form className="member-settings-layer__form" onSubmit={save}>
+          <p className="member-settings-layer__section">비밀번호 변경</p>
+          <Ex3Field label="현재 비밀번호" htmlFor="member-cur-pwd" required>
+            <Ex3Input id="member-cur-pwd" type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} required />
           </Ex3Field>
-          <Ex3Field label="새 비밀번호" htmlFor="layer-new-pwd" required>
+          <Ex3Field label="새 비밀번호" htmlFor="member-new-pwd" required>
             <Ex3Input
-              id="layer-new-pwd"
+              id="member-new-pwd"
               type="password"
               value={newPwd}
               onChange={(e) => setNewPwd(e.target.value)}
@@ -111,7 +116,17 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
               required
             />
           </Ex3Field>
-          {message && <p className="muted">{message}</p>}
+          <Ex3Field label="새 비밀번호 확인" htmlFor="member-new-pwd-confirm" required>
+            <Ex3Input
+              id="member-new-pwd-confirm"
+              type="password"
+              value={newPwdConfirm}
+              onChange={(e) => setNewPwdConfirm(e.target.value)}
+              minLength={6}
+              required
+            />
+          </Ex3Field>
+          {message && <p className="auth-card__notice">{message}</p>}
           {error && <p className="form-error">{error}</p>}
           <div className="ex3k-dialog__actions">
             <Ex3Button type="button" variant="ghost" onClick={onClose}>
@@ -126,32 +141,33 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
   );
 }
 
-export default function ManagerTopActions() {
-  const router = useRouter();
-  const logout = useAdminStore((s) => s.logout);
+type MemberHeaderActionsProps = {
+  member: MemberInfo;
+  onLogout: () => void;
+};
+
+export default function MemberHeaderActions({member, onLogout}: MemberHeaderActionsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
     <>
-      <div className="ex1-manager-bar">
+      <div className="header-member-bar">
+        <span className="header-member-bar__name">{member.memberName}</span>
         <button
           type="button"
-          className="ex1-manager-bar__btn"
-          aria-label="설정"
+          className="header-member-bar__btn"
+          aria-label="회원 설정"
           onClick={() => setSettingsOpen(true)}
         >
           <SettingsIcon />
         </button>
-        <button
-          type="button"
-          className="ex1-manager-bar__btn"
-          aria-label="로그아웃"
-          onClick={() => logout().then(() => router.push('/manager/login/'))}
-        >
+        <button type="button" className="header-member-bar__btn" aria-label="로그아웃" onClick={onLogout}>
           <LogoutIcon />
         </button>
       </div>
-      <ManagerSettingsLayer open={settingsOpen} onClose={() => setSettingsOpen(false)} />
+      <MemberSettingsLayer open={settingsOpen} member={member} onClose={() => setSettingsOpen(false)} />
     </>
   );
 }
+
+export {SettingsIcon, LogoutIcon};

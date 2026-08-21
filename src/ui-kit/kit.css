@@ -7,7 +7,7 @@
   --ex3k-line: #e5e5e0;
   --ex3k-soft: #f7f7f5;
   --ex3k-danger: #b42318;
-  --ex3k-radius: 7px;
+  --ex3k-radius: 8px;
   --ex3k-cal-accent: #ff4d00;
   --ex3k-cal-accent-soft: rgba(255, 77, 0, 0.12);
 }
@@ -58,7 +58,7 @@
   padding: 0 4px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--ex3k-muted);
+  color: #aaaaaa;
   pointer-events: none;
   transform: translateY(calc(var(--ex3k-control-h) / 2 - 50%));
   transform-origin: left center;
@@ -83,7 +83,7 @@
 .ex3k-field:has(.ex3k-colorpicker__input:not(:placeholder-shown)) .ex3k-field__label {
   transform: translateY(-50%);
   font-size: 11px;
-  color: var(--ex3k-ink);
+  color: #333333;
   background: #fff;
 }
 
@@ -351,7 +351,7 @@
   gap: 10px;
   padding: 8px 10px;
   border: 0;
-  border-radius: 12px;
+  border-radius: 8px;
   background: transparent;
   transition: background-color 0.16s ease;
 }
@@ -381,7 +381,7 @@
 }
 
 .ex3k-check__mark {
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 .ex3k-radio__input:checked + .ex3k-radio__card .ex3k-radio__mark,
@@ -842,7 +842,7 @@
   max-width: 360px;
   padding: 16px;
   border: 1px solid var(--ex3k-line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
 }
 
@@ -967,7 +967,7 @@
   justify-content: center;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 8px;
   background: #f3f3f1;
   color: var(--ex3k-ink);
   font-size: 13px;
@@ -982,7 +982,7 @@
 
 .ex3k-calendar--lg .ex3k-calendar__day {
   font-size: 14px;
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .ex3k-calendar__day:hover:not(:disabled):not(.ex3k-calendar__day--empty) {
@@ -1219,7 +1219,7 @@
   min-width: 280px;
   padding: 12px;
   border: 1px solid var(--ex3k-line);
-  border-radius: 10px;
+  border-radius: 8px;
   background: #fff;
   box-shadow: 0 16px 40px rgba(26, 26, 24, 0.12);
   animation: ex3k-pop 0.28s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1394,4 +1394,63 @@
   place-items: center;
   background: transparent;
   pointer-events: none;
+}
+
+[data-theme='dark'] .ex3-kit,
+[data-theme='dark'] .ex3k-overlay,
+[data-theme='dark'] .ex3k-loading {
+  --ex3k-accent: var(--color-text);
+  --ex3k-ink: var(--color-text);
+  --ex3k-muted: var(--color-text-muted);
+  --ex3k-line: var(--color-border);
+  --ex3k-soft: var(--color-bg-elevated);
+}
+
+[data-theme='dark'] .ex3k-field__label {
+  color: color-mix(in srgb, var(--color-text-muted) 88%, transparent);
+}
+
+[data-theme='dark'] .ex3k-field:focus-within .ex3k-field__label,
+[data-theme='dark'] .ex3k-field:has(.ex3k-input:not(:placeholder-shown)) .ex3k-field__label,
+[data-theme='dark'] .ex3k-field:has(.ex3k-textarea:not(:placeholder-shown)) .ex3k-field__label,
+[data-theme='dark'] .ex3k-field:has(.ex3k-select) .ex3k-field__label,
+[data-theme='dark'] .ex3k-field:has(.ex3k-datepicker__input:not(:placeholder-shown)) .ex3k-field__label,
+[data-theme='dark'] .ex3k-field:has(.ex3k-colorpicker__input:not(:placeholder-shown)) .ex3k-field__label {
+  color: var(--color-text);
+  background: var(--color-bg-card);
+}
+
+[data-theme='dark'] .ex3k-input,
+[data-theme='dark'] .ex3k-input[type='text'],
+[data-theme='dark'] .ex3k-input[type='email'],
+[data-theme='dark'] .ex3k-input[type='password'],
+[data-theme='dark'] .ex3k-input[type='number'],
+[data-theme='dark'] .ex3k-input[type='search'],
+[data-theme='dark'] .ex3k-input[type='tel'],
+[data-theme='dark'] .ex3k-input[type='url'],
+[data-theme='dark'] .ex3k-datepicker__input,
+[data-theme='dark'] .ex3k-colorpicker__input,
+[data-theme='dark'] .ex3k-colorpicker__hex,
+[data-theme='dark'] .ex3k-select,
+[data-theme='dark'] .ex3k-textarea {
+  background: var(--color-bg-card);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+[data-theme='dark'] .ex3k-input:hover,
+[data-theme='dark'] .ex3k-select:hover,
+[data-theme='dark'] .ex3k-textarea:hover,
+[data-theme='dark'] .ex3k-datepicker__input:hover,
+[data-theme='dark'] .ex3k-colorpicker__input:hover {
+  border-color: color-mix(in srgb, var(--color-text-muted) 55%, transparent);
+}
+
+[data-theme='dark'] .ex3k-input:focus,
+[data-theme='dark'] .ex3k-select:focus,
+[data-theme='dark'] .ex3k-textarea:focus,
+[data-theme='dark'] .ex3k-datepicker__input:focus,
+[data-theme='dark'] .ex3k-colorpicker__input:focus {
+  border-color: color-mix(in srgb, var(--color-text) 70%, transparent);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
 }
