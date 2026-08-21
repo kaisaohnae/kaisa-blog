@@ -136,7 +136,7 @@ export default function ManagerCategoriesPage() {
   };
 
   const updateDisplay = useCallback(async (node: CategoryTreeNode, checked: boolean) => {
-    const next = checked ? 'Y' : 'N';
+    const next: 'Y' | 'N' = checked ? 'Y' : 'N';
     const categoryId = Number(node.id);
     const origin = categories.find((item) => item.categoryId === categoryId);
     if (!origin || origin.isDisplay === next) {
