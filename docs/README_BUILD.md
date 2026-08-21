@@ -41,3 +41,7 @@ GitHub Pages 에 gh-pages 로 설정
 ```
 배포하고 풀 받아야함
 ```
+
+## Cafe24 / FTP 수동 배포
+
+`.git`, `node_modules` 없이 **`out/`만** 압축하는 방법은 [deploy.md](./deploy.md) 참고.
