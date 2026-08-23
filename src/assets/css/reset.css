@@ -108,6 +108,7 @@ button:active {opacity:0.5;}
 .tc {text-align:center;}
 .tr {text-align:right;}
 
-div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,img,input,select,button,iframe,textarea,label,fieldset,form {
+div,a,u,i,li,ol,ul,dl,dt,dd,span,strong,p,h1,h2,h3,h4,h5,h6,img,input,select,button,iframe,textarea,label,fieldset,form,
+nav,section,main,article,header,footer,aside,figure,figcaption {
     box-sizing:border-box;
 }
