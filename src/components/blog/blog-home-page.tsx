@@ -12,7 +12,6 @@ const PAGE_SIZE = 10;
 
 type PostListResponse = {
   list: BlogListItem[];
-  totalCount?: number;
   currentPage?: number;
   lastPage?: number;
   perPage?: number;
@@ -70,13 +69,11 @@ function BlogHomeContent() {
         setPosts(data.list || []);
         setCurrentPage(data.currentPage ?? page);
         setLastPage(Math.max(1, data.lastPage ?? 1));
-        setTotalCount(data.totalCount ?? data.list?.length ?? 0);
       })
       .catch((e) => {
         setPosts([]);
         setCurrentPage(1);
         setLastPage(1);
-        setTotalCount(0);
         setError(e.message || '글을 불러오지 못했습니다.');
       })
       .finally(() => setLoading(false));

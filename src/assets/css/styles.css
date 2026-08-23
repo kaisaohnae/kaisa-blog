@@ -278,11 +278,6 @@ body {
   padding: 28px 0 8px;
 }
 
-.blog-list-footer__meta {
-  margin: 0;
-  font-size: 13px;
-}
-
 .blog-pagination {
   display: flex;
   flex-wrap: wrap;
