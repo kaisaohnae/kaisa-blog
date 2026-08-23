@@ -13,7 +13,7 @@ body::-webkit-scrollbar-thumb {background: var(--color-scrollbar); border-radius
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --header-height: 72px;
   --layout-max: 960px;
-  --layout-gutter: clamp(20px, 4vw, 48px);
+  --layout-gutter: clamp(14px, 4vw, 48px);
 }
 
 [data-theme='light'] {
@@ -76,7 +76,12 @@ body {
 }
 
 .site-shell {width: 100%; padding-inline: var(--layout-gutter); box-sizing: border-box;}
-.site-shell__inner {width: 100%; max-width: var(--layout-max); margin-inline: auto; box-sizing: border-box;}
+.site-shell > .site-shell__inner {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  box-sizing: border-box;
+}
 .site-shell--header {height: 100%;}
 
 #header {
@@ -255,10 +260,15 @@ body {
   margin: 0;
 }
 
+.blog-home,
+.blog-list {
+  min-width: 0;
+}
+
 .blog-list {
   display: grid;
   gap: 20px;
-  padding-top: 34px;
+  padding-top: 0;
 }
 
 .blog-search {
@@ -377,13 +387,20 @@ body {
   align-items: center;
   gap: 6px 18px;
   width: 100%;
-  padding: 20px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 .blog-category-filter__item {
   display: inline-flex;
   align-items: center;
+  max-width: 100%;
   min-height: auto;
+  height: auto;
+  margin: 0;
   padding: 0;
   border: none !important;
   border-radius: 0;
@@ -392,6 +409,7 @@ body {
   font-size: 13px;
   font-weight: 400;
   line-height: 1.4;
+  white-space: normal;
   cursor: pointer;
   text-shadow: none !important;
   box-shadow: none !important;
@@ -449,10 +467,13 @@ body {
 
 .blog-card {
   display: block;
-  padding: 24px 28px;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--color-bg-card) 50%, transparent);
-  border: none;
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: none;
   text-decoration: none;
   color: inherit;
@@ -461,7 +482,6 @@ body {
 .blog-card:hover,
 .blog-card:focus,
 .blog-card:focus-visible {
-  border: none;
   box-shadow: none;
   transform: none;
   outline: none;
@@ -482,11 +502,15 @@ body {
   font-size: 24px;
   line-height: 1.2;
   margin: 0 0 10px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .blog-card__excerpt {
   margin: 0;
   color: var(--color-text-muted);
   line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .blog-card__tags {
   display: flex;
@@ -647,10 +671,22 @@ body {
 }
 
 @media (max-width: 720px) {
-  .header__inner {gap: 12px;}
-  .header__actions {gap: 10px;}
-  .menu__list {gap: 12px;}
-  .blog-card {padding: 20px;}
+  :root {
+    --header-height: 64px;
+    --layout-gutter: 14px;
+  }
+  .header__inner {gap: 10px;}
+  .header__actions {gap: 8px;}
+  .header__logo svg {width: 84px; height: auto;}
+  .menu__list {gap: 10px;}
+  .auth-chip {gap: 8px; font-size: 12px;}
+  .blog-main {padding: calc(var(--header-height) + 12px) 0 64px;}
+  .blog-search-area {padding-top: 0; margin-bottom: 0;}
+  .blog-category-filter {padding: 10px; margin-bottom: 20px; gap: 4px 12px;}
+  .blog-list {padding-top: 0; gap: 8px;}
+  .blog-card__excerpt {display: none;}
+  .blog-card__meta {margin-bottom: 4px; font-size: 10px; gap: 6px 10px;}
+  .blog-card__title {font-size: 14px; margin: 0;}
 }
 
 .auth-chip {display: flex; align-items: center; gap: 12px; font-size: 13px;}
@@ -751,21 +787,42 @@ body {
 }
 .form-error {color: #e53935; font-size: 13px;}
 .auth-card {
-  /* 콘텐츠 304px + padding 32*2 = reCAPTCHA 폭과 맞춤 */
+  /* 콘텐츠 304px + padding 32*2 = reCAPTCHA 폭과 맞춤 (데스크톱) */
   width: min(368px, 100%);
   margin: 0 auto;
-  padding: 32px;
-  border: 1px solid var(--color-border);
+  padding: clamp(16px, 4.5vw, 32px);
+  /*border: 1px solid var(--color-border);
   border-radius: 8px;
-  background: var(--color-bg-card);
+  background: var(--color-bg-card);*/
   display: grid;
   gap: 14px;
   box-sizing: border-box;
+  min-width: 0;
 }
 .auth-card h1 {margin: 0; font-family: var(--font-display);}
 .auth-captcha {
-  width: 304px;
+  width: min(304px, 100%);
   max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  transform-origin: center top;
+}
+
+@media (max-width: 420px) {
+  .auth-card {
+    width: 100%;
+    padding: 8px 0;
+    border-color: transparent;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .auth-card .ex3k-field:focus-within .ex3k-field__label,
+  .auth-card .ex3k-field:has(.ex3k-input:not(:placeholder-shown)) .ex3k-field__label {
+    background: var(--color-bg);
+  }
 }
 .auth-captcha--hidden {
   position: absolute;
