@@ -6,14 +6,30 @@ import {apiPost} from '@/config/api-config';
 import BlogPostCard, {type BlogListItem} from '@/components/blog/blog-post-card';
 import BlogSearchBar from '@/components/blog/blog-search-bar';
 import BlogCategoryFilter, {findCategoryLabel, type BlogCategory} from '@/components/blog/blog-category-filter';
+import BlogPagination, {buildHomeListHref} from '@/components/blog/blog-pagination';
+
+const PAGE_SIZE = 10;
+
+type PostListResponse = {
+  list: BlogListItem[];
+  totalCount?: number;
+  currentPage?: number;
+  lastPage?: number;
+  perPage?: number;
+};
 
 function BlogHomeContent() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('q')?.trim() || '';
   const categoryId = searchParams.get('categoryId')?.trim() || '';
+  const pageParam = Number(searchParams.get('page') || '1');
+  const page = Number.isFinite(pageParam) && pageParam > 0 ? Math.floor(pageParam) : 1;
+
   const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [totalPostCount, setTotalPostCount] = useState(0);
   const [posts, setPosts] = useState<BlogListItem[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -32,20 +48,39 @@ function BlogHomeContent() {
   useEffect(() => {
     setLoading(true);
     setError('');
-    const payload: {totalPage: number; keyword?: string; categoryId?: number} = {totalPage: 20};
+    const payload: {
+      pageSize: number;
+      totalPage: number;
+      page: number;
+      keyword?: string;
+      categoryId?: number;
+    } = {
+      pageSize: PAGE_SIZE,
+      totalPage: PAGE_SIZE,
+      page,
+    };
     if (keyword) payload.keyword = keyword;
     if (categoryId && Number.isFinite(Number(categoryId))) {
       payload.categoryId = Number(categoryId);
     }
 
-    apiPost<{list: BlogListItem[]}>('bl/get-post-list', payload)
-      .then((body) => setPosts(body.data.list || []))
+    apiPost<PostListResponse>('bl/get-post-list', payload)
+      .then((body) => {
+        const data = body.data;
+        setPosts(data.list || []);
+        setCurrentPage(data.currentPage ?? page);
+        setLastPage(Math.max(1, data.lastPage ?? 1));
+        setTotalCount(data.totalCount ?? data.list?.length ?? 0);
+      })
       .catch((e) => {
         setPosts([]);
+        setCurrentPage(1);
+        setLastPage(1);
+        setTotalCount(0);
         setError(e.message || '글을 불러오지 못했습니다.');
       })
       .finally(() => setLoading(false));
-  }, [keyword, categoryId]);
+  }, [keyword, categoryId, page]);
 
   const categoryName = useMemo(
     () => findCategoryLabel(categories, categoryId),
@@ -65,6 +100,9 @@ function BlogHomeContent() {
     return '아직 공개된 글이 없습니다.';
   }, [categoryName, keyword]);
 
+  const buildHref = (nextPage: number) =>
+    buildHomeListHref({page: nextPage, keyword, categoryId});
+
   return (
     <main className="blog-main">
       <div className="site-shell">
@@ -80,6 +118,11 @@ function BlogHomeContent() {
             ))}
             {!loading && !error && posts.length === 0 && <p className="muted empty-state">{emptyMessage}</p>}
           </section>
+          {!loading && !error && lastPage > 1 && (
+            <div className="blog-list-footer">
+              <BlogPagination currentPage={currentPage} lastPage={lastPage} buildHref={buildHref} />
+            </div>
+          )}
         </div>
       </div>
     </main>
