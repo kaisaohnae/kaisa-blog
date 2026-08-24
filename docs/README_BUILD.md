@@ -14,7 +14,6 @@ git push -u --force origin main
 rm -rf .git
 cd ..
 ```
-
 ## 방법2. (현재 사용중)
 
 ```
