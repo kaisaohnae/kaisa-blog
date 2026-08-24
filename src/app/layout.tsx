@@ -8,6 +8,7 @@ import '@/assets/css/styles.css';
 import '@/ui-components/styles/ui-components.css';
 import '@/ui-kit/kit.css';
 import MetaTags from '@/components/layout/meta-tags';
+import GoogleAnalytics from '@/components/layout/google-analytics';
 import {UiAlert, UiLoading, UiPopup} from '@/ui-components';
 import ThemeProvider from '@/components/layout/theme-provider';
 import {THEME_STORAGE_KEY} from '@/store/use-theme-store';
@@ -38,6 +39,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
   return (
     <html lang="ko" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <MetaTags />
+      <GoogleAnalytics />
       <body>
         <script
           dangerouslySetInnerHTML={{
