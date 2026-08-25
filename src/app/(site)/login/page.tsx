@@ -4,6 +4,7 @@ import Link from 'next/link';
 import {useRouter, useSearchParams} from 'next/navigation';
 import {Suspense, useEffect, useRef, useState} from 'react';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
+import {useT} from '@/i18n/locale-context';
 import {clearSavedMemberEmail, getSavedMemberEmail, saveMemberEmail} from '@/lib/auth-storage';
 import useMemberStore from '@/store/use-member-store';
 import {Ex3Button, Ex3Checkbox, Ex3Field, Ex3Input} from '@/ui-kit';
@@ -11,7 +12,8 @@ import {Ex3Button, Ex3Checkbox, Ex3Field, Ex3Input} from '@/ui-kit';
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const login = useMemberStore((s) => s.login);
+  const login = useMemberStore(s => s.login);
+  const t = useT();
   const recaptchaKeyRef = useRef(0);
   const [captchaKey, setCaptchaKey] = useState(0);
   const [email, setEmail] = useState('');
@@ -38,7 +40,7 @@ function LoginForm() {
     e.preventDefault();
     setError('');
     if (captchaRequired && !captcha) {
-      setError('로봇 방지 확인을 완료해 주세요.');
+      setError('Complete the robot check.');
       return;
     }
     try {
@@ -47,7 +49,7 @@ function LoginForm() {
       else clearSavedMemberEmail();
       router.push(searchParams.get('returnUrl') || '/');
     } catch (err: any) {
-      setError(err.message || '로그인에 실패했습니다.');
+      setError(err.message || 'Login failed.');
       resetCaptcha();
     }
   };
@@ -56,46 +58,47 @@ function LoginForm() {
     <main className="blog-main">
       <div className="site-shell">
         <form className="auth-card ex3-kit" onSubmit={onSubmit} autoComplete="on">
-          <p className="blog-hero__eyebrow">Member</p>
-          <h1>로그인</h1>
-          <Ex3Field label="이메일" htmlFor="login-email">
+          <p className="blog-hero__eyebrow">{t('Member')}</p>
+          <h1>{t('Login')}</h1>
+          <Ex3Field label={t('Email')} htmlFor="login-email">
             <Ex3Input
               id="login-email"
               name="username"
               type="email"
               autoComplete="username"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
             />
           </Ex3Field>
-          <Ex3Field label="비밀번호" htmlFor="login-pwd">
+          <Ex3Field label={t('Password')} htmlFor="login-pwd">
             <Ex3Input
               id="login-pwd"
               name="password"
               type="password"
               autoComplete="current-password"
               value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
+              onChange={e => setPwd(e.target.value)}
               required
               minLength={6}
             />
           </Ex3Field>
-          <Ex3Checkbox label="아이디 저장" checked={saveId} onChange={(e) => setSaveId(e.target.checked)} />
+          <Ex3Checkbox label={t('Save email')} checked={saveId} onChange={e => setSaveId(e.target.checked)} />
           {captchaRequired ? (
             <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
           ) : null}
-          {error && <p className="form-error">{error}</p>}
+          {error ? <p className="form-error">{t(error)}</p> : null}
           <Ex3Button type="submit" fullWidth>
-            로그인
+            {t('Login')}
           </Ex3Button>
           <p className="auth-card__hint">
-            계정이 없으면 <Link href="/register/">회원가입</Link>
+            {t('No account? ')}
+            <Link href="/register/">{t('Register')}</Link>
           </p>
           <p className="auth-card__hint">
-            <Link href="/find-id/">아이디 찾기</Link>
+            <Link href="/find-id/">{t('Find ID')}</Link>
             {' · '}
-            <Link href="/reset-password/">비밀번호 찾기</Link>
+            <Link href="/reset-password/">{t('Forgot password')}</Link>
           </p>
         </form>
       </div>

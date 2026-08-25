@@ -1,9 +1,11 @@
 'use client';
 
 import useThemeStore from '@/store/use-theme-store';
+import {useT} from '@/i18n/locale-context';
 
 export default function ThemeToggle() {
   const {theme, toggleTheme, hydrated} = useThemeStore();
+  const t = useT();
 
   if (!hydrated) {
     return (
@@ -20,7 +22,7 @@ export default function ThemeToggle() {
       type="button"
       className={`theme-toggle ${isDark ? 'theme-toggle--dark' : 'theme-toggle--light'}`}
       onClick={toggleTheme}
-      aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
+      aria-label={isDark ? t('Switch to light mode') : t('Switch to dark mode')}
       aria-pressed={isDark}
     >
       <span className="theme-toggle__track">

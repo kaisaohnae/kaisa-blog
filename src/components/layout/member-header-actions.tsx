@@ -3,6 +3,7 @@
 import {useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {apiPost} from '@/config/api-config';
+import {useT} from '@/i18n/locale-context';
 import type {MemberInfo} from '@/store/use-member-store';
 import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
 
@@ -28,12 +29,13 @@ function LogoutIcon() {
 function MemberSettingsLayer({
   open,
   member,
-  onClose,
+  onClose
 }: {
   open: boolean;
   member: MemberInfo;
   onClose: () => void;
 }) {
+  const t = useT();
   const [pwd, setPwd] = useState('');
   const [newPwd, setNewPwd] = useState('');
   const [newPwdConfirm, setNewPwdConfirm] = useState('');
@@ -63,17 +65,17 @@ function MemberSettingsLayer({
     setError('');
     setMessage('');
     if (newPwd !== newPwdConfirm) {
-      setError('새 비밀번호가 일치하지 않습니다.');
+      setError('New passwords do not match.');
       return;
     }
     try {
       const body = await apiPost('bl/change-password', {pwd, newPwd}, 'member');
-      setMessage(body.message || '비밀번호가 변경되었습니다.');
+      setMessage(body.message || 'Password changed.');
       setPwd('');
       setNewPwd('');
       setNewPwdConfirm('');
     } catch (err: any) {
-      setError(err.message || '변경에 실패했습니다.');
+      setError(err.message || 'Change failed.');
     }
   };
 
@@ -86,58 +88,58 @@ function MemberSettingsLayer({
         role="dialog"
         aria-modal="true"
         aria-labelledby="member-settings-title"
-        onClick={(event) => event.stopPropagation()}
+        onClick={event => event.stopPropagation()}
       >
         <h3 id="member-settings-title" className="ex3k-dialog__title">
-          회원 설정
+          {t('Account settings')}
         </h3>
         <dl className="member-settings-layer__info">
           <div>
-            <dt>닉네임</dt>
+            <dt>{t('Nickname')}</dt>
             <dd>{member.memberName}</dd>
           </div>
           <div>
-            <dt>이메일</dt>
+            <dt>{t('Email')}</dt>
             <dd>{member.email}</dd>
           </div>
         </dl>
         <form className="member-settings-layer__form" onSubmit={save}>
-          <p className="member-settings-layer__section">비밀번호 변경</p>
-          <Ex3Field label="현재 비밀번호" htmlFor="member-cur-pwd" required>
-            <Ex3Input id="member-cur-pwd" type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} required />
+          <p className="member-settings-layer__section">{t('Change password')}</p>
+          <Ex3Field label={t('Current password')} htmlFor="member-cur-pwd" required>
+            <Ex3Input id="member-cur-pwd" type="password" value={pwd} onChange={e => setPwd(e.target.value)} required />
           </Ex3Field>
-          <Ex3Field label="새 비밀번호" htmlFor="member-new-pwd" required>
+          <Ex3Field label={t('New password')} htmlFor="member-new-pwd" required>
             <Ex3Input
               id="member-new-pwd"
               type="password"
               value={newPwd}
-              onChange={(e) => setNewPwd(e.target.value)}
+              onChange={e => setNewPwd(e.target.value)}
               minLength={6}
               required
             />
           </Ex3Field>
-          <Ex3Field label="새 비밀번호 확인" htmlFor="member-new-pwd-confirm" required>
+          <Ex3Field label={t('Confirm new password')} htmlFor="member-new-pwd-confirm" required>
             <Ex3Input
               id="member-new-pwd-confirm"
               type="password"
               value={newPwdConfirm}
-              onChange={(e) => setNewPwdConfirm(e.target.value)}
+              onChange={e => setNewPwdConfirm(e.target.value)}
               minLength={6}
               required
             />
           </Ex3Field>
-          {message && <p className="auth-card__notice">{message}</p>}
-          {error && <p className="form-error">{error}</p>}
+          {message ? <p className="auth-card__notice">{t(message)}</p> : null}
+          {error ? <p className="form-error">{t(error)}</p> : null}
           <div className="ex3k-dialog__actions">
             <Ex3Button type="button" variant="ghost" onClick={onClose}>
-              닫기
+              {t('Close')}
             </Ex3Button>
-            <Ex3Button type="submit">변경</Ex3Button>
+            <Ex3Button type="submit">{t('Change')}</Ex3Button>
           </div>
         </form>
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }
 
@@ -147,6 +149,7 @@ type MemberHeaderActionsProps = {
 };
 
 export default function MemberHeaderActions({member, onLogout}: MemberHeaderActionsProps) {
+  const t = useT();
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   return (
@@ -156,12 +159,12 @@ export default function MemberHeaderActions({member, onLogout}: MemberHeaderActi
         <button
           type="button"
           className="header-member-bar__btn"
-          aria-label="회원 설정"
+          aria-label={t('Account settings')}
           onClick={() => setSettingsOpen(true)}
         >
           <SettingsIcon />
         </button>
-        <button type="button" className="header-member-bar__btn" aria-label="로그아웃" onClick={onLogout}>
+        <button type="button" className="header-member-bar__btn" aria-label={t('Logout')} onClick={onLogout}>
           <LogoutIcon />
         </button>
       </div>

@@ -28,7 +28,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: 'Kaisa Blog',
-  description: 'Kaisa Blog - 개발, 디자인, 기록',
+  description: 'Kaisa Blog - development, design, and notes',
   icons: {
     icon: '/img/common/favicon.svg',
     shortcut: '/img/common/favicon.svg',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
-    <html lang="ko" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${syne.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <head>
         <GoogleAdsense />
       </head>
