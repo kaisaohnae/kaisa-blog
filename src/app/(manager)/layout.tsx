@@ -19,6 +19,7 @@ const NAV = [
   {id: 'posts', href: '/manager/posts/', label: '글 관리'},
   {id: 'categories', href: '/manager/categories/', label: '카테고리'},
   {id: 'write', href: '/manager/posts/write/', label: '글쓰기'},
+  {id: 'requests', href: '/manager/requests/', label: '요청 관리'},
   {id: 'members', href: '/manager/members/', label: '회원 관리'},
   {id: 'users', href: '/manager/users/', label: '사용자 관리'},
   {id: 'issues', href: '/manager/issues/', label: '이슈탐색'},

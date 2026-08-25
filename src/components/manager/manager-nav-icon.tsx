@@ -74,6 +74,13 @@ export default function ManagerNavIcon({name, className}: ManagerNavIconProps) {
           <path d="M8.7 11h4.6M11 8.7v4.6" />
         </svg>
       );
+    case 'requests':
+      return (
+        <svg {...props}>
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          <path d="M8 8h8M8 12h5" />
+        </svg>
+      );
     case 'settings':
       return (
         <svg {...props}>
