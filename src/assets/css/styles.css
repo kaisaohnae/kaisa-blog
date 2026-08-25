@@ -12,7 +12,7 @@ body::-webkit-scrollbar-thumb {background: var(--color-scrollbar); border-radius
   --font-body: var(--font-body, 'DM Sans', sans-serif);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --header-height: 72px;
-  --layout-max: 960px;
+  --layout-max: 1100px;
   --layout-gutter: clamp(14px, 4vw, 48px);
 }
 
@@ -215,18 +215,32 @@ body {
   gap: 10px;
 }
 .site-footer__lang {
+  appearance: none;
+  display: inline;
+  margin: 0;
   padding: 0;
   border: 0;
+  border-radius: 0;
   background: transparent;
+  box-shadow: none;
   color: var(--color-text-muted);
   font-size: 12px;
+  font-weight: 400;
   letter-spacing: 0.04em;
   line-height: 1.2;
+  height: auto;
+  text-shadow: none;
   cursor: pointer;
   text-decoration: none;
+  vertical-align: baseline;
+  opacity: 1;
 }
 .site-footer__lang:hover {
   color: var(--color-text);
+  opacity: 1;
+}
+.site-footer__lang:active {
+  opacity: 1;
 }
 .site-footer__lang--active {
   color: var(--color-text);
