@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
 2:I[15539,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/0c2dsw9jztopz.js"],"default"]
-23:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
-24:"$Sreact.suspense"
+2d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+2e:"$Sreact.suspense"
 3:T13e2,# Laravel 11+와 현대 PHP 시작하기
 
 > 요약: Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.
@@ -2196,7 +2196,958 @@ DB/Redis까지 보려면 커스텀 health 체크 추가.
 이 문서들을 바탕으로, 도메인에 Filament·Inertia·Vapor·Event Sourcing 등을 선택적으로 더하면 실무 생산성이 빠르게 오른다.
 
 추가로 파고들 주제: Laravel Pennant(피처 플래그), Folio, Volt, Tenancy, DDD/Action 패턴, Arch 테스트, CI with GitHub Actions.
-d:T10fd,# React Native와 Expo로 시작하기
+d:Ta57,# Next.js App Router로 프로젝트 시작하기
+
+> 요약: App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.
+
+---
+
+## 1. 왜 App Router인가
+
+Pages Router도 동작하지만, 신규 프로젝트의 기본선은 **App Router**다.
+
+| 항목 | Pages Router | App Router |
+|------|--------------|------------|
+| 라우팅 | `pages/` | `app/` |
+| 레이아웃 | `_app` / `_document` | 중첩 `layout.tsx` |
+| 데이터 | `getServerSideProps` 등 | async Server Component / fetch |
+| 메타 | `next/head` | `metadata` / `generateMetadata` |
+
+실무 기본 조합: **Next.js 15/16 + TypeScript + App Router**.
+
+---
+
+## 2. 생성
+
+```bash
+npx create-next-app@latest my-app
+cd my-app
+npm run dev
+```
+
+권장 옵션: TypeScript, ESLint, App Router, `src/` 디렉터리(팀 취향).
+
+---
+
+## 3. 핵심 디렉터리
+
+```
+src/app/
+├── layout.tsx      # 루트 레이아웃
+├── page.tsx        # /
+├── posts/
+│   ├── page.tsx    # /posts
+│   └── [slug]/
+│       └── page.tsx
+└── globals.css
+```
+
+- `page.tsx` → 라우트 UI
+- `layout.tsx` → 공통 셸 (네비, 푸터)
+- `loading.tsx` / `error.tsx` → 구간별 UX
+- `not-found.tsx` → 404
+
+---
+
+## 4. 렌더 모드를 먼저 고른다
+
+| 모드 | 언제 |
+|------|------|
+| 정적(SSG/export) | 문서·마케팅·블로그 |
+| 동적(SSR) | 요청마다 다른 개인화 |
+| 혼합 | 목록은 정적, 일부만 동적 |
+
+GitHub Pages처럼 순수 정적이면 `output: 'export'`를 검토한다.  
+API Route·미들웨어·ISR 제약이 있으므로 **호스팅과 함께** 결정한다.
+
+```ts
+// next.config.ts
+const nextConfig = {
+  output: 'export', // 필요할 때만
+  trailingSlash: true,
+};
+```
+
+---
+
+## 5. 첫 페이지
+
+```tsx
+// app/page.tsx
+export default function HomePage() {
+  return (
+    <main>
+      <h1>Hello, Next.js</h1>
+    </main>
+  );
+}
+```
+
+루트 레이아웃:
+
+```tsx
+// app/layout.tsx
+export const metadata = {
+  title: 'My App',
+  description: 'Next.js app',
+};
+
+export default function RootLayout({children}: {children: React.ReactNode}) {
+  return (
+    <html lang="ko">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+---
+
+## 6. 체크리스트
+
+- [ ] App Router + TypeScript
+- [ ] `layout` / `page` 역할 분리
+- [ ] 정적 vs 동적 배포 전략 문서화
+- [ ] `trailingSlash`·베이스 경로를 호스팅과 맞춤
+
+---
+
+## 연습
+
+1. `create-next-app`으로 프로젝트를 만든다.
+2. `/about` 라우트와 공통 헤더 레이아웃을 추가한다.
+3. 정적 export가 필요한지 팀 기준으로 한 줄 결정한다.
+e:T8c3,# 라우팅·레이아웃·동적 세그먼트
+
+> 요약: 파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.
+
+---
+
+## 1. 기본 규칙
+
+| 파일 | URL |
+|------|-----|
+| `app/page.tsx` | `/` |
+| `app/posts/page.tsx` | `/posts` |
+| `app/posts/[slug]/page.tsx` | `/posts/:slug` |
+| `app/docs/[...slug]/page.tsx` | `/docs/*` |
+
+폴더 이름 = 경로. `page.tsx`가 있어야 그 경로가 공개된다.
+
+---
+
+## 2. 동적 세그먼트
+
+```tsx
+// app/posts/[slug]/page.tsx
+type Props = {params: Promise<{slug: string}>};
+
+export default async function PostPage({params}: Props) {
+  const {slug} = await params;
+  return <h1>{slug}</h1>;
+}
+```
+
+Next.js 15+에서는 **`params`가 Promise**일 수 있다. `await params`로 읽는다.  
+정적 HTML을 만들 때는 `generateStaticParams`와 함께 쓴다 — SEO와 충돌하지 않는다.
+
+```tsx
+export function generateStaticParams() {
+  return [{slug: 'hello'}, {slug: 'world'}];
+}
+```
+
+---
+
+## 3. 중첩 레이아웃
+
+```tsx
+// app/posts/layout.tsx
+export default function PostsLayout({children}: {children: React.ReactNode}) {
+  return (
+    <div>
+      <aside>카테고리</aside>
+      <section>{children}</section>
+    </div>
+  );
+}
+```
+
+레이아웃은 하위 이동 시 **리마운트되지 않는다**. 상태·스크롤 유지에 유리하다.
+
+Route Group `(site)` / `(manager)`로 URL 없이 레이아웃만 나눌 수 있다.
+
+```
+app/(site)/page.tsx      → /
+app/(manager)/manager/page.tsx → /manager
+```
+
+---
+
+## 4. Link와 이동
+
+```tsx
+import Link from 'next/link';
+
+<Link href="/posts/hello/">글 보기</Link>
+```
+
+`trailingSlash: true`면 링크도 `/posts/hello/`처럼 맞춘다.
+
+소프트 내비: `useRouter().push('/posts/')` (Client Component).
+
+---
+
+## 5. 병렬·인터셉트 (필요할 때)
+
+- `@folder` 병렬 슬롯: 대시보드 다중 패널
+- `(.)photo` 인터셉트: 모달 오버레이 UX
+
+입문 앱은 동적 세그먼트 + 레이아웃만으로 충분한 경우가 많다.
+
+---
+
+## 연습
+
+1. `/posts/[slug]`와 `generateStaticParams` 2개를 만든다.
+2. `(marketing)` / `(app)` 그룹으로 레이아웃을 나눈다.
+3. 모든 내부 링크에 trailing slash 정책을 맞춘다.
+f:T841,# Server Component와 Client Component
+
+> 요약: 기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.
+
+---
+
+## 1. 기본값 = Server
+
+`app/` 아래 컴포넌트는 기본적으로 **Server Component**다.
+
+할 수 있는 것:
+
+- DB·파일시스템·시크릿 접근
+- `async/await`로 데이터 로드
+- 번들에 안 실려 클라이언트 JS 감소
+
+할 수 없는 것:
+
+- `useState` / `useEffect`
+- 브라우저 API
+- 이벤트 핸들러 (`onClick` 등)
+
+---
+
+## 2. Client가 필요할 때
+
+파일 상단:
+
+```tsx
+'use client';
+
+import {useState} from 'react';
+
+export function Counter() {
+  const [n, setN] = useState(0);
+  return <button onClick={() => setN(n + 1)}>{n}</button>;
+}
+```
+
+규칙: **잎(leaf)에 가깝게** Client를 둔다.  
+페이지 전체를 `'use client'`로 열면 서버의 이점이 사라진다.
+
+---
+
+## 3. 경계 패턴
+
+```tsx
+// app/posts/page.tsx (Server)
+import {PostFilters} from './post-filters'; // client
+import {getPosts} from '@/lib/posts';
+
+export default async function PostsPage() {
+  const posts = await getPosts();
+  return (
+    <>
+      <PostFilters />
+      <PostList posts={posts} />
+    </>
+  );
+}
+```
+
+서버가 데이터를 가져와 직렬화 가능한 props로 Client에 넘긴다.  
+함수·클래스 인스턴스는 props로 넘기지 말 것.
+
+---
+
+## 4. 흔한 실수
+
+| 실수 | 대안 |
+|------|------|
+| 페이지 전체 client | 인터랙션만 분리 |
+| Server에서 `window` | Client로 이동 |
+| Client에서 `fs` | Server/lib에서 읽고 props |
+| 큰 차트 라이브러리를 레이아웃에 | 동적 import / 해당 페이지만 |
+
+---
+
+## 5. 구성 팁
+
+- 폼·테마 토글·검색창 → Client
+- 본문·메타·목록 데이터 → Server
+- 공유 훅이 client면 그걸 import한 트리도 client화됨에 주의
+
+---
+
+## 연습
+
+1. 서버 페이지 + 클라이언트 검색 입력 조합을 만든다.
+2. 불필요하게 `'use client'`인 파일을 찾아 서버로 되돌린다.
+3. Client bundle에 큰 의존성이 들어가는지 빌드 분석으로 확인한다.
+10:T966,# 데이터 페칭과 캐시 전략
+
+> 요약: Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.
+
+---
+
+## 1. 서버에서 가져오기
+
+```tsx
+async function getPost(slug: string) {
+  const res = await fetch(`https://api.example.com/posts/${slug}`, {
+    next: {revalidate: 60}, // 초 단위 ISR류 재검증
+  });
+  if (!res.ok) throw new Error('Failed');
+  return res.json();
+}
+
+export default async function Page({params}: {params: Promise<{slug: string}>}) {
+  const {slug} = await params;
+  const post = await getPost(slug);
+  return <article>{post.title}</article>;
+}
+```
+
+버전·설정에 따라 `fetch` 기본 캐시 동작이 달라질 수 있다.  
+**명시적 `cache` / `revalidate` / `tags`** 를 팀 표준으로 적는 편이 안전하다.
+
+---
+
+## 2. 옵션 치트시트
+
+| 옵션 | 의미 |
+|------|------|
+| `cache: 'force-cache'` | 가능하면 캐시 |
+| `cache: 'no-store'` | 매 요청 최신 |
+| `next: {revalidate: N}` | N초 후 재검증 |
+| `next: {tags: ['post']}` | 태그 단위 무효화 |
+
+```ts
+import {revalidateTag} from 'next/cache';
+revalidateTag('post');
+```
+
+정적 export(`output: 'export'`)에서는 런타임 재검증·서버 API가 제한된다.  
+**빌드 시점에 읽을 수 있는 데이터**(로컬 MD, 공개 API)가 맞다.
+
+---
+
+## 3. 로컬 파일·CMS
+
+```ts
+import fs from 'node:fs';
+import path from 'node:path';
+
+export function loadMarkdown(slug: string) {
+  const file = path.join(process.cwd(), 'content', `${slug}.md`);
+  return fs.readFileSync(file, 'utf8');
+}
+```
+
+블로그·문서 사이트는 MD/MDX + `generateStaticParams` 조합이 SEO·운영에 유리하다.
+
+---
+
+## 4. 클라이언트 페칭은 언제
+
+- 사용자별 실시간 데이터
+- 무한 스크롤·검색 타이핑
+- 브라우저 전용 API
+
+이 경우 React Query 등과 함께 Client Component에서 처리하고,  
+**초기 셸·SEO 본문**은 서버가 담당하는 편이 낫다.
+
+---
+
+## 5. 에러·로딩
+
+```
+app/posts/[slug]/loading.tsx
+app/posts/[slug]/error.tsx
+```
+
+구간별로 스피너·에러 UI를 두면 체감 품질이 올라간다.
+
+---
+
+## 연습
+
+1. `revalidate: 60` fetch와 `no-store` fetch를 비교한다.
+2. `content/` MD를 읽어 목록 페이지를 만든다.
+3. 정적 export 환경이면 “빌드 타임에만 읽기”로 데이터 소스를 정리한다.
+11:T836,# SSG·generateStaticParams·정적 export
+
+> 요약: 빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.
+
+---
+
+## 1. 왜 정적 HTML인가
+
+검색·공유 미리보기는 **첫 응답 HTML**을 본다.  
+빌드 때 본문이 들어 있으면 SEO에 유리하고, CDN 캐시도 쉽다.
+
+App Router에서 동적 경로를 정적화하려면:
+
+```tsx
+export function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({slug}));
+}
+```
+
+빌드 로그에 `/posts/[slug]`가 ● (SSG)로 찍히는지 확인한다.
+
+---
+
+## 2. params는 Promise여도 정적이다
+
+```tsx
+export default async function Page({params}: {params: Promise<{slug: string}>}) {
+  const {slug} = await params;
+  const post = getPost(slug);
+  if (!post) notFound();
+  return <Article post={post} />;
+}
+```
+
+`await params`는 Next API일 뿐, 페이지를 CSR로 바꾸지 않는다.  
+`generateStaticParams`가 있으면 **미리 렌더된 HTML**이 나온다.
+
+---
+
+## 3. `output: 'export'`
+
+```ts
+const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+};
+```
+
+결과물: `out/` 정적 파일 → GitHub Pages, S3, 일반 웹서버.
+
+제약 예:
+
+- 서버 Runtime Route Handler 제한
+- 미들웨어·ISR·On-demand revalidate 제한
+- 동적 서버만 가능한 기능 사용 불가
+
+가능하면: MD/API를 **빌드 시** 읽어 HTML 생성.
+
+---
+
+## 4. notFound와 누락 경로
+
+```tsx
+import {notFound} from 'next/navigation';
+
+if (!post) notFound();
+```
+
+`dynamicParams` 설정에 따라 빌드에 없는 slug 처리가 달라진다.  
+문서 사이트는 보통 **알려진 slug만** 빌드한다.
+
+---
+
+## 5. 체크리스트
+
+- [ ] 공개 글 slug가 `generateStaticParams`에 포함
+- [ ] 상세 HTML에 제목·본문·메타가 들어 있음
+- [ ] export면 서버 전용 기능 미사용
+- [ ] sitemap에 동일 URL 반영
+
+---
+
+## 연습
+
+1. 동적 `[slug]` 3개를 SSG로 빌드해 `out/` HTML을 연다.
+2. `await params`로 바꾼 뒤에도 정적 HTML인지 확인한다.
+3. export 모드에서 깨지는 API를 목록으로 적는다.
+12:T842,# Metadata·Open Graph·SEO 기본기
+
+> 요약: metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.
+
+---
+
+## 1. 정적 metadata
+
+```tsx
+// app/layout.tsx 또는 page.tsx
+export const metadata = {
+  title: {
+    default: 'Kaisa Blog',
+    template: '%s · Kaisa Blog',
+  },
+  description: '기술 블로그',
+};
+```
+
+하위 페이지 `title: 'Posts'` → `Posts · Kaisa Blog`.
+
+---
+
+## 2. 동적 generateMetadata
+
+```tsx
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{slug: string}>;
+}): Promise<Metadata> {
+  const {slug} = await params;
+  const post = getPost(slug);
+  if (!post) return {};
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {canonical: `https://blog.example.com/posts/${slug}/`},
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      url: `https://blog.example.com/posts/${slug}/`,
+    },
+  };
+}
+```
+
+목록·홈과 **실제 글 URL이 동일**해야 한다.  
+쿼리 스트링 상세(`/view?slug=`)는 메타·sitemap과 어긋나기 쉽다.
+
+---
+
+## 3. 같이 챙길 것
+
+| 항목 | 역할 |
+|------|------|
+| `robots.txt` | 크롤 허용/차단 |
+| `sitemap.xml` | URL 목록 |
+| JSON-LD | Article / Breadcrumb |
+| OG image | 공유 미리보기 CTR |
+| `lang` | `<html lang="ko">` |
+
+```ts
+// app/sitemap.ts
+export default function sitemap() {
+  return getAllSlugs().map((slug) => ({
+    url: `https://blog.example.com/posts/${slug}/`,
+    lastModified: new Date(),
+  }));
+}
+```
+
+---
+
+## 4. noindex가 맞는 곳
+
+- 로그인·회원가입
+- 관리자
+- 검색 결과 중복·내부 도구
+
+```ts
+robots: {index: false, follow: false}
+```
+
+---
+
+## 5. 실수
+
+- 모든 페이지 동일 title
+- canonical이 www/non-www와 불일치
+- 본문은 CSR인데 메타만 정적
+- trailing slash 불일치로 중복 URL
+
+---
+
+## 연습
+
+1. 글 상세에 `generateMetadata` + canonical을 붙인다.
+2. sitemap에 글 URL만 넣고 인증 페이지는 제외/noindex 한다.
+3. 카톡·슬랙에 URL을 붙여 OG 미리보기를 확인한다.
+13:T90d,# Route Handler와 Server Actions
+
+> 요약: 앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.
+
+---
+
+## 1. Route Handler
+
+```ts
+// app/api/hello/route.ts
+import {NextResponse} from 'next/server';
+
+export async function GET() {
+  return NextResponse.json({ok: true});
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  return NextResponse.json({received: body});
+}
+```
+
+용도: 웹훅, 외부 클라이언트 API, 서버 전용 프록시.
+
+`output: 'export'`에서는 **지원이 제한**된다. 정적 호스팅이면 백엔드를 별도(Cafe24 API 등)로 두는 편이 흔하다.
+
+---
+
+## 2. Server Actions
+
+```tsx
+// app/contact/actions.ts
+'use server';
+
+export async function sendMessage(formData: FormData) {
+  const email = String(formData.get('email') || '');
+  // DB / 메일 발송
+  return {ok: true};
+}
+```
+
+```tsx
+import {sendMessage} from './actions';
+
+export default function ContactForm() {
+  return (
+    <form action={sendMessage}>
+      <input name="email" type="email" required />
+      <button type="submit">보내기</button>
+    </form>
+  );
+}
+```
+
+폼·뮤테이션에 적합. 네트워크 왕복을 줄이고 progressive enhancement에 가깝다.
+
+---
+
+## 3. 언제 무엇을
+
+| 상황 | 선택 |
+|------|------|
+| 외부 앱이 호출 | Route Handler / 별도 API |
+| 같은 Next 앱 폼 | Server Action |
+| 순수 정적 사이트 | 외부 API + 클라이언트 또는 빌드 타임만 |
+
+---
+
+## 4. 보안
+
+- Action·Handler 모두 **입력 검증**
+- 쿠키·세션 확인
+- CSRF: Server Actions는 프레임워크 보호가 있으나 팀 정책 확인
+- 시크릿은 서버에만
+
+```ts
+import {z} from 'zod';
+const schema = z.object({email: z.string().email()});
+```
+
+---
+
+## 5. 재검증
+
+```ts
+'use server';
+import {revalidatePath} from 'next/cache';
+
+export async function updatePost(id: string) {
+  // ...
+  revalidatePath(`/posts/${id}`);
+}
+```
+
+정적 export 환경에서는 런타임 재검증이 어렵다. 배포 파이프라인으로 다시 빌드한다.
+
+---
+
+## 연습
+
+1. `POST /api/echo` Route Handler를 만든다 (Node 런타임 호스팅에서).
+2. 간단한 Server Action 폼을 만든다.
+3. 현재 배포가 export면 “Next API 없이” 설계도를 그린다.
+14:T951,# 미들웨어와 인증 경계
+
+> 요약: middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.
+
+---
+
+## 1. middleware.ts
+
+```ts
+// middleware.ts
+import {NextResponse} from 'next/server';
+import type {NextRequest} from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('session')?.value;
+  if (!token && request.nextUrl.pathname.startsWith('/manager')) {
+    return NextResponse.redirect(new URL('/login/', request.url));
+  }
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/manager/:path*'],
+};
+```
+
+엣지에서 빠르게 경로를 가른다. **무거운 DB 조회**는 넣지 않는 편이 좋다.
+
+---
+
+## 2. 인증 정보 위치
+
+| 저장 | 장점 | 주의 |
+|------|------|------|
+| HttpOnly 쿠키 | XSS에 상대적으로 안전 | CSRF·SameSite |
+| 메모리/상태 | XSS 표면 | 새로고침 시 소실 → 보통 쿠키와 조합 |
+| localStorage | 구현 쉬움 | XSS 위험 |
+
+SPA+별도 API면 쿠키 또는 Bearer.  
+Next 풀스택이면 쿠키 세션 + Server Component에서 검증이 흔하다.
+
+---
+
+## 3. 레이아웃에서 가드
+
+```tsx
+// app/manager/layout.tsx
+import {redirect} from 'next/navigation';
+import {getSession} from '@/lib/auth';
+
+export default async function ManagerLayout({children}: {children: React.ReactNode}) {
+  const session = await getSession();
+  if (!session) redirect('/login/');
+  return <div>{children}</div>;
+}
+```
+
+미들웨어(거친 차단) + 레이아웃/페이지(정확한 권한) **이중**이 안전하다.
+
+---
+
+## 4. 정적 export와의 관계
+
+`output: 'export'`면 미들웨어·서버 세션이 제한될 수 있다.  
+그 경우:
+
+- 관리자 인증은 **클라이언트 + API**
+- 또는 관리자만 별도 서버 호스팅
+
+공개 Posts는 정적, Issues/Manager는 API — 역할 분리와 잘 맞는다.
+
+---
+
+## 5. 체크리스트
+
+- [ ] matcher로 보호 경로 명시
+- [ ] 관리자 API는 서버에서 토큰 재검증
+- [ ] 로그인·회원가입 noindex
+- [ ] 로그아웃아웃 시 쿠키·캐시 정리
+
+---
+
+## 연습
+
+1. `/manager/*` 미들웨어 리다이렉트를 만든다 (Node 호스팅).
+2. 레이아웃에서 세션 없는 사용자를 `redirect` 한다.
+3. export 배포라면 클라이언트 가드 + API 401 처리 흐름을 문서화한다.
+15:T6c6,# 이미지·폰트·성능 최적화
+
+> 요약: next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.
+
+---
+
+## 1. next/image
+
+```tsx
+import Image from 'next/image';
+
+<Image
+  src="/hero.jpg"
+  alt="Hero"
+  width={1200}
+  height={630}
+  priority // LCP 후보만
+/>
+```
+
+이점: 리사이즈·lazy·현대 포맷.  
+`output: 'export'`면 `images.unoptimized: true` 또는 커스텀 로더가 필요할 수 있다.
+
+```ts
+images: {unoptimized: true}
+```
+
+원격 이미지는 `images.remotePatterns`에 도메인 허용.
+
+---
+
+## 2. next/font
+
+```tsx
+import {Geist, Geist_Mono} from 'next/font/google';
+
+const sans = Geist({subsets: ['latin'], variable: '--font-sans'});
+
+export default function RootLayout({children}: {children: React.ReactNode}) {
+  return (
+    <html className={sans.variable}>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+빌드 시 폰트를 받아 **레이아웃 시프트·외부 요청**을 줄인다.
+
+---
+
+## 3. 번들
+
+- 큰 라이브러리는 쓰는 페이지/Client에만
+- `dynamic(() => import(...), {ssr: false})` 는 정말 필요할 때만
+- barrel `index.ts` 과다 re-export 주의
+
+```bash
+npm run build
+# 라우트별 크기 확인
+```
+
+---
+
+## 4. 스트리밍·로딩 UI
+
+`loading.tsx`와 Suspense로 셸을 먼저 보내고 느린 구간을 채운다.  
+체감 LCP·INP에 도움이 된다.
+
+---
+
+## 5. 측정
+
+- Lighthouse / PageSpeed
+- Web Vitals (LCP, CLS, INP)
+- 실제 장치·3G 스로틀
+
+최적화 전후를 **같은 URL**로 비교한다.
+
+---
+
+## 연습
+
+1. 히어로에 `next/image` + `priority`를 적용한다.
+2. `next/font`로 본문 폰트를 옮긴다.
+3. export 모드면 `unoptimized` 필요 여부를 확인한다.
+16:T811,# 배포 — Vercel·정적 호스팅·체크리스트
+
+> 요약: Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.
+
+---
+
+## 1. 호스팅 선택
+
+| 대상 | 적합 |
+|------|------|
+| Vercel / 유사 PaaS | SSR·Action·ISR·미들웨어 풀활용 |
+| GitHub Pages / S3+CDN | `output: 'export'` 정적 사이트 |
+| Node 서버 / Docker | 커스텀 런타임·사내 인프라 |
+
+기능이 필요하면 호스팅을 먼저 고치고,  
+정적만 필요하면 export로 단순화한다.
+
+---
+
+## 2. 환경변수
+
+```env
+NEXT_PUBLIC_SITE_URL=https://blog.example.com
+NEXT_PUBLIC_API_URL=https://api.example.com
+```
+
+- `NEXT_PUBLIC_*` → 클라이언트 노출
+- 시크릿 → 서버 전용, 저장소 커밋 금지
+- 프리뷰/프로덕션 URL 분리
+
+---
+
+## 3. 정적 export 배포 흐름
+
+```bash
+npm run build
+# out/ 업로드
+```
+
+- `trailingSlash`와 서버/CDN 설정 일치
+- SPA 폴백보다 **실제 경로별 HTML**이 SEO에 유리
+- 커스텀 도메인 + HTTPS
+
+---
+
+## 4. 프로덕션 체크리스트
+
+### SEO
+
+- [ ] 글 URL이 정적 HTML
+- [ ] sitemap / robots
+- [ ] canonical·OG
+- [ ] 관리자·로그인 noindex
+
+### 신뢰성
+
+- [ ] 환경변수 누락 시 빌드 실패 또는 명확한 에러
+- [ ] 404/500 페이지
+- [ ] 롤백 방법 (이전 배포 재활성화)
+
+### 성능
+
+- [ ] 이미지·폰트 전략
+- [ ] 번들 이상치 없음
+- [ ] 캐시 헤더/CDN
+
+---
+
+## 5. CI 스케치
+
+1. lint / typecheck / test
+2. `next build`
+3. artifact 배포 또는 Vercel 연동
+4. 스모크: `/`, `/posts/`, 대표 글 URL
+
+---
+
+## 정리
+
+Next.js 배포는 “어디서 돌릴지”가 아키텍처다.  
+공개 문서·블로그는 정적 HTML, 동적 이슈·관리자는 API — 역할을 나누면 SEO와 운영을 동시에 가져가기 쉽다.
+
+---
+
+## 연습
+
+1. 현재 프로젝트가 Vercel형인지 export형인지 한 줄로 적는다.
+2. `NEXT_PUBLIC_SITE_URL`이 sitemap·OG에 쓰이는지 확인한다.
+3. 위 체크리스트를 통과/미통과로 표시한다.
+17:T10fd,# React Native와 Expo로 시작하기
 
 > 요약: 최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.
 
@@ -2383,7 +3334,7 @@ props·API 응답·네비게이션 파라미터에 타입을 걸면 앱 규모�
 2. 홈 화면에 이름·버전 텍스트를 표시한다.
 3. `app.json`의 `name`, `scheme`을 바꿔 반영을 확인한다.
 4. TypeScript로 `User` 타입과 표시 컴포넌트를 만든다.
-e:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
+18:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
 
 > 요약: RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.
 
@@ -2617,7 +3568,7 @@ Tailwind 문법을 쓰고 싶다면 NativeWind. 팀 합의 후 도입.
 2. `SafeAreaView` + 헤더/본문/하단 CTA 레이아웃을 구성한다.
 3. iOS/Android 그림자를 `Platform.select`로 맞춘다.
 4. `expo-image`로 원격 이미지를 표시한다.
-f:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
+19:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
 
 > 요약: `useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.
 
@@ -2820,7 +3771,7 @@ UI 로직이 반복되면 훅으로 추출. 다만 성급한 추상화는 피한
 2. zod + react-hook-form으로 회원가입 검증을 붙인다.
 3. `useRef`로 비밀번호 필드 자동 포커스를 구현한다.
 4. `useToggle` 커스텀 훅으로 비밀번호 표시/숨김을 만든다.
-10:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
+1a:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
 
 > 요약: 가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.
 
@@ -3038,7 +3989,7 @@ Universal Links / App Links는 EAS·도메인 검증이 필요 (운영 배포 �
 2. pull-to-refresh와 empty 상태를 구현한다.
 3. Expo Router로 탭 + 상세(`[id]`) 화면을 연결한다.
 4. 로그인 여부에 따라 `(auth)` / `(tabs)`로 분기한다.
-11:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
+1b:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
 
 > 요약: API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.
 
@@ -3252,7 +4203,7 @@ useQuery({
 2. 게시글 목록 `useQuery` + 에러/로딩 UI를 구현한다.
 3. 생성 `useMutation` 후 목록 invalidate.
 4. `useInfiniteQuery` + FlatList 무한 스크롤을 연결한다.
-12:T1644,# 인증·보안 저장소·디바이스 권한
+1c:T1644,# 인증·보안 저장소·디바이스 권한
 
 > 요약: 토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.
 
@@ -3492,7 +4443,7 @@ queryClient.clear();
 2. `AuthProvider` + Router 가드를 연결한다.
 3. 이미지 피커 권한 플로우(거절 안내 포함)를 만든다.
 4. (선택) 앱 포그라운드 복귀 시 생체 잠금을 추가한다.
-13:T127b,# 애니메이션·제스처·사용자 경험
+1d:T127b,# 애니메이션·제스처·사용자 경험
 
 > 요약: Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.
 
@@ -3692,7 +4643,7 @@ OS “동작 줄이기”가 켜져 있으면 큰 애니메이션을 스킵하�
 2. 스와이프로 삭제할 수 있는 리스트 행을 구현한다.
 3. 모달 화면 `presentation: 'modal'`을 추가한다.
 4. 주요 CTA에 햅틱 피드백을 붙인다.
-14:T1112,# 상태 관리·아키텍처·모듈화
+1e:T1112,# 상태 관리·아키텍처·모듈화
 
 > 요약: 전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.
 
@@ -3874,7 +4825,7 @@ npx expo install eslint prettier
 2. Zustand로 장바구니(또는 최근 검색어)를 persist한다.
 3. Theme Context로 라이트/다크를 토글한다.
 4. 라우트 단위 ErrorBoundary를 추가한다.
-15:Tf29,# 테스트·디버깅·성능
+1f:Tf29,# 테스트·디버깅·성능
 
 > 요약: 컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.
 
@@ -4045,7 +4996,7 @@ npx expo install @sentry/react-native
 2. SecureStore·fetch를 mock한 Auth 훅 테스트를 만든다.
 3. FlashList/FlatList 행을 memo로 최적화하고 스크롤을 비교한다.
 4. (선택) Maestro로 로그인→홈 플로우를 자동화한다.
-16:T14ef,# EAS 빌드·스토어 배포·OTA
+20:T14ef,# EAS 빌드·스토어 배포·OTA
 
 > 요약: EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.
 
@@ -4273,7 +5224,7 @@ eas update --branch production --message "Fix checkout crash"
 이 문서들을 바탕으로, 도메인에 맞게 결제·지도·오프라인(SQLite/WatermelonDB)·실시간(웹소켓)을 얹으면 실무 앱으로 확장할 수 있다.
 
 추가로 파고들 주제: Expo Modules API(커스텀 네이티브), Skia, React Native Web, Brownfield(기존 네이티브에 RN 삽입), Detox CI.
-17:T19ae,# Spring Boot 3와 Java 21 시작하기
+21:T19ae,# Spring Boot 3와 Java 21 시작하기
 
 > 요약: Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.
 
@@ -4535,7 +5486,7 @@ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 2. `GET /api/health-demo` 엔드포인트를 추가하고 record로 응답한다.
 3. `local` / `prod` 프로파일을 나누고, `prod`에서는 로그 레벨을 INFO로 맞춘다.
 4. Actuator `/actuator/health`가 200을 반환하는지 확인한다.
-18:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
+22:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
 
 > 요약: Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.
 
@@ -4805,7 +5756,7 @@ MyWorker myWorker() { return new MyWorker(); }
 1. `AppProperties(record)`를 만들고 `app.greeting` 값을 주입받아 API로 반환한다.
 2. `Clock` Bean을 등록하고 서비스에서 “지금 시각”을 출력한다. 테스트에서는 고정 `Clock`으로 교체한다.
 3. `local` 프로필에만 동작하는 `DevBanner` 컴포넌트를 만든다.
-19:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
+23:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
 
 > 요약: Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.
 
@@ -5078,7 +6029,7 @@ DTO/컨트롤러에 `@Operation`, `@Schema`로 계약을 보강하면 협업 비
 2. 존재하지 않는 상품 조회 시 `ProblemDetail` 404를 반환한다.
 3. `RestClient`로 공개 API(예: JSONPlaceholder)를 호출하는 서비스를 만든다.
 4. springdoc으로 Swagger UI에서 API를 확인한다.
-1a:T1b02,# Spring Data JPA와 영속성 계층
+24:T1b02,# Spring Data JPA와 영속성 계층
 
 > 요약: JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.
 
@@ -5385,7 +6336,7 @@ public abstract class BaseEntity {
 2. 게시글 목록 + 작성자 이메일을 **fetch join 또는 DTO 쿼리**로 N+1 없이 조회한다.
 3. Flyway로 테이블을 생성하고 `ddl-auto: validate`로 맞춘다.
 4. `open-in-view: false`에서 지연 로딩 예외가 안 나는지 확인한다.
-1b:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
+25:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
 
 > 요약: Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.
 
@@ -5642,7 +6593,7 @@ class UserControllerSecurityTest {
 2. 회원가입 시 BCrypt로 비밀번호를 저장한다.
 3. JWT 로그인 + Bearer 인증 필터를 구현하거나, Resource Server + issuer-uri로 구성한다.
 4. `@PreAuthorize`로 ADMIN 전용 삭제 API를 만든다.
-1c:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
+26:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
 
 > 요약: 단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.
 
@@ -5867,7 +6818,7 @@ Clock fixedClock() {
 2. `@WebMvcTest`로 validation 400 응답을 검증한다.
 3. Testcontainers PostgreSQL로 리포지토리/서비스 IT를 작성한다.
 4. `@ServiceConnection`으로 datasource 자동 연결을 확인해 본다.
-1d:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
+27:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
 
 > 요약: 헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.
 
@@ -6111,7 +7062,7 @@ Zipkin/Jaeger/Grafana Tempo 등으로 트레이스를 시각화한다.
 2. 비즈니스 카운터 `order.created`를 추가한다.
 3. 로그 패턴에 `traceId`를 넣고, 요청 로그와 연결해 본다.
 4. (선택) OpenTelemetry collector + Jaeger로 트레이스를 시각화한다.
-1e:T18ce,# 비동기·메시징·Virtual Threads
+28:T18ce,# 비동기·메시징·Virtual Threads
 
 > 요약: `@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.
 
@@ -6341,7 +7292,7 @@ Kafka는 로그/이벤트 스트림·재생에 강하고, Rabbit은 작업 큐�
 2. `OrderCreatedEvent` + `@TransactionalEventListener(AFTER_COMMIT)`로 메일 발송(로그로 대체)을 구현한다.
 3. (선택) Kafka Testcontainers로 produce/consume 통합 테스트를 작성한다.
 4. Outbox 테이블 설계를 문서/코드로 스케치한다.
-1f:T146f,# 캐시·Resilience·성능 최적화
+29:T146f,# 캐시·Resilience·성능 최적화
 
 > 요약: 캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.
 
@@ -6551,7 +7502,7 @@ public class IdempotencyKey { ... }
 2. 외부 호출에 Resilience4j CircuitBreaker + Retry를 적용한다.
 3. RestClient read timeout을 3초로 설정한다.
 4. 느린 목록 API를 키셋 페이지네이션으로 바꾼다.
-20:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
+2a:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
 
 > 요약: 로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.
 
@@ -6805,7 +7756,7 @@ Spring Boot의 최신 기법은 “새 어노테이션 암기”보다 **운영 
 이 문서들을 바탕으로, 팀 도메인에 맞게 깊이를 더하면 실무 Spring Boot 역량이 빠르게 쌓인다.
 
 추가로 파고들 주제: Spring Authorization Server, Spring Modulith, Spring Batch, R2DBC, Spring Cloud Gateway, GraalVM 심화, ArchUnit 기반 아키텍처 테스트.
-0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$L2",null,{"posts":[{"slug":"laravel-01","title":"Laravel 11+와 현대 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$3","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$4","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$5","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$6","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$7","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$8","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$9","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$a","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$b","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$c","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$e","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$f","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$10","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$11","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$12","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$13","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$14","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$15","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$16","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$17","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$18","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$19","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$1a","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$1b","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$1c","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$1d","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$1e","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$1f","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$20","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"}],"categories":[{"id":"laravel","label":"Laravel","count":10},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10}]}]],["$L21"],"$L22"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"Ugj2Me8MeBqDWxLWHN76t"}
-21:["$","script","script-0",{"src":"/_next/static/chunks/0c2dsw9jztopz.js","async":true}]
-22:["$","$L23",null,{"children":["$","$24",null,{"name":"Next.MetadataOutlet","children":"$@25"}]}]
-25:null
+0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$L2",null,{"posts":[{"slug":"laravel-01","title":"Laravel 11+와 현대 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$3","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$4","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$5","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$6","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$7","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$8","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$9","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$a","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$b","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$c","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"nextjs-01","title":"Next.js App Router로 프로젝트 시작하기","excerpt":"App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.","content":"$d","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":3,"order":1,"filePath":"nextjs/01-app-router-getting-started.md"},{"slug":"nextjs-02","title":"라우팅·레이아웃·동적 세그먼트","excerpt":"파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.","content":"$e","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":2,"filePath":"nextjs/02-routing-layouts-dynamic-segments.md"},{"slug":"nextjs-03","title":"Server Component와 Client Component","excerpt":"기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.","content":"$f","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":3,"filePath":"nextjs/03-server-client-components.md"},{"slug":"nextjs-04","title":"데이터 페칭과 캐시 전략","excerpt":"Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.","content":"$10","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":4,"filePath":"nextjs/04-data-fetching-caching.md"},{"slug":"nextjs-05","title":"SSG·generateStaticParams·정적 export","excerpt":"빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.","content":"$11","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":5,"filePath":"nextjs/05-ssg-generate-static-params-export.md"},{"slug":"nextjs-06","title":"Metadata·Open Graph·SEO 기본기","excerpt":"metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.","content":"$12","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":6,"filePath":"nextjs/06-metadata-open-graph-seo.md"},{"slug":"nextjs-07","title":"Route Handler와 Server Actions","excerpt":"앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.","content":"$13","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":7,"filePath":"nextjs/07-route-handlers-server-actions.md"},{"slug":"nextjs-08","title":"미들웨어와 인증 경계","excerpt":"middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.","content":"$14","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":8,"filePath":"nextjs/08-middleware-auth-boundaries.md"},{"slug":"nextjs-09","title":"이미지·폰트·성능 최적화","excerpt":"next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.","content":"$15","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":9,"filePath":"nextjs/09-image-font-performance.md"},{"slug":"nextjs-10","title":"배포 — Vercel·정적 호스팅·체크리스트","excerpt":"Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.","content":"$16","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":10,"filePath":"nextjs/10-deploy-vercel-static-checklist.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$17","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$18","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$19","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$1a","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$1b","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$1c","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$1d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$1e","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$1f","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$20","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$21","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$22","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$23","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$24","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$25","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$26","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$27","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$28","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$29","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$2a","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"}],"categories":[{"id":"laravel","label":"Laravel","count":10},{"id":"nextjs","label":"Next.js","count":10},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10}]}]],["$L2b"],"$L2c"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"YR8XEmou2GuDkjzPoP5hZ"}
+2b:["$","script","script-0",{"src":"/_next/static/chunks/0c2dsw9jztopz.js","async":true}]
+2c:["$","$L2d",null,{"children":["$","$2e",null,{"name":"Next.MetadataOutlet","children":"$@2f"}]}]
+2f:null
