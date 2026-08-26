@@ -40,11 +40,11 @@ const INITIAL: SourceState = {items: [], loading: false, error: ''};
 const SOURCE_META: Record<SourceKey, {title: string}> = {
   naver: {title: 'Naver'},
   daum: {title: 'Daum'},
-  google: {title: 'Google Trends KR/US (4시간)'},
+  google: {title: 'Google Trends US (4시간)'},
 };
 
 const COPY_FOOTER_PROMPT =
-  '블로그에 오늘 이슈다운거 다뤄볼만하거 3개만 작성하고 싶은데 마크다운 문법으로 복사되게 만들어주고 카테고리도 구분되게 알려줘';
+  'From today\'s US Google Trends issues, write 3 blog posts worth covering. Use markdown in content and assign a clear category for each.';
 
 function formatSourceList(title: string, items: IssueItem[]) {
   if (!items.length) {
@@ -67,7 +67,7 @@ function formatGoogleTrendSections(items: IssueItem[]) {
 
   const grouped = new Map<string, IssueItem[]>();
   for (const item of items) {
-    const geo = (item.geo || 'KR').toUpperCase();
+    const geo = (item.geo || 'US').toUpperCase();
     const list = grouped.get(geo) || [];
     list.push(item);
     grouped.set(geo, list);
@@ -357,7 +357,7 @@ function GoogleTrendsCard({
         <div className="manager-issues__box">
           <ol className="manager-issues__list manager-issues__list--google">
             {trends.map((item, index) => (
-              <li key={`${item.geo || 'KR'}-${item.title}-${index}`} className="manager-issues__trend-row">
+              <li key={`${item.geo || 'US'}-${item.title}-${index}`} className="manager-issues__trend-row">
                 <span className="manager-issues__rank">{item.rank ?? index + 1}</span>
                 {item.geo ? <span className="manager-issues__geo">{item.geo}</span> : null}
                 <span className="manager-issues__keyword">{item.title}</span>

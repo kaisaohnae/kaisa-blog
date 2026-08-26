@@ -12,8 +12,6 @@ export default function BlogPostPage({post}: {post: BlogPost}) {
           </Link>
           <div className="blog-post__meta">
             <span>{post.publishedAt}</span>
-            <span>{post.categoryLabel || post.category}</span>
-            <span>{post.readingMinutes} min read</span>
           </div>
           <h1 className="blog-post__title">{post.title}</h1>
           <PostContent content={post.content.trim()} />

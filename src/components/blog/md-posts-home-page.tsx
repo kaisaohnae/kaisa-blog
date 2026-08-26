@@ -23,8 +23,6 @@ function PostCard({post}: {post: BlogPost}) {
     <Link href={`/posts/${post.slug}/`} className="blog-card">
       <div className="blog-card__meta">
         <span className="blog-card__date">{post.publishedAt}</span>
-        <span className="blog-card__category">{post.categoryLabel}</span>
-        <span className="blog-card__views">{post.readingMinutes} min</span>
       </div>
       <h2 className="blog-card__title">{post.title}</h2>
       <p className="blog-card__excerpt">{post.excerpt}</p>
