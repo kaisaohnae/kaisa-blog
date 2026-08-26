@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /manager/
+
+Sitemap: https://blog.kaisa.co.kr/sitemap.xml
