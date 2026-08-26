@@ -1,0 +1,308 @@
+1:"$Sreact.fragment"
+2:I[79520,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],""]
+3:I[83661,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+4:I[39756,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+5:I[37457,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+6:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+14:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+:HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
+:HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
+:HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+0:{"P":null,"c":["","posts","spring-boot-02",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["posts",{"children":[["slug","spring-boot-02","d",null],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$Lf",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true,"nonce":"$undefined"}],"$L10"],"$L11"]}],{},null,false,null]},null,false,"$@12"]},null,false,"$@12"]},null,false,null]},null,false,null],"$L13",false]],"m":"$undefined","G":["$14",["$L15","$L16"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Ugj2Me8MeBqDWxLWHN76t"}
+17:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1b:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+10:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+1a:[]
+12:"$W1a"
+13:["$","$1","h",{"children":[null,["$","$L1b",null,{"children":"$L1c"}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1e"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+15:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+16:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1f:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+20:T1896,# IoC, Bean, Configuration — 현대적인 의존성 주입
+
+> 요약: Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.
+
+---
+
+---
+
+## 1. IoC와 DI란
+
+- **IoC (Inversion of Control)**: 객체 생성·생명주기 제어권을 프레임워크가 가진다.
+- **DI (Dependency Injection)**: 필요한 의존성을 외부에서 주입받는다.
+
+직접 `new`로 조립하면 테스트·교체가 어렵고, Spring은 **Bean**으로 등록된 객체를 조립한다.
+
+---
+
+## 2. Bean이 되는 방법
+
+| 방식 | 언제 쓰나 |
+|------|-----------|
+| `@Component` / `@Service` / `@Repository` / `@Controller` | 직접 만든 클래스 |
+| `@Bean` in `@Configuration` | 외부 라이브러리 객체, 세밀한 생성 제어 |
+| `@ConfigurationProperties` + `@EnableConfigurationProperties` | 타입 세이프 설정 바인딩 |
+| Auto-configuration | starter가 자동 등록 |
+
+```java
+@Service
+public class OrderService {
+    private final OrderRepository orderRepository;
+    private final PaymentClient paymentClient;
+
+    // 생성자 1개면 @Autowired 생략 가능 (권장)
+    public OrderService(OrderRepository orderRepository, PaymentClient paymentClient) {
+        this.orderRepository = orderRepository;
+        this.paymentClient = paymentClient;
+    }
+}
+```
+
+---
+
+## 3. 주입 방식 — 무엇을 쓸까
+
+### 생성자 주입 (권장, 사실상 표준)
+
+```java
+@Service
+@RequiredArgsConstructor  // Lombok 사용 시
+public class UserService {
+    private final UserRepository userRepository;
+}
+```
+
+장점:
+
+- `final`로 불변성 보장
+- 순환 의존성을 초기에 발견
+- 테스트에서 목 객체를 생성자로 넣기 쉬움
+
+### 필드 주입 (비권장)
+
+```java
+@Autowired
+private UserRepository userRepository; // 테스트·불변성 약함
+```
+
+### Setter 주입
+
+선택적 의존성일 때만 드물게 사용.
+
+---
+
+## 4. `@Configuration`과 `@Bean`
+
+```java
+@Configuration
+public class AppConfig {
+
+    @Bean
+    Clock clock() {
+        return Clock.systemUTC();
+    }
+
+    @Bean
+    ObjectMapper objectMapper() {
+        return JsonMapper.builder()
+                .addModule(new JavaTimeModule())
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .build();
+    }
+}
+```
+
+`@Configuration`은 CGLIB 프록시로 `@Bean` 메서드 간 호출을 싱글톤으로 보장한다.  
+가벼운 설정만 필요하면 `@Configuration(proxyBeanMethods = false)` (Lite mode)를 쓰면 기동이 빨라진다.
+
+---
+
+## 5. 스코프
+
+| Scope | 설명 |
+|-------|------|
+| `singleton` (기본) | 컨테이너당 1개 |
+| `prototype` | 요청마다 새 인스턴스 |
+| `request` | HTTP 요청당 1개 |
+| `session` | HTTP 세션당 1개 |
+
+```java
+@Bean
+@Scope("prototype")
+public ReportBuilder reportBuilder() {
+    return new ReportBuilder();
+}
+```
+
+대부분의 서비스/리포지토리는 **singleton**이면 충분하다. 상태를 필드에 두지 말 것.
+
+---
+
+## 6. 조건부 Bean (실무에서 자주 씀)
+
+```java
+@Bean
+@ConditionalOnProperty(name = "app.mail.enabled", havingValue = "true")
+MailSender mailSender(MailProperties props) {
+    return new SmtpMailSender(props);
+}
+
+@Bean
+@ConditionalOnMissingBean(MailSender.class)
+MailSender noopMailSender() {
+    return new NoopMailSender();
+}
+```
+
+기타:
+
+- `@ConditionalOnClass`
+- `@ConditionalOnWebApplication`
+- `@Profile("local")`
+
+```java
+@Service
+@Profile("!prod")
+public class FakePaymentClient implements PaymentClient { ... }
+```
+
+---
+
+## 7. `@ConfigurationProperties` (하드코딩 설정 금지)
+
+```java
+@ConfigurationProperties(prefix = "app.payment")
+public record PaymentProperties(
+        String baseUrl,
+        Duration timeout,
+        int maxRetries
+) {}
+```
+
+```yaml
+app:
+  payment:
+    base-url: https://pay.example.com
+    timeout: 3s
+    max-retries: 2
+```
+
+```java
+@Configuration
+@EnableConfigurationProperties(PaymentProperties.class)
+public class PaymentConfig {
+
+    @Bean
+    PaymentClient paymentClient(PaymentProperties props, RestClient.Builder builder) {
+        return new HttpPaymentClient(
+                builder.baseUrl(props.baseUrl())
+                        .build(),
+                props
+        );
+    }
+}
+```
+
+Boot 3에서는 **record + `@ConfigurationProperties`** 조합이 깔끔하다.  
+IDE 자동완성을 위해 `spring-boot-configuration-processor`를 annotationProcessor로 추가하면 좋다.
+
+---
+
+## 8. 인터페이스 기반 설계
+
+```java
+public interface NotificationPort {
+    void send(String to, String message);
+}
+
+@Service
+public class EmailNotificationAdapter implements NotificationPort { ... }
+```
+
+테스트:
+
+```java
+@SpringBootTest
+@Import(TestNotificationConfig.class)
+class OrderServiceIT { ... }
+```
+
+의존성을 구현체가 아닌 **포트(인터페이스)** 에 두면 교체·테스트가 쉬워진다.
+
+---
+
+## 9. 순환 의존성
+
+Boot 2에서는 경고, Boot 3에서는 **기본적으로 금지**에 가깝다.
+
+해결:
+
+1. 설계 분리 (공통 로직을 제3 서비스로)
+2. 이벤트(`ApplicationEventPublisher`)로 결합도 낮추기
+3. `@Lazy`는 최후 수단
+
+---
+
+## 10. 생명주기 콜백
+
+```java
+@Component
+public class CacheWarmer {
+
+    @PostConstruct
+    void warm() {
+        // 기동 직후
+    }
+
+    @PreDestroy
+    void shutdown() {
+        // 종료 직전
+    }
+}
+```
+
+또는:
+
+```java
+@Bean(initMethod = "start", destroyMethod = "stop")
+MyWorker myWorker() { return new MyWorker(); }
+```
+
+리소스 정리는 `destroyMethod` / `@PreDestroy` / `DisposableBean`을 명확히.
+
+---
+
+## 11. 최신 기법 요약
+
+- 생성자 주입 + `final`이 기본
+- 설정은 `@ConfigurationProperties`로 타입 세이프하게
+- 외부 연동 Bean은 `@Configuration`에서 조립
+- `@Profile` / `@ConditionalOn*`으로 환경별 구현 교체
+- 순환 참조는 구조로 해결
+- Lite `@Configuration(proxyBeanMethods = false)`로 기동 최적화 가능
+
+---
+
+## 연습
+
+1. `AppProperties(record)`를 만들고 `app.greeting` 값을 주입받아 API로 반환한다.
+2. `Clock` Bean을 등록하고 서비스에서 “지금 시각”을 출력한다. 테스트에서는 고정 `Clock`으로 교체한다.
+3. `local` 프로필에만 동작하는 `DevBanner` 컴포넌트를 만든다.f:[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"IoC, Bean, Configuration — 현대적인 의존성 주입\",\"description\":\"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/spring-boot-02/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"spring-boot\",\"keywords\":\"spring-boot\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"IoC, Bean, Configuration — 현대적인 의존성 주입\",\"item\":\"https://blog.kaisa.co.kr/posts/spring-boot-02/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L6",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":[["$","span",null,{"children":"2026-08-26"}],["$","span",null,{"children":"Spring Boot"}],["$","span",null,{"children":[6," min read"]}]]}],["$","h1",null,{"className":"blog-post__title","children":"IoC, Bean, Configuration — 현대적인 의존성 주입"}],["$","$L1f",null,{"content":"$20"}]]}]}]}]]
+1c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+21:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+19:null
+1e:[["$","title","0",{"children":"IoC, Bean, Configuration — 현대적인 의존성 주입 · Kaisa Blog"}],["$","meta","1",{"name":"description","content":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/posts/spring-boot-02/"}],["$","meta","6",{"property":"og:title","content":"IoC, Bean, Configuration — 현대적인 의존성 주입 · Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/posts/spring-boot-02/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"IoC, Bean, Configuration — 현대적인 의존성 주입 · Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L21","18",{}]]

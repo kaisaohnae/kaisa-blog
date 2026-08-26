@@ -1,0 +1,263 @@
+1:"$Sreact.fragment"
+2:I[79520,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],""]
+3:I[83661,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+4:I[39756,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+5:I[37457,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+6:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+14:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+:HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
+:HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
+:HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+0:{"P":null,"c":["","posts","spring-boot-06",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["posts",{"children":[["slug","spring-boot-06","d",null],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$Lf",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true,"nonce":"$undefined"}],"$L10"],"$L11"]}],{},null,false,null]},null,false,"$@12"]},null,false,"$@12"]},null,false,null]},null,false,null],"$L13",false]],"m":"$undefined","G":["$14",["$L15","$L16"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Ugj2Me8MeBqDWxLWHN76t"}
+17:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1b:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+10:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+1a:[]
+12:"$W1a"
+13:["$","$1","h",{"children":[null,["$","$L1b",null,{"children":"$L1c"}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1e"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+15:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+16:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1f:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+20:T16cd,# 테스트 — JUnit 5, MockMvc, Testcontainers
+
+> 요약: 단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.
+
+---
+
+---
+
+## 1. 테스트 피라미드 (Spring 관점)
+
+| 종류 | 도구 | 속도 | 목적 |
+|------|------|------|------|
+| 단위 | JUnit + Mockito | 매우 빠름 | 도메인/서비스 로직 |
+| 슬라이스 | `@WebMvcTest`, `@DataJpaTest` | 빠름 | 계층 경계 |
+| 통합 | `@SpringBootTest` + Testcontainers | 느림 | 실제 조립 검증 |
+| E2E | RestAssured / 브라우저 | 가장 느림 | 핵심 시나리오만 |
+
+모든 것을 `@SpringBootTest`로 올리면 CI가 느려지고 실패 원인 추적이 어렵다.
+
+---
+
+## 2. 단위 테스트
+
+```java
+class OrderServiceTest {
+
+    @Test
+    void rejectsEmptyItems() {
+        OrderRepository repo = mock(OrderRepository.class);
+        OrderService service = new OrderService(repo);
+
+        assertThatThrownBy(() -> service.create(new CreateOrderRequest(List.of())))
+                .isInstanceOf(InvalidOrderException.class);
+    }
+}
+```
+
+순수 도메인/서비스는 Spring 컨텍스트 없이 테스트하는 것이 최선이다.
+
+---
+
+## 3. `@WebMvcTest` — 컨트롤러 슬라이스
+
+```java
+@WebMvcTest(UserController.class)
+@Import(GlobalExceptionHandler.class)
+class UserControllerTest {
+
+    @Autowired MockMvc mockMvc;
+    @MockitoBean UserService userService; // Boot 3.4+ (이전: @MockBean)
+
+    @Test
+    void createUser() throws Exception {
+        given(userService.create(any()))
+                .willReturn(new UserResponse(1L, "a@b.com", "Ann"));
+
+        mockMvc.perform(post("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {"email":"a@b.com","name":"Ann"}
+                            """))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.email").value("a@b.com"));
+    }
+}
+```
+
+Security가 켜져 있으면 `@AutoConfigureMockMvc(addFilters = false)` 또는 `@WithMockUser`를 사용한다.
+
+---
+
+## 4. `@DataJpaTest` — 영속성 슬라이스
+
+```java
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Import(TestcontainersConfig.class)
+class UserRepositoryTest {
+
+    @Autowired UserRepository userRepository;
+
+    @Test
+    void findByEmail() {
+        userRepository.save(User.create("a@b.com", "Ann"));
+
+        assertThat(userRepository.findByEmail("a@b.com")).isPresent();
+    }
+}
+```
+
+H2로 대체하면 운영 DB(PostgreSQL)와 方言 차이가 난다. **중요한 쿼리는 Testcontainers + 실제 DB**가 안전하다.
+
+---
+
+## 5. Testcontainers (최신 표준)
+
+의존성:
+
+```xml
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-testcontainers</artifactId>
+  <scope>test</scope>
+</dependency>
+<dependency>
+  <groupId>org.testcontainers</groupId>
+  <artifactId>postgresql</artifactId>
+  <scope>test</scope>
+</dependency>
+<dependency>
+  <groupId>org.testcontainers</groupId>
+  <artifactId>junit-jupiter</artifactId>
+  <scope>test</scope>
+</dependency>
+```
+
+```java
+@TestConfiguration(proxyBeanMethods = false)
+public class TestcontainersConfig {
+
+    @Bean
+    @ServiceConnection
+    PostgreSQLContainer<?> postgres() {
+        return new PostgreSQLContainer<>("postgres:16-alpine");
+    }
+}
+```
+
+```java
+@SpringBootTest
+@Import(TestcontainersConfig.class)
+class UserServiceIT {
+
+    @Autowired UserService userService;
+
+    @Test
+    void createAndGet() {
+        UserResponse created = userService.create(new CreateUserRequest("a@b.com", "Ann"));
+        assertThat(userService.get(created.id()).email()).isEqualTo("a@b.com");
+    }
+}
+```
+
+`@ServiceConnection`(Boot 3.1+)이 datasource URL을 자동 연결한다. 수동 `@DynamicPropertySource`보다 간결하다.
+
+Kafka, Redis, LocalStack도 동일 패턴으로 붙일 수 있다.
+
+---
+
+## 6. `@SpringBootTest` + MockMvc / TestRestTemplate / RestTestClient
+
+```java
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class ApiIT {
+
+    @Autowired MockMvc mockMvc; // @AutoConfigureMockMvc 필요
+    // 또는
+    @Autowired TestRestTemplate restTemplate;
+}
+```
+
+Boot 3.4+에서는 `RestTestClient`도 선택지로 떠올랐다. 팀 표준에 맞춘다.
+
+---
+
+## 7. 테스트 데이터
+
+- 테스트마다 독립: `@Transactional` 롤백 또는 컨테이너 재사용 + 클리닝
+- Fixture 빌더 / 팩토리 메서드
+- `@Sql("/test-data.sql")`는 간단할 때만
+
+```java
+static User user(String email) {
+    return User.create(email, email.split("@")[0]);
+}
+```
+
+---
+
+## 8. AssertJ & 가독성
+
+```java
+assertThat(result)
+    .extracting(UserResponse::email, UserResponse::name)
+    .containsExactly("a@b.com", "Ann");
+```
+
+JUnit `assertEquals`보다 AssertJ 체인이 실패 메시지가 좋다.
+
+---
+
+## 9. 비동기·시간·외부 API
+
+| 대상 | 기법 |
+|------|------|
+| 시간 | `Clock` Bean 주입 후 고정 |
+| 외부 HTTP | WireMock / MockWebServer |
+| 메시지 | Testcontainers Kafka / Embedded |
+| 파일 | `@TempDir` |
+
+```java
+@Bean
+@Primary
+Clock fixedClock() {
+    return Clock.fixed(Instant.parse("2026-01-01T00:00:00Z"), ZoneOffset.UTC);
+}
+```
+
+---
+
+## 10. CI에서 안정적으로
+
+- Docker 사용 가능 러너 필요 (Testcontainers)
+- 컨테이너 재사용: `testcontainers.reuse.enable=true` (로컬)
+- 병렬 테스트 시 포트/리소스 충돌 주의
+- flaky 테스트는 재시도로 숨기지 말고 원인 제거
+
+---
+
+## 연습
+
+1. 서비스 단위 테스트 2개 작성 (성공/실패).
+2. `@WebMvcTest`로 validation 400 응답을 검증한다.
+3. Testcontainers PostgreSQL로 리포지토리/서비스 IT를 작성한다.
+4. `@ServiceConnection`으로 datasource 자동 연결을 확인해 본다.f:[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"테스트 — JUnit 5, MockMvc, Testcontainers\",\"description\":\"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/spring-boot-06/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"spring-boot\",\"keywords\":\"spring-boot\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"테스트 — JUnit 5, MockMvc, Testcontainers\",\"item\":\"https://blog.kaisa.co.kr/posts/spring-boot-06/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L6",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":[["$","span",null,{"children":"2026-08-26"}],["$","span",null,{"children":"Spring Boot"}],["$","span",null,{"children":[5," min read"]}]]}],["$","h1",null,{"className":"blog-post__title","children":"테스트 — JUnit 5, MockMvc, Testcontainers"}],["$","$L1f",null,{"content":"$20"}]]}]}]}]]
+1c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+21:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+19:null
+1e:[["$","title","0",{"children":"테스트 — JUnit 5, MockMvc, Testcontainers · Kaisa Blog"}],["$","meta","1",{"name":"description","content":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/posts/spring-boot-06/"}],["$","meta","6",{"property":"og:title","content":"테스트 — JUnit 5, MockMvc, Testcontainers · Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/posts/spring-boot-06/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"테스트 — JUnit 5, MockMvc, Testcontainers · Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L21","18",{}]]

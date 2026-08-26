@@ -1,0 +1,243 @@
+1:"$Sreact.fragment"
+2:I[79520,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],""]
+3:I[83661,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+4:I[39756,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+5:I[37457,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+6:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+14:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+:HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
+:HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
+:HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+0:{"P":null,"c":["","posts","laravel-05",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["posts",{"children":[["slug","laravel-05","d",null],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$Lf",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true,"nonce":"$undefined"}],"$L10"],"$L11"]}],{},null,false,null]},null,false,"$@12"]},null,false,"$@12"]},null,false,null]},null,false,null],"$L13",false]],"m":"$undefined","G":["$14",["$L15","$L16"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Ugj2Me8MeBqDWxLWHN76t"}
+17:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1b:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+10:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+1a:[]
+12:"$W1a"
+13:["$","$1","h",{"children":[null,["$","$L1b",null,{"children":"$L1c"}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1e"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+15:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+16:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1f:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+20:T1290,# 인증·인가 — Sanctum, Policy, Gate
+
+> 요약: 세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.
+
+---
+
+---
+
+## 1. 인증 vs 인가
+
+- **인증(Authentication)**: 누구인가
+- **인가(Authorization)**: 무엇을 할 수 있는가
+
+Laravel은 인증 스캐폴딩 + Gate/Policy 인가가 강점이다.
+
+---
+
+## 2. 무엇을 설치할까
+
+| 상황 | 추천 |
+|------|------|
+| Blade 모노리스 | Breeze (Blade) / Fortify |
+| SPA (Vue/React) + 같은 도메인 | Breeze + Sanctum (쿠키) |
+| 모바일/외부 API | Sanctum Personal Access Token |
+| 풀옵션 팀 기능 | Jetstream |
+| 관리자 패널 | Filament (별도 가드) |
+
+일반적인 API: **Sanctum**이 가장 무난하다. Passport는 OAuth2 풀스펙이 필요할 때.
+
+```bash
+composer require laravel/sanctum
+php artisan install:api   # Laravel 버전에 따라
+# 또는 breeze
+composer require laravel/breeze --dev
+php artisan breeze:install
+```
+
+---
+
+## 3. 세션 기반 (웹)
+
+```php
+public function store(LoginRequest $request)
+{
+    if (! Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
+        throw ValidationException::withMessages([
+            'email' => '자격 증명이 올바르지 않습니다.',
+        ]);
+    }
+    $request->session()->regenerate();
+    return redirect()->intended('/dashboard');
+}
+```
+
+로그아웃 시 `invalidate` + `regenerateToken`으로 세션 고정 공격 완화.
+
+비밀번호:
+
+```php
+'password' => ['required', 'confirmed', Password::defaults()],
+```
+
+`AppServiceProvider`에서 `Password::defaults()` 정책을 강화한다.
+
+---
+
+## 4. Sanctum 토큰 API
+
+```php
+// 로그인
+$user = User::where('email', $request->email)->first();
+
+if (! $user || ! Hash::check($request->password, $user->password)) {
+    throw ValidationException::withMessages(['email' => 'Invalid credentials']);
+}
+
+$token = $user->createToken('mobile', ['posts:read', 'posts:write'])->plainTextToken;
+
+return ['token' => $token];
+```
+
+```php
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('posts', PostController::class);
+    Route::get('/me', fn (Request $r) => new UserResource($r->user()));
+});
+```
+
+클라이언트: `Authorization: Bearer {token}`
+
+토큰 abilities:
+
+```php
+if ($request->user()->tokenCan('posts:write')) { ... }
+```
+
+로그아웃/철회:
+
+```php
+$request->user()->currentAccessToken()->delete();
+```
+
+---
+
+## 5. SPA 인증 (쿠키 + CSRF)
+
+Sanctum SPA 방식:
+
+1. 프론트와 API가 공유 가능한 도메인/서브도메인
+2. `/sanctum/csrf-cookie` 선호출
+3. 로그인 후 쿠키 세션으로 `auth:sanctum`
+
+CORS·`SANCTUM_STATEFUL_DOMAINS`·`SESSION_DOMAIN` 설정이 핵심이다.  
+토큰을 localStorage에 두는 방식보다 **HttpOnly 쿠키 세션**이 XSS에 유리한 경우가 많다.
+
+---
+
+## 6. Gate와 Policy
+
+```bash
+php artisan make:policy PostPolicy --model=Post
+```
+
+```php
+class PostPolicy
+{
+    public function viewAny(User $user): bool
+    {
+        return true;
+    }
+
+    public function view(?User $user, Post $post): bool
+    {
+        return $post->isPublished() || $user?->id === $post->user_id;
+    }
+
+    public function update(User $user, Post $post): bool
+    {
+        return $user->id === $post->user_id || $user->isAdmin();
+    }
+
+    public function delete(User $user, Post $post): bool
+    {
+        return $this->update($user, $post);
+    }
+}
+```
+
+컨트롤러:
+
+```php
+$this->authorize('update', $post);
+// 또는
+Gate::authorize('update', $post);
+```
+
+라우트:
+
+```php
+Route::put('/posts/{post}', ...)->middleware('can:update,post');
+```
+
+Blade:
+
+```blade
+@can('update', $post)
+    <a href="...">수정</a>
+@endcan
+```
+
+Form Request `authorize()`와 Policy를 맞춰 두면 구멍이 줄어든다.
+
+---
+
+## 7. 역할·권한 패키지
+
+복잡하면 Spatie Laravel Permission:
+
+- `role`: admin, editor
+- `permission`: posts.publish
+- 팀/가드 단위 분리 가능
+
+처음부터 역할만 문자열로 `if ($user->role === 'admin')` 난립하면 나중에 고통스럽다.  
+Policy 안에서 role/permission을 읽게 중앙화하자.
+
+---
+
+## 8. 보안 체크리스트
+
+- [ ] `APP_DEBUG=false` (운영)
+- [ ] HTTPS, Secure/HttpOnly/SameSite 쿠키
+- [ ] 로그인 throttle
+- [ ] 비밀번호 해시(bcrypt/argon2) — 직접 해시 금지, `Hash` 파사드
+- [ ] Mass assignment / IDOR: Policy로 소유권 검사
+- [ ] 이메일 인증·비밀번호 재설정 토큰 만료
+- [ ] 관리자 경로 추가 보호
+
+---
+
+## 연습
+
+1. Sanctum으로 로그인/토큰 발급/보호 API를 만든다.
+2. `PostPolicy`로 본인 글만 수정·삭제 가능하게 한다.
+3. 로그인 라우트에 `throttle`을 건다.
+4. `/me` Resource 응답을 구현한다.f:[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"인증·인가 — Sanctum, Policy, Gate\",\"description\":\"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/laravel-05/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"laravel\",\"keywords\":\"laravel\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"인증·인가 — Sanctum, Policy, Gate\",\"item\":\"https://blog.kaisa.co.kr/posts/laravel-05/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L6",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":[["$","span",null,{"children":"2026-08-26"}],["$","span",null,{"children":"Laravel"}],["$","span",null,{"children":[5," min read"]}]]}],["$","h1",null,{"className":"blog-post__title","children":"인증·인가 — Sanctum, Policy, Gate"}],["$","$L1f",null,{"content":"$20"}]]}]}]}]]
+1c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+21:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+19:null
+1e:[["$","title","0",{"children":"인증·인가 — Sanctum, Policy, Gate · Kaisa Blog"}],["$","meta","1",{"name":"description","content":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/posts/laravel-05/"}],["$","meta","6",{"property":"og:title","content":"인증·인가 — Sanctum, Policy, Gate · Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/posts/laravel-05/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"인증·인가 — Sanctum, Policy, Gate · Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L21","18",{}]]

@@ -1,0 +1,345 @@
+1:"$Sreact.fragment"
+2:I[79520,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],""]
+3:I[83661,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+4:I[39756,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+5:I[37457,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+6:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+14:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+:HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
+:HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
+:HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+0:{"P":null,"c":["","posts","spring-boot-04",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["posts",{"children":[["slug","spring-boot-04","d",null],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$Lf",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true,"nonce":"$undefined"}],"$L10"],"$L11"]}],{},null,false,null]},null,false,"$@12"]},null,false,"$@12"]},null,false,null]},null,false,null],"$L13",false]],"m":"$undefined","G":["$14",["$L15","$L16"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Ugj2Me8MeBqDWxLWHN76t"}
+17:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1b:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+10:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+1a:[]
+12:"$W1a"
+13:["$","$1","h",{"children":[null,["$","$L1b",null,{"children":"$L1c"}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1e"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+15:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+16:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1f:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+20:T1b01,# Spring Data JPA와 영속성 계층
+
+> 요약: JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.
+
+---
+
+---
+
+## 1. 계층 역할
+
+| 계층 | 책임 |
+|------|------|
+| Entity | 비즈니스 상태와 불변식 |
+| Repository | 영속성 추상화 |
+| Service (`@Transactional`) | 유스케이스 단위 트랜잭션 |
+| Controller | HTTP만 |
+
+---
+
+## 2. 엔티티 기본 패턴
+
+```java
+@Entity
+@Table(name = "users")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 50)
+    private String name;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @LastModifiedDate
+    private Instant updatedAt;
+
+    public static User create(String email, String name) {
+        User user = new User();
+        user.email = email;
+        user.name = name;
+        return user;
+    }
+
+    public void rename(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("name required");
+        }
+        this.name = name;
+    }
+}
+```
+
+핵심:
+
+- 기본 생성자는 `protected`
+- setter 남발 금지 — 의미 있는 도메인 메서드 제공
+- equals/hashCode는 **식별자 기준**으로 신중히 ( Lombok `@EqualsAndHashCode` 무분별 사용 주의)
+
+Auditing 활성화:
+
+```java
+@Configuration
+@EnableJpaAuditing
+public class JpaConfig {}
+```
+
+---
+
+## 3. Spring Data Repository
+
+```java
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
+
+    @Query("select u from User u where u.name like %:keyword%")
+    List<User> searchByName(@Param("keyword") String keyword);
+}
+```
+
+파생 쿼리 메서드 → JPQL `@Query` → `Specification` / QueryDSL 순으로 복잡도를 올린다.
+
+### 수정·삭제 쿼리
+
+```java
+@Modifying(clearAutomatically = true, flushAutomatically = true)
+@Query("update User u set u.name = :name where u.id = :id")
+int rename(@Param("id") Long id, @Param("name") String name);
+```
+
+벌크 업데이트 후 영속성 컨텍스트와 DB 불일치에 주의.
+
+---
+
+## 4. 트랜잭션
+
+```java
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserResponse get(Long id) {
+        return userRepository.findById(id)
+                .map(UserMapper::toResponse)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @Transactional
+    public UserResponse create(CreateUserRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new DuplicateEmailException(request.email());
+        }
+        User saved = userRepository.save(User.create(request.email(), request.name()));
+        return UserMapper.toResponse(saved);
+    }
+}
+```
+
+권장:
+
+- 클래스 기본: `readOnly = true`
+- 쓰기 메서드만 `@Transactional`
+- 트랜잭션 경계는 **애플리케이션 서비스**
+- 컨트롤러/`@Repository` 기본 메서드에 비즈니스 트랜잭션을 두지 않기
+
+전파(Propagation)·격리 수준은 기본값으로 대부분 충분하다. 특별한 동시성 이슈가 있을 때만 조정.
+
+---
+
+## 5. 연관관계와 지연 로딩
+
+```java
+@ManyToOne(fetch = FetchType.LAZY, optional = false)
+@JoinColumn(name = "user_id")
+private User user;
+
+@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<OrderLine> lines = new ArrayList<>();
+```
+
+규칙:
+
+- 모든 연관은 **LAZY**가 기본 전략
+- `EAGER`는 성능 사고의 주범
+- 양방향은 편의 메서드로 양쪽을 맞춘다
+
+```java
+public void addLine(OrderLine line) {
+    lines.add(line);
+    line.setOrder(this);
+}
+```
+
+---
+
+## 6. N+1 문제와 해결
+
+증상: 목록 조회 후 연관 엔티티 접근 시 쿼리가 N번 추가.
+
+해결:
+
+### fetch join
+
+```java
+@Query("select o from Order o join fetch o.user where o.id = :id")
+Optional<Order> findWithUser(@Param("id") Long id);
+```
+
+### EntityGraph
+
+```java
+@EntityGraph(attributePaths = {"lines"})
+Optional<Order> findWithLinesById(Long id);
+```
+
+### DTO 프로젝션 (읽기 전용에 최적)
+
+```java
+@Query("""
+    select new com.example.demo.order.OrderSummary(o.id, u.email, o.totalAmount)
+    from Order o join o.user u
+    where o.status = :status
+    """)
+List<OrderSummary> findSummaries(OrderStatus status);
+```
+
+Open Session In View(`spring.jpa.open-in-view`)는 Boot 기본이 true인데, **운영에서는 false 권장**.
+
+```yaml
+spring:
+  jpa:
+    open-in-view: false
+```
+
+뷰/컨트롤러에서 지연 로딩이 터지면 설계를 고치는 편이 맞다.
+
+---
+
+## 7. 스키마 관리 — Flyway / Liquibase
+
+`ddl-auto: update`는 로컬 장난감용. 운영은 **마이그레이션 도구**가 정답.
+
+```yaml
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+```
+
+```
+db/migration/
+  V1__create_users.sql
+  V2__create_orders.sql
+```
+
+```sql
+-- V1__create_users.sql
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ
+);
+```
+
+---
+
+## 8. 낙관적 락
+
+동시 수정 충돌 방지:
+
+```java
+@Version
+private Long version;
+```
+
+충돌 시 `OptimisticLockException` → 409 또는 재시도 정책.
+
+---
+
+## 9. 성능·운영 설정
+
+```yaml
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 3000
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+```
+
+로컬에서 SQL 확인:
+
+```yaml
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE  # Boot 3 / Hibernate 6
+```
+
+`spring.jpa.show-sql=true`만으로는 바인딩 파라미터가 안 보인다.
+
+---
+
+## 10. Soft delete / 공통 베이스
+
+```java
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity {
+    @CreatedDate private Instant createdAt;
+    @LastModifiedDate private Instant updatedAt;
+}
+```
+
+소프트 삭제는 `@SQLRestriction` / `@SoftDelete`(Hibernate 6.4+) 또는 명시적 `deletedAt` 필드로 처리.
+
+---
+
+## 연습
+
+1. `User`, `Post` (User 1:N Post) 엔티티와 리포지토리를 만든다.
+2. 게시글 목록 + 작성자 이메일을 **fetch join 또는 DTO 쿼리**로 N+1 없이 조회한다.
+3. Flyway로 테이블을 생성하고 `ddl-auto: validate`로 맞춘다.
+4. `open-in-view: false`에서 지연 로딩 예외가 안 나는지 확인한다.f:[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"Spring Data JPA와 영속성 계층\",\"description\":\"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/spring-boot-04/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"spring-boot\",\"keywords\":\"spring-boot\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Spring Data JPA와 영속성 계층\",\"item\":\"https://blog.kaisa.co.kr/posts/spring-boot-04/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L6",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":[["$","span",null,{"children":"2026-08-26"}],["$","span",null,{"children":"Spring Boot"}],["$","span",null,{"children":[6," min read"]}]]}],["$","h1",null,{"className":"blog-post__title","children":"Spring Data JPA와 영속성 계층"}],["$","$L1f",null,{"content":"$20"}]]}]}]}]]
+1c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+21:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+19:null
+1e:[["$","title","0",{"children":"Spring Data JPA와 영속성 계층 · Kaisa Blog"}],["$","meta","1",{"name":"description","content":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/posts/spring-boot-04/"}],["$","meta","6",{"property":"og:title","content":"Spring Data JPA와 영속성 계층 · Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/posts/spring-boot-04/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"Spring Data JPA와 영속성 계층 · Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L21","18",{}]]

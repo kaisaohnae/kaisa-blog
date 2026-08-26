@@ -1,0 +1,225 @@
+1:"$Sreact.fragment"
+2:I[79520,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],""]
+3:I[83661,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+4:I[39756,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+5:I[37457,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+6:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
+14:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+:HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
+:HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
+:HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+0:{"P":null,"c":["","posts","react-native-01",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["posts",{"children":[["slug","react-native-01","d",null],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$Lf",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true,"nonce":"$undefined"}],"$L10"],"$L11"]}],{},null,false,null]},null,false,"$@12"]},null,false,"$@12"]},null,false,null]},null,false,null],"$L13",false]],"m":"$undefined","G":["$14",["$L15","$L16"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"Ugj2Me8MeBqDWxLWHN76t"}
+17:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+18:"$Sreact.suspense"
+1b:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+1d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+10:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true,"nonce":"$undefined"}]
+11:["$","$L17",null,{"children":["$","$18",null,{"name":"Next.MetadataOutlet","children":"$@19"}]}]
+1a:[]
+12:"$W1a"
+13:["$","$1","h",{"children":[null,["$","$L1b",null,{"children":"$L1c"}],["$","div",null,{"hidden":true,"children":["$","$L1d",null,{"children":["$","$18",null,{"name":"Next.Metadata","children":"$L1e"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+15:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+16:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+1f:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+20:T10fc,# React Native와 Expo로 시작하기
+
+> 요약: 최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.
+
+---
+
+---
+
+## 1. React Native란
+
+JavaScript/TypeScript로 **iOS·Android(그리고 웹)** UI를 만드는 프레임워크다.  
+웹의 DOM 대신 **네이티브 뷰**를 그리며, React의 컴포넌트·훅·상태 모델을 그대로 쓴다.
+
+| 구분 | React (Web) | React Native |
+|------|-------------|--------------|
+| 렌더 대상 | HTML/CSS | Native Views |
+| 스타일 | CSS | StyleSheet (Yoga 레이아웃) |
+| 네비게이션 | react-router 등 | Expo Router / React Navigation |
+| 빌드 | Vite/Webpack | Metro + 네이티브 빌드 |
+
+---
+
+## 2. Expo vs Bare RN — 2020년대 후반 기준
+
+실무·학습 모두 **Expo(managed / CNG)** 가 기본 추천이다.
+
+| 항목 | Expo | Bare CLI |
+|------|------|----------|
+| 시작 속도 | 매우 빠름 | 느림 |
+| OTA 업데이트 | EAS Update | 직접 구성 |
+| 네이티브 모듈 | config plugin / prebuild | 수동 연동 |
+| 스토어 빌드 | EAS Build | Xcode/Gradle 직접 |
+
+지금은 “Expo는 토이”가 아니다. **Expo = 프로덕션 RN 툴체인**에 가깝다.
+
+---
+
+## 3. 환경 준비
+
+- Node.js LTS (20+)
+- Git
+- Android Studio (에뮬레이터) / Xcode (macOS, iOS)
+- 실기기: Expo Go 앱
+
+```bash
+npx create-expo-app@latest my-app
+cd my-app
+npx expo start
+```
+
+템플릿 선택 시 **TypeScript + Expo Router** 를 고르는 것을 권장한다.
+
+```bash
+npx create-expo-app@latest my-app -t expo-template-blank-typescript
+# 또는 공식 라우터 템플릿
+npx create-expo-app@latest my-app --template tabs
+```
+
+---
+
+## 4. 프로젝트 구조 (Expo Router)
+
+```
+app/                 # 파일 기반 라우팅 (페이지)
+├── _layout.tsx
+├── index.tsx
+├── (tabs)/
+└── +not-found.tsx
+components/
+hooks/
+constants/
+assets/
+app.json | app.config.ts
+package.json
+```
+
+`app.json` 핵심:
+
+```json
+{
+  "expo": {
+    "name": "MyApp",
+    "slug": "my-app",
+    "scheme": "myapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "platforms": ["ios", "android"],
+    "plugins": []
+  }
+}
+```
+
+---
+
+## 5. New Architecture (간단 이해)
+
+React Native의 신 아키텍처:
+
+- **Fabric**: 새 렌더러
+- **TurboModules**: 빠른 네이티브 모듈
+- **JSI**: JS↔Native 저수준 인터페이스
+
+Expo SDK 최근 버전은 New Architecture가 기본/권장이다.  
+우선은 “켠다” 정도만 알고, 브릿지 병목이 줄었다는 점만 기억하면 충분하다.
+
+---
+
+## 6. 첫 화면
+
+```tsx
+// app/index.tsx
+import { Text, View, StyleSheet } from 'react-native';
+
+export default function HomeScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Hello, React Native</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0f172a',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#f8fafc',
+  },
+});
+```
+
+웹처럼 `className`이 기본은 아니다. (NativeWind를 쓰면 Tailwind류 가능 — 스타일·폼 문서 참고)
+
+---
+
+## 7. 개발 루프
+
+```bash
+npx expo start          # Dev server
+# a: Android / i: iOS / w: web
+# r: reload / j: debugger
+```
+
+- Fast Refresh로 저장 즉시 반영
+- 실기기는 같은 Wi‑Fi 또는 tunnel 모드
+- 로그: 터미널 + React Native DevTools
+
+---
+
+## 8. TypeScript를 기본으로
+
+```tsx
+type User = {
+  id: string;
+  name: string;
+};
+
+function greet(user: User): string {
+  return `Hi, ${user.name}`;
+}
+```
+
+props·API 응답·네비게이션 파라미터에 타입을 걸면 앱 규모가 커져도 안전하다.
+
+---
+
+## 9. 최신 기법 체크리스트
+
+- [ ] Expo + TypeScript로 시작
+- [ ] Expo Router(파일 기반 라우팅) 사용
+- [ ] `app.config.ts`로 환경별 설정 분리 검토
+- [ ] EAS(빌드/업데이트)를 배포 경로로 염두
+- [ ] 웹 CSS 감각을 StyleSheet/Flex로 재학습
+
+---
+
+## 연습
+
+1. Expo 프로젝트를 만들고 에뮬레이터/실기기에서 실행한다.
+2. 홈 화면에 이름·버전 텍스트를 표시한다.
+3. `app.json`의 `name`, `scheme`을 바꿔 반영을 확인한다.
+4. TypeScript로 `User` 타입과 표시 컴포넌트를 만든다.f:[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"React Native와 Expo로 시작하기\",\"description\":\"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/react-native-01/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"react-native\",\"keywords\":\"react-native\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"React Native와 Expo로 시작하기\",\"item\":\"https://blog.kaisa.co.kr/posts/react-native-01/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L6",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":[["$","span",null,{"children":"2026-08-26"}],["$","span",null,{"children":"React Native"}],["$","span",null,{"children":[4," min read"]}]]}],["$","h1",null,{"className":"blog-post__title","children":"React Native와 Expo로 시작하기"}],["$","$L1f",null,{"content":"$20"}]]}]}]}]]
+1c:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+21:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+19:null
+1e:[["$","title","0",{"children":"React Native와 Expo로 시작하기 · Kaisa Blog"}],["$","meta","1",{"name":"description","content":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/posts/react-native-01/"}],["$","meta","6",{"property":"og:title","content":"React Native와 Expo로 시작하기 · Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/posts/react-native-01/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"React Native와 Expo로 시작하기 · Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L21","18",{}]]
