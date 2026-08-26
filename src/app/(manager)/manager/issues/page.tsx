@@ -44,7 +44,7 @@ const SOURCE_META: Record<SourceKey, {title: string}> = {
 };
 
 const COPY_FOOTER_PROMPT =
-  'From today\'s US Google Trends issues, write 3 blog posts worth covering. Use markdown in content and assign a clear category for each.';
+  '블로그에 오늘 이슈다운거 다뤄볼만하거 3개만 작성하고 싶은데 마크다운 문법으로 복사되게 만들어주고 카테고리도 구분되게 알려줘';
 
 function formatSourceList(title: string, items: IssueItem[]) {
   if (!items.length) {
