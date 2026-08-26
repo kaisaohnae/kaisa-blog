@@ -20,11 +20,11 @@ export default function Header() {
     <header id="header">
       <div className="site-shell site-shell--header">
         <div className="header__inner site-shell__inner">
-          <h1 className="header__logo">
+          <p className="header__logo">
             <Link href="/" aria-label="Kaisa Blog Home">
               <IconLogo width={100} height={42} />
             </Link>
-          </h1>
+          </p>
           <div className="header__actions">
             {hydrated && member ? (
               <MemberHeaderActions member={member} onLogout={() => logout()} />
