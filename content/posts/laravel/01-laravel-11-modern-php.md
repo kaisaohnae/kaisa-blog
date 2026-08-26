@@ -3,13 +3,13 @@ slug: laravel-01
 order: 1
 category: laravel
 categoryLabel: Laravel
-title: "Laravel 11+와 현대 PHP 시작하기"
+title: "Laravel 11+와 PHP 시작하기"
 summary: "Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다."
 publishedAt: 2026-08-26
 tags: ["laravel"]
 ---
 
-# Laravel 11+와 현대 PHP 시작하기
+# Laravel 11+와 PHP 시작하기
 
 > 요약: Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.
 

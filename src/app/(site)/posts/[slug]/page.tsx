@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import BlogPostPage from '@/components/blog/blog-post-page';
 import JsonLd from '@/components/seo/json-ld';
-import {getBlogPost, getBlogPostSlugs} from '@/data/blog-posts';
+import {getAdjacentBlogPosts, getBlogPost, getBlogPostSlugs} from '@/data/blog-posts';
 import {postJsonLd, postPageMetadata} from '@/lib/seo';
 import {notFound} from 'next/navigation';
 
@@ -25,10 +25,12 @@ export default async function Page({params}: PageProps) {
   const post = getBlogPost(slug);
   if (!post) notFound();
 
+  const {prev, next} = getAdjacentBlogPosts(slug);
+
   return (
     <>
       <JsonLd data={postJsonLd(post)} />
-      <BlogPostPage post={post} />
+      <BlogPostPage post={post} prev={prev} next={next} />
     </>
   );
 }

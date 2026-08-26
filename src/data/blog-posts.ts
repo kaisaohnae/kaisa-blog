@@ -22,6 +22,14 @@ const CATEGORY_LABELS: Record<string, string> = {
   laravel: 'Laravel',
   'react-native': 'React Native',
   nextjs: 'Next.js',
+  aws: 'AWS',
+  'html-css': 'HTML/CSS',
+  nginx: 'Nginx',
+  db: 'DB',
+  vue: 'Vue',
+  angular: 'Angular',
+  flutter: 'Flutter',
+  wpf: 'WPF',
 };
 
 function parseFrontmatter(raw: string): {data: Record<string, string>; body: string} {
@@ -129,6 +137,24 @@ export function getAllBlogPosts(): BlogPost[] {
 
 export function getBlogPost(slug: string): BlogPost | undefined {
   return getAllBlogPosts().find((post) => post.slug === slug);
+}
+
+/** Same-category neighbors by `order`. Missing side is omitted by callers. */
+export function getAdjacentBlogPosts(slug: string): {
+  prev: BlogPost | null;
+  next: BlogPost | null;
+} {
+  const post = getBlogPost(slug);
+  if (!post) return {prev: null, next: null};
+
+  const siblings = getBlogPostsByCategory(post.category);
+  const index = siblings.findIndex((item) => item.slug === slug);
+  if (index < 0) return {prev: null, next: null};
+
+  return {
+    prev: index > 0 ? siblings[index - 1] : null,
+    next: index < siblings.length - 1 ? siblings[index + 1] : null,
+  };
 }
 
 export function getBlogPostSlugs(): string[] {

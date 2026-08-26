@@ -31,7 +31,7 @@ const CATALOG = {
   laravel: {
     label: 'Laravel',
     items: [
-      {src: 'Laravel 11과 현대 PHP 시작하기.md', kebab: 'laravel-11-modern-php'},
+      {src: 'Laravel 11과 PHP 시작하기.md', kebab: 'laravel-11-modern-php'},
       {src: '라우팅 미들웨어 컨트롤러 요청 생명주기.md', kebab: 'routing-middleware-controller'},
       {src: 'Eloquent ORM과 데이터베이스.md', kebab: 'eloquent-orm'},
       {src: 'Validation Form Request API Resource.md', kebab: 'validation-form-request-resource'},
