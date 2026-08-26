@@ -17,6 +17,7 @@ DB 기반 **이슈**(`/issues/`)와 분리한다. 이슈는 Cafe24 API·관리�
 | `spring-boot/` | Spring Boot | `spring-boot-` |
 | `laravel/` | Laravel | `laravel-` |
 | `react-native/` | React Native | `react-native-` |
+| `nextjs/` | Next.js | `nextjs-` |
 
 - 새 카테고리는 폴더를 만들고 이 표·`src/lib/md-posts.ts`의 라벨 맵을 갱신한다.
 - `study` 등 임시 워크스페이스 이름은 쓰지 않는다.

@@ -21,6 +21,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   'spring-boot': 'Spring Boot',
   laravel: 'Laravel',
   'react-native': 'React Native',
+  nextjs: 'Next.js',
 };
 
 function parseFrontmatter(raw: string): {data: Record<string, string>; body: string} {
