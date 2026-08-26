@@ -1,0 +1,69 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+5:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T709,# PostgreSQL: 관계형 DB의 실무 기본선
+
+> 요약: 트랜잭션·인덱스·JSON·확장까지, 웹/API 백엔드에서 PostgreSQL을 고르는 이유와 운영 기본을 정리한다.
+
+---
+
+## 1. 언제 PostgreSQL인가
+
+| 맞는 경우 | 덜 맞는 경우 |
+|-----------|--------------|
+| 관계·제약·트랜잭션이 중요 | 초단순 키-값만 필요 |
+| SQL 분석·리포팅 | 극단적 수평 샤딩만 목표 |
+| JSON과 관계를 함께 | 문서만 무제한 스키마리스 |
+
+오픈소스 관계형 DB 중 **기능·표준 SQL·확장성** 균형이 좋아 기본선으로 자주 고른다.
+
+---
+
+## 2. 핵심 개념
+
+- **ACID 트랜잭션**: `BEGIN` / `COMMIT` / `ROLLBACK`
+- **스키마·제약**: PK, FK, UNIQUE, CHECK
+- **인덱스**: B-tree 기본, 부분·표현식 인덱스
+- **JSONB**: 문서형 필드를 관계형 안에 섞을 때
+
+```sql
+CREATE TABLE orders (
+  id           bigserial PRIMARY KEY,
+  user_id      bigint NOT NULL REFERENCES users(id),
+  payload      jsonb NOT NULL DEFAULT '{}',
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX orders_user_id_idx ON orders (user_id);
+CREATE INDEX orders_payload_gin ON orders USING gin (payload);
+```
+
+---
+
+## 3. 운영 포인트
+
+- 연결: 풀 크기 = 앱 인스턴스 × 커넥션 (과다 연결 주의)
+- `EXPLAIN (ANALYZE, BUFFERS)`로 슬로우 쿼리
+- 백업: `pg_dump` / 연속 WAL(운영 등급)
+- 마이그레이션 도구(Flyway, Prisma migrate 등)로 스키마 변경
+
+---
+
+## 4. 확장 맛보기
+
+| 확장 | 용도 |
+|------|------|
+| `uuid-ossp` / `pgcrypto` | UUID·암호 |
+| `pg_trgm` | 유사 문자열 검색 |
+| PostGIS | 지리 정보 |
+
+---
+
+## 정리
+
+PostgreSQL은 “그냥 SQL DB”가 아니라 **관계 + JSON + 확장**을 한 엔진에서 다루는 기본선이다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"PostgreSQL: 관계형 DB의 실무 기본선\",\"description\":\"트랜잭션·인덱스·JSON·확장까지, 웹/API 백엔드에서 PostgreSQL을 고르는 이유와 운영 기본을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/db-01/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"db\",\"keywords\":\"db\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"PostgreSQL: 관계형 DB의 실무 기본선\",\"item\":\"https://blog.kaisa.co.kr/posts/db-01/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"PostgreSQL: 관계형 DB의 실무 기본선"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[null,["$","$L2",null,{"href":"/posts/db-02/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"MySQL: 웹 서비스에서 가장 흔한 관계형 DB"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+7:null

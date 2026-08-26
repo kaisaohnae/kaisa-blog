@@ -1,0 +1,80 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+5:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T72b,# AWS 계정·IAM·빌링 기초 잡기
+
+> 요약: 루트 계정 보호, IAM 사용자·MFA, 비용 알람까지 AWS를 안전하게 시작하는 최소 세팅을 정리한다.
+
+---
+
+## 1. 먼저 지킬 것
+
+AWS는 권한만 열리면 비용·데이터가 바로 열린다. 첫 주는 **계정 보안 + 비용 가시성**이 우선이다.
+
+| 항목 | 권장 |
+|------|------|
+| 루트 | 일상 작업에 쓰지 않음 |
+| MFA | 루트·관리자 IAM 모두 필수 |
+| 액세스 키 | 루트에 발급하지 않음 |
+| 예산 | Billing 알람(예: $10/$50) |
+
+---
+
+## 2. 루트 vs IAM
+
+- **루트**: 계정 소유자. 결제·계정 닫기 등 제한된 작업만.
+- **IAM 사용자/역할**: 일상 개발·운영. 최소 권한 원칙.
+
+실무 기본 흐름:
+
+1. 루트에 MFA 설정
+2. 관리자용 IAM 사용자 생성 + MFA
+3. 이후 콘솔·CLI는 IAM만 사용
+
+---
+
+## 3. IAM 그룹으로 권한 묶기
+
+사용자를 그룹에 넣고, 그룹에 정책을 붙인다.
+
+예:
+
+- `Developers` → 읽기 + 제한된 배포 권한
+- `Ops` → CloudWatch, EC2 운영
+- `BillingViewers` → 비용 조회만
+
+`AdministratorAccess`를 개인에게 바로 다는 습관은 피한다. 필요하면 짧은 시간·별도 역할로.
+
+---
+
+## 4. CLI 프로필
+
+```bash
+aws configure --profile work
+aws sts get-caller-identity --profile work
+```
+
+`~/.aws/credentials`와 `config`에 프로필을 나눠 두면 계정·환경을 섞지 않기 쉽다.
+
+---
+
+## 5. 비용 알람
+
+Billing → Budgets / Cost Explorer에서:
+
+- 월 예산 알림
+- 이상 비용(Anomaly) 감지
+- 태그 전략(예: `Project`, `Env`)을 처음부터 합의
+
+프리 티어·크레딧이 있어도 **알람 없이 방치하지 않는다.**
+
+---
+
+## 정리
+
+AWS 시작의 정답은 서비스 개수가 아니라 **루트 보호 · IAM · 비용 알람** 세 줄이다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"AWS 계정·IAM·빌링 기초 잡기\",\"description\":\"루트 계정 보호, IAM 사용자·MFA, 비용 알람까지 AWS를 안전하게 시작하는 최소 세팅을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/aws-01/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"aws\",\"keywords\":\"aws\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"AWS 계정·IAM·빌링 기초 잡기\",\"item\":\"https://blog.kaisa.co.kr/posts/aws-01/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"AWS 계정·IAM·빌링 기초 잡기"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[null,["$","$L2",null,{"href":"/posts/aws-02/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"VPC·서브넷·보안 그룹으로 네트워크 설계하기"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+7:null

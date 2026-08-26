@@ -1,0 +1,77 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+7:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+8:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T6b5,# Nginx에서 HTTPS·TLS 종단하기
+
+> 요약: 인증서 배치, 443 리스너, HTTP→HTTPS 리다이렉트까지 실무에서 쓰는 TLS 기본 구성을 정리한다.
+
+---
+
+## 1. TLS를 앞단에 두는 이유
+
+인증서를 Nginx(또는 로드밸런서)에서 끊으면:
+
+- 앱은 HTTP로 단순하게 유지할 수 있다
+- 인증서 갱·암호 스위트를 한곳에서 관리한다
+- HSTS 등 보안 헤더를 일관 적용하기 쉽다
+
+---
+
+## 2. 443 서버 블록 골격
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+`X-Forwarded-Proto`가 틀리면 앱이 http 링크를 만들거나 쿠키 Secure 설정이 어긋날 수 있다.
+
+---
+
+## 3. 80 → 443
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+    return 301 https://$host$request_uri;
+}
+```
+
+인증서 발급(ACME HTTP-01) 중에는 `/.well-known/acme-challenge/` 경로를 열어 두는 구성이 흔하다.
+
+---
+
+## 4. 운영 포인트
+
+| 항목 | 권장 |
+|------|------|
+| 갱신 | certbot renew + deploy hook으로 reload |
+| 프로토콜 | TLS 1.2+ |
+| HSTS | 안정화 후 `Strict-Transport-Security` |
+| 권한 | privkey 권한·백업 경로 점검 |
+
+---
+
+## 정리
+
+HTTPS는 “인증서 파일만 넣는 일”이 아니라 **리다이렉트 · Forwarded 헤더 · 갱신 자동화**를 세트로 끝내는 일이다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"Nginx에서 HTTPS·TLS 종단하기\",\"description\":\"인증서 배치, 443 리스너, HTTP→HTTPS 리다이렉트까지 실무에서 쓰는 TLS 기본 구성을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/nginx-02/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"nginx\",\"keywords\":\"nginx\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Nginx에서 HTTPS·TLS 종단하기\",\"item\":\"https://blog.kaisa.co.kr/posts/nginx-02/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"Nginx에서 HTTPS·TLS 종단하기"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[["$","$L2",null,{"href":"/posts/nginx-01/","className":"blog-post__adjacent-link","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"이전 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"Nginx 리버스 프록시 기초"}]]}],["$","$L2",null,{"href":"/posts/nginx-03/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"Nginx 운영·보안 체크리스트"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],"$L5"],"$L6"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+5:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]
+6:["$","$L7",null,{"children":["$","$8",null,{"name":"Next.MetadataOutlet","children":"$@9"}]}]
+9:null

@@ -1,8 +1,976 @@
 1:"$Sreact.fragment"
 2:I[15539,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1u2my58i1zrhq.js"],"default"]
-2d:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
-2e:"$Sreact.suspense"
-3:T13e2,# Laravel 11+와 현대 PHP 시작하기
+44:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+45:"$Sreact.suspense"
+3:T618,# Angular 스탠드얼론으로 프로젝트 시작하기
+
+> 요약: NgModule 없이 standalone 컴포넌트·라우팅 기준으로 Angular 프로젝트를 세팅하고 기본 구조를 정리한다.
+
+---
+
+## 1. 왜 지금 Angular인가
+
+Angular는 **프레임워크가 라우팅·DI·폼·빌드를 한 세트로** 제공하는 쪽에 가깝다.
+
+신규 기본선은 **standalone API**다. NgModule은 레거시·라이브러리 경계에서 만날 수 있다.
+
+| 항목 | 예전 | 지금 |
+|------|------|------|
+| 부트스트랩 | `NgModule` | `bootstrapApplication` |
+| 컴포넌트 | `declarations` | `standalone: true` |
+| 의존성 | `imports` in module | 컴포넌트 `imports` |
+
+---
+
+## 2. 생성
+
+```bash
+npm install -g @angular/cli
+ng new my-app --standalone
+cd my-app
+ng serve
+```
+
+권장: TypeScript strict, 라우팅 포함.
+
+---
+
+## 3. 최소 컴포넌트
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  template: `<h1>{{ title }}</h1>`,
+})
+export class HomeComponent {
+  title = 'Home';
+}
+```
+
+`ng new` 최신 템플릿은 이미 standalone가 기본인 경우가 많다. 버전 노트를 확인한다.
+
+---
+
+## 4. 디렉터리 감각
+
+```
+src/app/
+├── app.config.ts
+├── app.routes.ts
+├── app.ts          # 루트
+└── home/
+    └── home.ts
+```
+
+기능별로 폴더를 나누고, 공유 UI는 `shared/`로 모은다.
+
+---
+
+## 정리
+
+Angular 시작은 모듈 미로가 아니라 **standalone 컴포넌트 + `app.config.ts`** 한 줄로 고정한다.
+4:T6cf,# 컴포넌트·템플릿·데이터 바인딩
+
+> 요약: 인터폴레이션, property/event 바인딩, @if/@for, input/output으로 템플릿과 컴포넌트를 연결하는 방법을 정리한다.
+
+---
+
+## 1. 바인딩 네 가지
+
+| 문법 | 방향 | 예 |
+|------|------|-----|
+| `{{ }}` | 컴포넌트 → 뷰 | 텍스트 |
+| `[prop]` | → | DOM/컴포넌트 입력 |
+| `(event)` | ← | 클릭·커스텀 이벤트 |
+| `[(ngModel)]` | 양방향 | 폼 (FormsModule 필요) |
+
+```html
+<button type="button" [disabled]="loading" (click)="save()">
+  {{ label }}
+</button>
+```
+
+---
+
+## 2. 제어 흐름 (신규 문법)
+
+```html
+@if (user) {
+  <p>{{ user.name }}</p>
+} @else {
+  <p>로그인 필요</p>
+}
+
+@for (item of items; track item.id) {
+  <li>{{ item.title }}</li>
+}
+```
+
+`*ngIf` / `*ngFor`도 동작하지만, 신규는 **내장 제어 흐름**을 우선한다. `track`은 리스트 성능에 중요하다.
+
+---
+
+## 3. input / output
+
+```ts
+import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'app-user-card',
+  standalone: true,
+  template: `
+    <p>{{ name() }}</p>
+    <button type="button" (click)="select.emit(name())">선택</button>
+  `,
+})
+export class UserCardComponent {
+  name = input.required<string>();
+  select = output<string>();
+}
+```
+
+시그널 기반 `input()`/`output()`이 최신 기본선이다. 데코레이터 `@Input`도 혼재할 수 있다.
+
+---
+
+## 4. 주의
+
+- 템플릿에 무거운 로직·구독 남발 금지
+- XSS: `[innerHTML]`는 살균 후에만
+- `ChangeDetectionStrategy.OnPush`는 시그널/불변 업데이트와 잘 맞는다
+
+---
+
+## 정리
+
+템플릿은 뷰의 계약이다. **표시는 바인딩, 분기는 @if/@for, 소통은 input/output**으로 좁힌다.
+5:T668,# 시그널·서비스·의존성 주입
+
+> 요약: signal/computed/effect와 providedIn 서비스로 상태와 의존성을 다루는 Angular의 핵심 패턴을 정리한다.
+
+---
+
+## 1. 시그널
+
+```ts
+import { signal, computed, effect } from '@angular/core';
+
+const count = signal(0);
+const double = computed(() => count() * 2);
+
+effect(() => {
+  console.log('count', count());
+});
+
+count.update((n) => n + 1);
+```
+
+- `signal`: 쓰기 가능한 상태
+- `computed`: 파생 값
+- `effect`: 구독 기반 부수 효과 (남용 주의)
+
+Zone 기반 변경 감지와 함께 쓰이며, 점진적으로 시그널 중심 UI가 늘고 있다.
+
+---
+
+## 2. 서비스 + DI
+
+```ts
+import { Injectable, inject, signal } from '@angular/core';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  readonly user = signal<string | null>(null);
+
+  login(name: string) {
+    this.user.set(name);
+  }
+}
+```
+
+컴포넌트에서:
+
+```ts
+private readonly auth = inject(AuthService);
+```
+
+생성자 주입도 가능하지만 `inject()`가 짧다.
+
+---
+
+## 3. 제공 범위
+
+| 범위 | 언제 |
+|------|------|
+| `providedIn: 'root'` | 앱 전역 싱글톤 |
+| 컴포넌트 `providers` | 해당 트리만 |
+| 라우트 `providers` | 기능 모듈 대체 |
+
+테스트에서는 구현을 mock으로 갈아끼우기 쉽다.
+
+---
+
+## 4. HTTP
+
+`provideHttpClient()`를 `app.config.ts`에 넣고, 서비스에서 `HttpClient`를 주입한다.  
+구독은 `async` 파이프 또는 시그널로 모아 누수를 줄인다.
+
+---
+
+## 정리
+
+상태는 **시그널**, 공유 로직은 **서비스**, 연결은 **DI** — 이 세 층이 Angular의 뼈대다.
+6:T6b4,# 라우팅과 리액티브 폼
+
+> 요약: provideRouter, lazy 로드, 가드와 FormBuilder·validators로 화면 전환과 입력 검증을 구성하는 방법을 정리한다.
+
+---
+
+## 1. 라우트
+
+```ts
+import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+  { path: '', loadComponent: () => import('./home/home').then((m) => m.HomeComponent) },
+  {
+    path: 'posts/:id',
+    loadComponent: () => import('./post/post').then((m) => m.PostComponent),
+  },
+  { path: '**', redirectTo: '' },
+];
+```
+
+- `loadComponent`로 코드 스플리팅
+- `RouterLink` / `routerLinkActive`
+- 파라미터는 `inputBinding` 또는 `ActivatedRoute`
+
+---
+
+## 2. 가드
+
+```ts
+export const authGuard = () => {
+  const auth = inject(AuthService);
+  return auth.user() ? true : createUrlTreeFromSnapshot(/* … */);
+};
+```
+
+`CanActivateFn`으로 로그인·권한을 막는다. 가드에서 무거운 API는 피한다.
+
+---
+
+## 3. 리액티브 폼
+
+```ts
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+
+readonly form = inject(FormBuilder).nonNullable.group({
+  email: ['', [Validators.required, Validators.email]],
+  agree: [false, Validators.requiredTrue],
+});
+```
+
+```html
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="email" formControlName="email" />
+</form>
+```
+
+템플릿 주도 폼(`ngModel`)은 작은 폼에, **복잡한 검증·동적 필드는 Reactive Forms**.
+
+---
+
+## 4. 접근성
+
+- `label` + `id`
+- 에러 메시지를 `aria-describedby`로 연결
+- 제출 버튼 disabled와 메시지 병행
+
+---
+
+## 정리
+
+URL은 라우터가, 입력은 폼 모델이 책임진다. **lazy 라우트 + 가드 + reactive form**이 SPA 실무 기본 세트다.
+7:T72c,# AWS 계정·IAM·빌링 기초 잡기
+
+> 요약: 루트 계정 보호, IAM 사용자·MFA, 비용 알람까지 AWS를 안전하게 시작하는 최소 세팅을 정리한다.
+
+---
+
+## 1. 먼저 지킬 것
+
+AWS는 권한만 열리면 비용·데이터가 바로 열린다. 첫 주는 **계정 보안 + 비용 가시성**이 우선이다.
+
+| 항목 | 권장 |
+|------|------|
+| 루트 | 일상 작업에 쓰지 않음 |
+| MFA | 루트·관리자 IAM 모두 필수 |
+| 액세스 키 | 루트에 발급하지 않음 |
+| 예산 | Billing 알람(예: $10/$50) |
+
+---
+
+## 2. 루트 vs IAM
+
+- **루트**: 계정 소유자. 결제·계정 닫기 등 제한된 작업만.
+- **IAM 사용자/역할**: 일상 개발·운영. 최소 권한 원칙.
+
+실무 기본 흐름:
+
+1. 루트에 MFA 설정
+2. 관리자용 IAM 사용자 생성 + MFA
+3. 이후 콘솔·CLI는 IAM만 사용
+
+---
+
+## 3. IAM 그룹으로 권한 묶기
+
+사용자를 그룹에 넣고, 그룹에 정책을 붙인다.
+
+예:
+
+- `Developers` → 읽기 + 제한된 배포 권한
+- `Ops` → CloudWatch, EC2 운영
+- `BillingViewers` → 비용 조회만
+
+`AdministratorAccess`를 개인에게 바로 다는 습관은 피한다. 필요하면 짧은 시간·별도 역할로.
+
+---
+
+## 4. CLI 프로필
+
+```bash
+aws configure --profile work
+aws sts get-caller-identity --profile work
+```
+
+`~/.aws/credentials`와 `config`에 프로필을 나눠 두면 계정·환경을 섞지 않기 쉽다.
+
+---
+
+## 5. 비용 알람
+
+Billing → Budgets / Cost Explorer에서:
+
+- 월 예산 알림
+- 이상 비용(Anomaly) 감지
+- 태그 전략(예: `Project`, `Env`)을 처음부터 합의
+
+프리 티어·크레딧이 있어도 **알람 없이 방치하지 않는다.**
+
+---
+
+## 정리
+
+AWS 시작의 정답은 서비스 개수가 아니라 **루트 보호 · IAM · 비용 알람** 세 줄이다.
+8:T70a,# PostgreSQL: 관계형 DB의 실무 기본선
+
+> 요약: 트랜잭션·인덱스·JSON·확장까지, 웹/API 백엔드에서 PostgreSQL을 고르는 이유와 운영 기본을 정리한다.
+
+---
+
+## 1. 언제 PostgreSQL인가
+
+| 맞는 경우 | 덜 맞는 경우 |
+|-----------|--------------|
+| 관계·제약·트랜잭션이 중요 | 초단순 키-값만 필요 |
+| SQL 분석·리포팅 | 극단적 수평 샤딩만 목표 |
+| JSON과 관계를 함께 | 문서만 무제한 스키마리스 |
+
+오픈소스 관계형 DB 중 **기능·표준 SQL·확장성** 균형이 좋아 기본선으로 자주 고른다.
+
+---
+
+## 2. 핵심 개념
+
+- **ACID 트랜잭션**: `BEGIN` / `COMMIT` / `ROLLBACK`
+- **스키마·제약**: PK, FK, UNIQUE, CHECK
+- **인덱스**: B-tree 기본, 부분·표현식 인덱스
+- **JSONB**: 문서형 필드를 관계형 안에 섞을 때
+
+```sql
+CREATE TABLE orders (
+  id           bigserial PRIMARY KEY,
+  user_id      bigint NOT NULL REFERENCES users(id),
+  payload      jsonb NOT NULL DEFAULT '{}',
+  created_at   timestamptz NOT NULL DEFAULT now()
+);
+
+CREATE INDEX orders_user_id_idx ON orders (user_id);
+CREATE INDEX orders_payload_gin ON orders USING gin (payload);
+```
+
+---
+
+## 3. 운영 포인트
+
+- 연결: 풀 크기 = 앱 인스턴스 × 커넥션 (과다 연결 주의)
+- `EXPLAIN (ANALYZE, BUFFERS)`로 슬로우 쿼리
+- 백업: `pg_dump` / 연속 WAL(운영 등급)
+- 마이그레이션 도구(Flyway, Prisma migrate 등)로 스키마 변경
+
+---
+
+## 4. 확장 맛보기
+
+| 확장 | 용도 |
+|------|------|
+| `uuid-ossp` / `pgcrypto` | UUID·암호 |
+| `pg_trgm` | 유사 문자열 검색 |
+| PostGIS | 지리 정보 |
+
+---
+
+## 정리
+
+PostgreSQL은 “그냥 SQL DB”가 아니라 **관계 + JSON + 확장**을 한 엔진에서 다루는 기본선이다.
+9:T67b,# MySQL: 웹 서비스에서 가장 흔한 관계형 DB
+
+> 요약: InnoDB·문자셋·인덱스·레플리케이션 관점에서 MySQL(MariaDB 계열 포함) 실무 기본을 정리한다.
+
+---
+
+## 1. 언제 MySQL인가
+
+- LAMP/워드프레스·레거시 웹 스택
+- 읽기 위주·단순 CRUD가 많은 서비스
+- 호스팅·관리형(RDS MySQL 등) 접근성이 중요할 때
+
+MariaDB는 호환 계열로 함께 언급되는 경우가 많다. 엔진·SQL 방언 차이는 버전별로 확인한다.
+
+---
+
+## 2. 엔진과 문자셋
+
+| 항목 | 권장 |
+|------|------|
+| 스토리지 엔진 | **InnoDB** (트랜잭션·FK) |
+| 문자셋 | `utf8mb4` |
+| 콜레이션 | 팀 표준 (예: `utf8mb4_unicode_ci`) |
+
+`utf8`(3바이트)와 `utf8mb4`를 혼동하면 이모지·일부 문자에서 깨진다.
+
+```sql
+CREATE TABLE posts (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  body MEDIUMTEXT NOT NULL,
+  created_at DATETIME(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  KEY posts_created_at_idx (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+---
+
+## 3. 인덱스·쿼리
+
+- PK/UK를 명확히
+- `WHERE` / `JOIN` 컬럼 인덱스
+- `SELECT *`·함수로 컬럼 감싸기(인덱스 무력화) 주의
+- `EXPLAIN`으로 type / rows / Extra 확인
+
+---
+
+## 4. 운영
+
+- 바이너리 로그 + 백업(덤프/스냅샷)
+- 읽기 레플리카(필요 시)
+- `max_connections`, 버퍼 풀 크기 모니터링
+- 마이그레이션 시 락·온라인 DDL 전략
+
+---
+
+## 정리
+
+MySQL은 익숙함과 생태계가 강점이다. **InnoDB + utf8mb4 + 인덱스 설계**만 지켜도 실수 대부분이 줄어든다.
+a:T6b9,# MongoDB: 문서형 DB로 유연한 스키마 다루기
+
+> 요약: 컬렉션·도큐먼트·인덱스·트랜잭션 경계를 기준으로 MongoDB가 맞는 워크로드와 설계 주의를 정리한다.
+
+---
+
+## 1. 언제 MongoDB인가
+
+| 맞는 경우 | 조심할 경우 |
+|-----------|-------------|
+| 문서 구조가 자주 변함 | 강한 조인·정규화가 핵심 |
+| 수평 확장·샤딩 전제 | 단순 키-값만 (Redis가 나을 수 있음) |
+| 읽기 패턴이 문서 단위 | 복잡한 다테이블 트랜잭션 중심 |
+
+“SQL이 싫어서”만으로 고르면 나중에 조인·일관성에서 비용이 커진다.
+
+---
+
+## 2. 기본 모델
+
+```js
+// posts 컬렉션
+{
+  _id: ObjectId("…"),
+  title: "제목",
+  tags: ["db", "mongodb"],
+  author: { id: "u1", name: "Ada" },
+  createdAt: ISODate("2026-08-26T00:00:00Z")
+}
+```
+
+- 자주 함께 읽는 데이터는 **임베드**
+- 커지거나 독립 수명주기면 **참조**
+- 배열·중첩이 커질수록 문서 500KB~MB 상한을 의식
+
+---
+
+## 3. 인덱스·쿼리
+
+```js
+db.posts.createIndex({ tags: 1, createdAt: -1 })
+db.posts.find({ tags: "mongodb" }).sort({ createdAt: -1 }).limit(20)
+```
+
+- 쿼리 패턴에 맞춰 인덱스
+- `explain("executionStats")`
+- 멀티키·TTL·텍스트 인덱스 용도를 구분
+
+---
+
+## 4. 트랜잭션·운영
+
+- 단일 문서 갱신은 원자적
+- 멀티 도큐먼트 트랜잭션은 가능하지만 **비용·제약**을 알고 쓴다
+- 레플리카 셋이 운영 기본
+- 스키마 검증(Schema Validation)으로 “완전 자유”를 완화
+
+---
+
+## 정리
+
+MongoDB는 유연함이 무기이지만, **읽기 패턴에 맞는 문서 설계·인덱스** 없이 쓰면 관계형보다 더 아프다.
+b:T6cc,# SQLite: 파일 하나로 충분한 임베디드 SQL
+
+> 요약: 서버 없이 파일 기반 SQL이 필요한 앱·도구·프로토타입에서 SQLite를 쓰는 기준과 한계를 정리한다.
+
+---
+
+## 1. 언제 SQLite인가
+
+| 맞는 경우 | 아닌 경우 |
+|-----------|-----------|
+| 단일 서버·로컬 앱 | 다중 서버가 동시에 같은 DB 파일에 쓰기 |
+| 프로토타입·CLI·모바일 | 높은 동시 쓰기 TPS |
+| 읽기 위주 소규모 서비스 | 운영급 HA·페일오버 필요 |
+| 테스트·임베디드 | 중앙 관리형 멀티테넌트 DB |
+
+“서버 설치 없이 SQL”이 필요하면 최우선 후보다.
+
+---
+
+## 2. 기본 사용
+
+```bash
+sqlite3 app.db
+```
+
+```sql
+PRAGMA foreign_keys = ON;
+PRAGMA journal_mode = WAL;
+
+CREATE TABLE notes (
+  id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL,
+  body TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+```
+
+- **WAL** 모드는 읽기/쓰기 동시성에 유리한 경우가 많다
+- 타입은 동적이나, 앱에서 규약을 지키는 편이 안전
+
+---
+
+## 3. 동시성·배포
+
+- 쓰기는 기본적으로 한 연결(파일 락)
+- 서버리스/다중 인스턴스가 같은 파일을 쓰면 깨지기 쉽다
+- 백업은 파일 복사 전 `sqlite3 .backup` 또는 VACUUM INTO
+- 컨테이너라면 볼륨에 DB 파일을 둔다
+
+---
+
+## 4. 생태계
+
+- 모바일(iOS/Android), 브라우저(wasm), 데스크톱
+- ORM/도구: Prisma, Drizzle, sqlx 등에서 지원하는 경우 많음
+- Litestream 등으로 복제·백업을 보강하는 운영도 가능
+
+---
+
+## 정리
+
+SQLite는 작은 DB가 아니라 **임베디드 관계형 엔진**이다. 경계(단일 쓰기·파일 위치)만 지키면 운영이 매우 단순해진다.
+c:T60c,# Stateless와 Stateful 위젯
+
+> 요약: 위젯이 화면의 구성 단위임을 기준으로 StatelessWidget과 StatefulWidget의 역할·생명주기를 정리한다.
+
+---
+
+## 1. 모든 것이 위젯
+
+버튼, 패딩, 테마, 앱 전체까지 **위젯 트리**로 조합한다. 새 UI는 보통 기존 위젯을 조합해 만든다.
+
+---
+
+## 2. StatelessWidget
+
+입력이 바뀌면 다시 그려질 뿐, **내부 가변 상태가 없다**.
+
+```dart
+class TitleText extends StatelessWidget {
+  const TitleText({super.key, required this.text});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text);
+  }
+}
+```
+
+---
+
+## 3. StatefulWidget
+
+탭, 입력, 애니메이션처럼 **시간이 지나며 변하는 값**이 있을 때.
+
+```dart
+class Counter extends StatefulWidget {
+  const Counter({super.key});
+  @override
+  State<Counter> createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int count = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => setState(() => count++),
+      child: Text('$count'),
+    );
+  }
+}
+```
+
+`setState`는 해당 `State`의 `build`를 다시 돌린다. 범위를 작게 유지한다.
+
+---
+
+## 4. 생명주기 포인트
+
+- `initState`: 한 번 초기화
+- `dispose`: 컨트롤러·구독 해제
+- `didUpdateWidget`: 부모 파라미터가 바뀔 때
+
+---
+
+## 정리
+
+상태가 없으면 Stateless, **이 위젯이 기억할 값이 있으면 Stateful**. 전역 상태는 별도 계층으로 뺀다.
+d:T74d,# 시맨틱 HTML로 문서 뼈대 잡기
+
+> 요약: header·main·nav·section 등 시맨틱 태그로 문서 구조를 잡고, 접근성·SEO에 유리한 HTML 기본선을 정리한다.
+
+---
+
+## 1. 왜 시맨틱인가
+
+`div`만으로도 화면은 만들 수 있다. 다만 **의미 있는 태그**를 쓰면:
+
+- 스크린 리더·검색엔진이 구조를 읽기 쉽다
+- CSS·JS 선택자가 의도에 맞게 유지된다
+- 팀원에게 HTML만으로도 레이아웃 의도가 전달된다
+
+---
+
+## 2. 기본 뼈대
+
+```html
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>페이지 제목</title>
+  </head>
+  <body>
+    <header>…</header>
+    <nav aria-label="주요">…</nav>
+    <main>
+      <article>
+        <h1>…</h1>
+        <section>…</section>
+      </article>
+    </main>
+    <aside>…</aside>
+    <footer>…</footer>
+  </body>
+</html>
+```
+
+- `lang`은 실제 언어에 맞춘다
+- `main`은 문서당 하나
+- 제목은 `h1`~`h6` 계층을 건너뛰지 않는다
+
+---
+
+## 3. 태그 선택 가이드
+
+| 의도 | 태그 |
+|------|------|
+| 사이트 헤더/푸터 | `header` / `footer` |
+| 주요 내비 | `nav` |
+| 독립 글 | `article` |
+| 주제 구역 | `section` |
+| 보조 정보 | `aside` |
+| 버튼이 아닌 링크 | `a` |
+| 동작 트리거 | `button` |
+
+클릭 가능한 `div` + `onclick`은 피하고, **`button`/`a`** 를 쓴다.
+
+---
+
+## 4. 이미지·대체 텍스트
+
+```html
+<img src="/hero.webp" alt="강아지 산책 사진" width="800" height="450" />
+```
+
+- 의미 있는 이미지 → 구체적 `alt`
+- 장식 이미지 → `alt=""`
+- 가능하면 `width`/`height`로 CLS 완화
+
+---
+
+## 정리
+
+HTML의 첫 목표는 예쁘게 그리는 것이 아니라 **문서의 뼈대를 올바르게 선언**하는 것이다.
+e:T620,# CSS 박스 모델과 display 기초
+
+> 요약: content·padding·border·margin과 box-sizing, display 값의 차이를 정리해 레이아웃 사고의 기본을 잡는다.
+
+---
+
+## 1. 박스 모델
+
+모든 요소는 박스로 그려진다.
+
+```
+margin
+  border
+    padding
+      content
+```
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+```
+
+`border-box`면 **width에 padding·border가 포함**되어 계산이 직관적이다. 프로젝트 기본값으로 두는 편이 좋다.
+
+---
+
+## 2. display 핵심
+
+| 값 | 동작 |
+|----|------|
+| `block` | 가로 한 줄 차지, 위아래 쌓임 |
+| `inline` | 글자처럼 흐름, width/height 제한적 |
+| `inline-block` | 흐름 + 박스 크기 지정 |
+| `none` | 렌더·레이아웃에서 제거 |
+| `flex` / `grid` | 자식 배치 컨텍스트 |
+
+`visibility: hidden`은 자리는 남기고, `display: none`은 자리를 없앤다.
+
+---
+
+## 3. margin 함정
+
+- 세로 margin collapse: 인접 block끼리 마진이 합쳐질 수 있다
+- 부모에 padding/border/overflow로 막는 패턴이 흔하다
+- 컴포넌트 간격은 **gap( flex/grid )** 또는 유틸 클래스로 통일
+
+---
+
+## 4. 실무 기본 리셋(최소)
+
+```css
+html { line-height: 1.5; }
+body { margin: 0; }
+img, svg { max-width: 100%; height: auto; display: block; }
+```
+
+과도한 전체 리셋보다 **팀 합의된 최소 세트**가 유지보수에 유리하다.
+
+---
+
+## 정리
+
+레이아웃 버그의 절반은 박스 모델·`display` 오해에서 온다. 먼저 **어떤 박스가 어떻게 흐르는지**를 본다.
+f:T5ed,# CSS Grid로 2차원 레이아웃 잡기
+
+> 요약: 행·열 트랙, fr, auto-fit, 영역 이름까지 Grid로 페이지·카드 그리드를 설계하는 방법을 정리한다.
+
+---
+
+## 1. Grid가 맞는 경우
+
+행과 열을 **동시에** 제어할 때: 대시보드, 갤러리, 전체 페이지 골격.
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100dvh;
+}
+```
+
+---
+
+## 2. 트랙 단위
+
+| 단위 | 용도 |
+|------|------|
+| `fr` | 남는 공간 비율 |
+| `minmax(0, 1fr)` | 넘침 방지에 자주 사용 |
+| `auto` / `max-content` | 내용 기반 |
+| `repeat(auto-fit, minmax(16rem, 1fr))` | 반응형 카드 |
+
+```css
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+```
+
+---
+
+## 3. 영역으로 배치
+
+```css
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "nav main"
+    "footer footer";
+  grid-template-columns: 12rem 1fr;
+}
+.header { grid-area: header; }
+.nav { grid-area: nav; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+```
+
+이름 있는 영역은 미디어쿼리에서 재배치하기 쉽다.
+
+---
+
+## 4. Flex vs Grid
+
+| | Flex | Grid |
+|--|------|------|
+| 차원 | 1D | 2D |
+| 강점 | 정렬·분배 | 행열·영역 |
+| 함께 | 카드 안 헤더 | 카드 바깥 그리드 |
+
+---
+
+## 정리
+
+페이지 골격은 Grid, 컴포넌트 내부 정렬은 Flex — 이 역할 분담만 지켜도 레이아웃이 단순해진다.
+10:T600,# 타이포·색·CSS 변수로 디자인 토큰
+
+> 요약: 글꼴·행간·색 대비와 CSS 커스텀 프로퍼티로 일관된 디자인 토큰을 만드는 방법을 정리한다.
+
+---
+
+## 1. 타이포 기본
+
+| 항목 | 권장 |
+|------|------|
+| 본문 | 16px 전후 (`1rem`) |
+| 행간 | 1.5 전후 |
+| 제목 | 단계적으로, 과도한 단계 수 금지 |
+| 줄길이 | 대략 45–75자 |
+
+```css
+:root {
+  --font-sans: "Pretendard", system-ui, sans-serif;
+  --text-body: 1rem;
+  --leading: 1.6;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading);
+}
+```
+
+---
+
+## 2. 색과 대비
+
+- 본문/배경 대비를 확보한다 (대략 WCAG AA 목표)
+- “브랜드 색 = 본문 색”으로 쓰지 않는다
+- 상태색(성공/위험)은 색만으로 전달하지 말고 아이콘·텍스트 병행
+
+---
+
+## 3. CSS 변수(토큰)
+
+```css
+:root {
+  --color-bg: #f7f7f5;
+  --color-text: #1a1a1a;
+  --color-accent: #0b6e4f;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-text: #f2f2f2;
+  }
+}
+```
+
+컴포넌트는 raw hex 대신 **토큰만** 참조하게 하면 테마 전환이 쉽다.
+
+---
+
+## 4. 간격 스케일
+
+`4 / 8 / 12 / 16 / 24 / 32`처럼 제한된 스케일을 쓰면 화면이 정돈된다.  
+임의 `13px` 간격이 늘수록 디자인이 흔들린다.
+
+---
+
+## 정리
+
+예쁜 한 페이지보다 **토큰이 있는 시스템**이 다음 페이지를 싸게 만든다.
+11:T13db,# Laravel 11+와 PHP 시작하기
 
 > 요약: Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.
 
@@ -233,7 +1201,7 @@ curl http://127.0.0.1:8000/api/hello
 2. `.env`에서 SQLite ↔ MySQL/Postgres 중 하나로 DB를 연결한다.
 3. `OrderStatus` Enum을 만들어 `tinker`에서 출력해 본다.
 4. `php artisan route:list`로 등록된 라우트를 확인한다.
-4:T142f,# 라우팅·미들웨어·컨트롤러 — 요청 생명주기
+12:T142f,# 라우팅·미들웨어·컨트롤러 — 요청 생명주기
 
 > 요약: 요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.
 
@@ -465,7 +1433,7 @@ $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
 2. `PublishPostController` invokable을 만든다.
 3. `admin` 미들웨어로 삭제 API를 보호한다.
 4. `throttle:10,1`을 로그인 시도 라우트에 건다.
-5:T14b7,# Eloquent ORM과 데이터베이스
+13:T14b7,# Eloquent ORM과 데이터베이스
 
 > 요약: 마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.
 
@@ -728,7 +1696,7 @@ php artisan make:observer PostObserver --model=Post
 2. `published` 스코프와 factory state를 구현한다.
 3. `preventLazyLoading`을 켜고 N+1을 `with`로 고친다.
 4. 주문 생성 시 트랜잭션으로 order + items를 저장한다.
-6:T15e5,# Validation, Form Request, API Resource
+14:T15e5,# Validation, Form Request, API Resource
 
 > 요약: 입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.
 
@@ -966,7 +1934,7 @@ $path = $request->file('cover')->store('covers', 's3');
 2. `PostResource`로 show/index 응답을 통일한다.
 3. 검증 실패 JSON 포맷을 커스터마이즈한다.
 4. 이미지 업로드 필드 검증 + `storage` 저장을 구현한다.
-7:T1291,# 인증·인가 — Sanctum, Policy, Gate
+15:T1291,# 인증·인가 — Sanctum, Policy, Gate
 
 > 요약: 세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.
 
@@ -1171,7 +2139,7 @@ Policy 안에서 role/permission을 읽게 중앙화하자.
 2. `PostPolicy`로 본인 글만 수정·삭제 가능하게 한다.
 3. 로그인 라우트에 `throttle`을 건다.
 4. `/me` Resource 응답을 구현한다.
-8:T10b4,# 테스트 — PHPUnit, Pest, Feature 테스트
+16:T10b4,# 테스트 — PHPUnit, Pest, Feature 테스트
 
 > 요약: Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.
 
@@ -1363,7 +2331,7 @@ Http::fake([
 2. Policy 403 시나리오를 고정한다.
 3. `Http::fake`로 외부 결제 클라이언트를 테스트한다.
 4. `Queue::fake`로 환영 메일 Job이 쌓이는지 확인한다.
-9:T1249,# 큐·Job·이벤트·스케줄링
+17:T1249,# 큐·Job·이벤트·스케줄링
 
 > 요약: 무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.
 
@@ -1586,7 +2554,7 @@ $user->notify(new InvoicePaid($invoice));
 2. `OrderPlaced` 이벤트 + 큐 리스너를 만든다.
 3. 실패를 강제하고 `queue:failed`를 확인한다.
 4. 매일 자정에 임시 파일 정리 스케줄을 등록한다.
-a:Teb5,# 캐시·Redis·성능 최적화
+18:Teb5,# 캐시·Redis·성능 최적화
 
 > 요약: 캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.
 
@@ -1782,7 +2750,7 @@ p95 지연, 쿼리 수, Redis hit ratio, 큐 wait time을 같이 본다.
 2. Redis lock으로 중복 결제 요청을 막는다.
 3. `route:cache` / `config:cache`를 스테이징에서 검증한다.
 4. 목록 API 쿼리 수를 `with` 전후로 비교한다.
-b:T1220,# Blade·Livewire·Inertia와 API 프론트 전략
+19:T1220,# Blade·Livewire·Inertia와 API 프론트 전략
 
 > 요약: 서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.
 
@@ -1988,7 +2956,7 @@ php artisan filament:install --panels
 2. Livewire 검색 리스트를 구현한다 **또는** Inertia 페이지 하나를 연결한다.
 3. API Resource와 Inertia props 중 하나로 게시글 상세를 내려준다.
 4. (선택) Reverb로 간단 알림 이벤트를 방송한다.
-c:T15c0,# 운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트
+1a:T15c0,# 운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트
 
 > 요약: Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.
 
@@ -2196,7 +3164,7 @@ DB/Redis까지 보려면 커스텀 health 체크 추가.
 이 문서들을 바탕으로, 도메인에 Filament·Inertia·Vapor·Event Sourcing 등을 선택적으로 더하면 실무 생산성이 빠르게 오른다.
 
 추가로 파고들 주제: Laravel Pennant(피처 플래그), Folio, Volt, Tenancy, DDD/Action 패턴, Arch 테스트, CI with GitHub Actions.
-d:Ta57,# Next.js App Router로 프로젝트 시작하기
+1b:Ta57,# Next.js App Router로 프로젝트 시작하기
 
 > 요약: App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.
 
@@ -2317,7 +3285,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 1. `create-next-app`으로 프로젝트를 만든다.
 2. `/about` 라우트와 공통 헤더 레이아웃을 추가한다.
 3. 정적 export가 필요한지 팀 기준으로 한 줄 결정한다.
-e:T8c3,# 라우팅·레이아웃·동적 세그먼트
+1c:T8c3,# 라우팅·레이아웃·동적 세그먼트
 
 > 요약: 파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.
 
@@ -2412,7 +3380,7 @@ import Link from 'next/link';
 1. `/posts/[slug]`와 `generateStaticParams` 2개를 만든다.
 2. `(marketing)` / `(app)` 그룹으로 레이아웃을 나눈다.
 3. 모든 내부 링크에 trailing slash 정책을 맞춘다.
-f:T841,# Server Component와 Client Component
+1d:T841,# Server Component와 Client Component
 
 > 요약: 기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.
 
@@ -2503,7 +3471,7 @@ export default async function PostsPage() {
 1. 서버 페이지 + 클라이언트 검색 입력 조합을 만든다.
 2. 불필요하게 `'use client'`인 파일을 찾아 서버로 되돌린다.
 3. Client bundle에 큰 의존성이 들어가는지 빌드 분석으로 확인한다.
-10:T966,# 데이터 페칭과 캐시 전략
+1e:T966,# 데이터 페칭과 캐시 전략
 
 > 요약: Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.
 
@@ -2594,7 +3562,7 @@ app/posts/[slug]/error.tsx
 1. `revalidate: 60` fetch와 `no-store` fetch를 비교한다.
 2. `content/` MD를 읽어 목록 페이지를 만든다.
 3. 정적 export 환경이면 “빌드 타임에만 읽기”로 데이터 소스를 정리한다.
-11:T836,# SSG·generateStaticParams·정적 export
+1f:T836,# SSG·generateStaticParams·정적 export
 
 > 요약: 빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.
 
@@ -2681,7 +3649,7 @@ if (!post) notFound();
 1. 동적 `[slug]` 3개를 SSG로 빌드해 `out/` HTML을 연다.
 2. `await params`로 바꾼 뒤에도 정적 HTML인지 확인한다.
 3. export 모드에서 깨지는 API를 목록으로 적는다.
-12:T842,# Metadata·Open Graph·SEO 기본기
+20:T842,# Metadata·Open Graph·SEO 기본기
 
 > 요약: metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.
 
@@ -2782,7 +3750,7 @@ robots: {index: false, follow: false}
 1. 글 상세에 `generateMetadata` + canonical을 붙인다.
 2. sitemap에 글 URL만 넣고 인증 페이지는 제외/noindex 한다.
 3. 카톡·슬랙에 URL을 붙여 OG 미리보기를 확인한다.
-13:T90d,# Route Handler와 Server Actions
+21:T90d,# Route Handler와 Server Actions
 
 > 요약: 앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.
 
@@ -2885,7 +3853,7 @@ export async function updatePost(id: string) {
 1. `POST /api/echo` Route Handler를 만든다 (Node 런타임 호스팅에서).
 2. 간단한 Server Action 폼을 만든다.
 3. 현재 배포가 export면 “Next API 없이” 설계도를 그린다.
-14:T951,# 미들웨어와 인증 경계
+22:T951,# 미들웨어와 인증 경계
 
 > 요약: middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.
 
@@ -2972,7 +3940,7 @@ export default async function ManagerLayout({children}: {children: React.ReactNo
 1. `/manager/*` 미들웨어 리다이렉트를 만든다 (Node 호스팅).
 2. 레이아웃에서 세션 없는 사용자를 `redirect` 한다.
 3. export 배포라면 클라이언트 가드 + API 401 처리 흐름을 문서화한다.
-15:T6c6,# 이미지·폰트·성능 최적화
+23:T6c6,# 이미지·폰트·성능 최적화
 
 > 요약: next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.
 
@@ -3058,7 +4026,7 @@ npm run build
 1. 히어로에 `next/image` + `priority`를 적용한다.
 2. `next/font`로 본문 폰트를 옮긴다.
 3. export 모드면 `unoptimized` 필요 여부를 확인한다.
-16:T811,# 배포 — Vercel·정적 호스팅·체크리스트
+24:T811,# 배포 — Vercel·정적 호스팅·체크리스트
 
 > 요약: Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.
 
@@ -3147,7 +4115,212 @@ Next.js 배포는 “어디서 돌릴지”가 아키텍처다.
 1. 현재 프로젝트가 Vercel형인지 export형인지 한 줄로 적는다.
 2. `NEXT_PUBLIC_SITE_URL`이 sitemap·OG에 쓰이는지 확인한다.
 3. 위 체크리스트를 통과/미통과로 표시한다.
-17:T10fd,# React Native와 Expo로 시작하기
+25:T65a,# Nginx 리버스 프록시 기초
+
+> 요약: 정적 파일 서빙과 upstream 프록시로 앱 앞단에 Nginx를 두는 최소 구성을 정리한다.
+
+---
+
+## 1. 왜 Nginx인가
+
+Nginx는 **리버스 프록시·정적 파일·TLS 종단**에 자주 쓴다. 앱 서버(Node, Java, PHP-FPM 등) 앞에 두면:
+
+- 포트·프로토콜을 바깥에 한 곳에서 정리한다
+- 정적 자산은 앱을 거치지 않는다
+- 헬스체크·타임아웃·버퍼를 앞단에서 통제한다
+
+---
+
+## 2. 최소 서버 블록
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+`Host` / `X-Forwarded-*` 헤더는 앱이 실제 호스트·스킴을 알게 하는 데 중요하다.
+
+---
+
+## 3. 정적 + 프록시
+
+```nginx
+location /assets/ {
+    alias /var/www/app/assets/;
+    expires 7d;
+    access_log off;
+}
+
+location / {
+    proxy_pass http://127.0.0.1:3000;
+}
+```
+
+긴 매칭·정확한 경로(`=`, `^~`) 우선순위를 알고 쓰면 의도치 않은 프록시를 줄일 수 있다.
+
+---
+
+## 4. 확인
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+curl -I http://127.0.0.1/
+```
+
+설정 문법 검사(`-t`) 없이 reload 하지 않는다.
+
+---
+
+## 정리
+
+Nginx 첫 목표는 복잡한 튜닝이 아니라 **앱 앞단에서 Host·Forwarded·정적/동적 분리를 올바르게 하는 것**이다.
+26:T6b6,# Nginx에서 HTTPS·TLS 종단하기
+
+> 요약: 인증서 배치, 443 리스너, HTTP→HTTPS 리다이렉트까지 실무에서 쓰는 TLS 기본 구성을 정리한다.
+
+---
+
+## 1. TLS를 앞단에 두는 이유
+
+인증서를 Nginx(또는 로드밸런서)에서 끊으면:
+
+- 앱은 HTTP로 단순하게 유지할 수 있다
+- 인증서 갱·암호 스위트를 한곳에서 관리한다
+- HSTS 등 보안 헤더를 일관 적용하기 쉽다
+
+---
+
+## 2. 443 서버 블록 골격
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
+
+`X-Forwarded-Proto`가 틀리면 앱이 http 링크를 만들거나 쿠키 Secure 설정이 어긋날 수 있다.
+
+---
+
+## 3. 80 → 443
+
+```nginx
+server {
+    listen 80;
+    server_name example.com;
+    return 301 https://$host$request_uri;
+}
+```
+
+인증서 발급(ACME HTTP-01) 중에는 `/.well-known/acme-challenge/` 경로를 열어 두는 구성이 흔하다.
+
+---
+
+## 4. 운영 포인트
+
+| 항목 | 권장 |
+|------|------|
+| 갱신 | certbot renew + deploy hook으로 reload |
+| 프로토콜 | TLS 1.2+ |
+| HSTS | 안정화 후 `Strict-Transport-Security` |
+| 권한 | privkey 권한·백업 경로 점검 |
+
+---
+
+## 정리
+
+HTTPS는 “인증서 파일만 넣는 일”이 아니라 **리다이렉트 · Forwarded 헤더 · 갱신 자동화**를 세트로 끝내는 일이다.
+27:T6bf,# Nginx 운영·보안 체크리스트
+
+> 요약: 타임아웃, 버퍼, 로그, 보안 헤더, gzip까지 배포 전에 볼 Nginx 실무 체크리스트를 모은다.
+
+---
+
+## 1. 프록시·타임아웃
+
+- [ ] `proxy_connect_timeout` / `proxy_read_timeout` 앱 특성에 맞게
+- [ ] 업로드가 있으면 `client_max_body_size`
+- [ ] WebSocket이면 `Upgrade` / `Connection` 헤더
+- [ ] upstream 다운 시 에러 페이지·재시도 정책
+
+```nginx
+proxy_connect_timeout 5s;
+proxy_read_timeout 60s;
+client_max_body_size 20m;
+```
+
+---
+
+## 2. 보안 헤더(예시)
+
+```nginx
+add_header X-Content-Type-Options nosniff always;
+add_header X-Frame-Options SAMEORIGIN always;
+add_header Referrer-Policy strict-origin-when-cross-origin always;
+```
+
+CSP는 앱과 맞춰 단계적으로. 잘못 넣면 스크립트·스타일이 한꺼번에 깨진다.
+
+---
+
+## 3. 로그·관측
+
+- access/error 로그 경로·로테이션
+- `$request_time` / upstream 시간 필드로 지연 분석
+- 헬스체크 URL은 access_log off 검토
+
+---
+
+## 4. 성능
+
+| 항목 | 메모 |
+|------|------|
+| gzip / brotli | 텍스트 응답 |
+| `sendfile` | 정적 파일 |
+| 캐시 헤더 | 해시 파일명 자산에 장기 캐시 |
+| worker_connections | 트래픽에 맞게 |
+
+미세 튜닝보다 **불필요한 프록시·큰 바디·느린 upstream**을 먼저 본다.
+
+---
+
+## 5. 배포 전 확인
+
+- [ ] `nginx -t`
+- [ ] reload 후 헬스·주요 URL
+- [ ] HTTP→HTTPS, www/non-www 정책 일치
+- [ ] 인증서 만료일·자동 갱신
+- [ ] 서버_tokens off (버전 노출 축소)
+
+---
+
+## 정리
+
+Nginx 운영은 옵션 나열이 아니라 **타임아웃 · 헤더 · 로그 · 인증서 갱신**이 체크리스트를 통과하는지다.
+28:T10fd,# React Native와 Expo로 시작하기
 
 > 요약: 최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.
 
@@ -3334,7 +4507,7 @@ props·API 응답·네비게이션 파라미터에 타입을 걸면 앱 규모�
 2. 홈 화면에 이름·버전 텍스트를 표시한다.
 3. `app.json`의 `name`, `scheme`을 바꿔 반영을 확인한다.
 4. TypeScript로 `User` 타입과 표시 컴포넌트를 만든다.
-18:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
+29:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
 
 > 요약: RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.
 
@@ -3568,7 +4741,7 @@ Tailwind 문법을 쓰고 싶다면 NativeWind. 팀 합의 후 도입.
 2. `SafeAreaView` + 헤더/본문/하단 CTA 레이아웃을 구성한다.
 3. iOS/Android 그림자를 `Platform.select`로 맞춘다.
 4. `expo-image`로 원격 이미지를 표시한다.
-19:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
+2a:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
 
 > 요약: `useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.
 
@@ -3771,7 +4944,7 @@ UI 로직이 반복되면 훅으로 추출. 다만 성급한 추상화는 피한
 2. zod + react-hook-form으로 회원가입 검증을 붙인다.
 3. `useRef`로 비밀번호 필드 자동 포커스를 구현한다.
 4. `useToggle` 커스텀 훅으로 비밀번호 표시/숨김을 만든다.
-1a:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
+2b:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
 
 > 요약: 가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.
 
@@ -3989,7 +5162,7 @@ Universal Links / App Links는 EAS·도메인 검증이 필요 (운영 배포 �
 2. pull-to-refresh와 empty 상태를 구현한다.
 3. Expo Router로 탭 + 상세(`[id]`) 화면을 연결한다.
 4. 로그인 여부에 따라 `(auth)` / `(tabs)`로 분기한다.
-1b:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
+2c:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
 
 > 요약: API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.
 
@@ -4203,7 +5376,7 @@ useQuery({
 2. 게시글 목록 `useQuery` + 에러/로딩 UI를 구현한다.
 3. 생성 `useMutation` 후 목록 invalidate.
 4. `useInfiniteQuery` + FlatList 무한 스크롤을 연결한다.
-1c:T1644,# 인증·보안 저장소·디바이스 권한
+2d:T1644,# 인증·보안 저장소·디바이스 권한
 
 > 요약: 토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.
 
@@ -4443,7 +5616,7 @@ queryClient.clear();
 2. `AuthProvider` + Router 가드를 연결한다.
 3. 이미지 피커 권한 플로우(거절 안내 포함)를 만든다.
 4. (선택) 앱 포그라운드 복귀 시 생체 잠금을 추가한다.
-1d:T127b,# 애니메이션·제스처·사용자 경험
+2e:T127b,# 애니메이션·제스처·사용자 경험
 
 > 요약: Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.
 
@@ -4643,7 +5816,7 @@ OS “동작 줄이기”가 켜져 있으면 큰 애니메이션을 스킵하�
 2. 스와이프로 삭제할 수 있는 리스트 행을 구현한다.
 3. 모달 화면 `presentation: 'modal'`을 추가한다.
 4. 주요 CTA에 햅틱 피드백을 붙인다.
-1e:T1112,# 상태 관리·아키텍처·모듈화
+2f:T1112,# 상태 관리·아키텍처·모듈화
 
 > 요약: 전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.
 
@@ -4825,7 +5998,7 @@ npx expo install eslint prettier
 2. Zustand로 장바구니(또는 최근 검색어)를 persist한다.
 3. Theme Context로 라이트/다크를 토글한다.
 4. 라우트 단위 ErrorBoundary를 추가한다.
-1f:Tf29,# 테스트·디버깅·성능
+30:Tf29,# 테스트·디버깅·성능
 
 > 요약: 컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.
 
@@ -4996,7 +6169,7 @@ npx expo install @sentry/react-native
 2. SecureStore·fetch를 mock한 Auth 훅 테스트를 만든다.
 3. FlashList/FlatList 행을 memo로 최적화하고 스크롤을 비교한다.
 4. (선택) Maestro로 로그인→홈 플로우를 자동화한다.
-20:T14ef,# EAS 빌드·스토어 배포·OTA
+31:T14ef,# EAS 빌드·스토어 배포·OTA
 
 > 요약: EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.
 
@@ -5224,7 +6397,7 @@ eas update --branch production --message "Fix checkout crash"
 이 문서들을 바탕으로, 도메인에 맞게 결제·지도·오프라인(SQLite/WatermelonDB)·실시간(웹소켓)을 얹으면 실무 앱으로 확장할 수 있다.
 
 추가로 파고들 주제: Expo Modules API(커스텀 네이티브), Skia, React Native Web, Brownfield(기존 네이티브에 RN 삽입), Detox CI.
-21:T19ae,# Spring Boot 3와 Java 21 시작하기
+32:T19ae,# Spring Boot 3와 Java 21 시작하기
 
 > 요약: Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.
 
@@ -5486,7 +6659,7 @@ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 2. `GET /api/health-demo` 엔드포인트를 추가하고 record로 응답한다.
 3. `local` / `prod` 프로파일을 나누고, `prod`에서는 로그 레벨을 INFO로 맞춘다.
 4. Actuator `/actuator/health`가 200을 반환하는지 확인한다.
-22:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
+33:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
 
 > 요약: Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.
 
@@ -5756,7 +6929,7 @@ MyWorker myWorker() { return new MyWorker(); }
 1. `AppProperties(record)`를 만들고 `app.greeting` 값을 주입받아 API로 반환한다.
 2. `Clock` Bean을 등록하고 서비스에서 “지금 시각”을 출력한다. 테스트에서는 고정 `Clock`으로 교체한다.
 3. `local` 프로필에만 동작하는 `DevBanner` 컴포넌트를 만든다.
-23:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
+34:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
 
 > 요약: Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.
 
@@ -6029,7 +7202,7 @@ DTO/컨트롤러에 `@Operation`, `@Schema`로 계약을 보강하면 협업 비
 2. 존재하지 않는 상품 조회 시 `ProblemDetail` 404를 반환한다.
 3. `RestClient`로 공개 API(예: JSONPlaceholder)를 호출하는 서비스를 만든다.
 4. springdoc으로 Swagger UI에서 API를 확인한다.
-24:T1b02,# Spring Data JPA와 영속성 계층
+35:T1b02,# Spring Data JPA와 영속성 계층
 
 > 요약: JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.
 
@@ -6336,7 +7509,7 @@ public abstract class BaseEntity {
 2. 게시글 목록 + 작성자 이메일을 **fetch join 또는 DTO 쿼리**로 N+1 없이 조회한다.
 3. Flyway로 테이블을 생성하고 `ddl-auto: validate`로 맞춘다.
 4. `open-in-view: false`에서 지연 로딩 예외가 안 나는지 확인한다.
-25:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
+36:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
 
 > 요약: Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.
 
@@ -6593,7 +7766,7 @@ class UserControllerSecurityTest {
 2. 회원가입 시 BCrypt로 비밀번호를 저장한다.
 3. JWT 로그인 + Bearer 인증 필터를 구현하거나, Resource Server + issuer-uri로 구성한다.
 4. `@PreAuthorize`로 ADMIN 전용 삭제 API를 만든다.
-26:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
+37:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
 
 > 요약: 단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.
 
@@ -6818,7 +7991,7 @@ Clock fixedClock() {
 2. `@WebMvcTest`로 validation 400 응답을 검증한다.
 3. Testcontainers PostgreSQL로 리포지토리/서비스 IT를 작성한다.
 4. `@ServiceConnection`으로 datasource 자동 연결을 확인해 본다.
-27:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
+38:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
 
 > 요약: 헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.
 
@@ -7062,7 +8235,7 @@ Zipkin/Jaeger/Grafana Tempo 등으로 트레이스를 시각화한다.
 2. 비즈니스 카운터 `order.created`를 추가한다.
 3. 로그 패턴에 `traceId`를 넣고, 요청 로그와 연결해 본다.
 4. (선택) OpenTelemetry collector + Jaeger로 트레이스를 시각화한다.
-28:T18ce,# 비동기·메시징·Virtual Threads
+39:T18ce,# 비동기·메시징·Virtual Threads
 
 > 요약: `@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.
 
@@ -7292,7 +8465,7 @@ Kafka는 로그/이벤트 스트림·재생에 강하고, Rabbit은 작업 큐�
 2. `OrderCreatedEvent` + `@TransactionalEventListener(AFTER_COMMIT)`로 메일 발송(로그로 대체)을 구현한다.
 3. (선택) Kafka Testcontainers로 produce/consume 통합 테스트를 작성한다.
 4. Outbox 테이블 설계를 문서/코드로 스케치한다.
-29:T146f,# 캐시·Resilience·성능 최적화
+3a:T146f,# 캐시·Resilience·성능 최적화
 
 > 요약: 캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.
 
@@ -7502,7 +8675,7 @@ public class IdempotencyKey { ... }
 2. 외부 호출에 Resilience4j CircuitBreaker + Retry를 적용한다.
 3. RestClient read timeout을 3초로 설정한다.
 4. 느린 목록 API를 키셋 페이지네이션으로 바꾼다.
-2a:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
+3b:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
 
 > 요약: 로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.
 
@@ -7756,7 +8929,415 @@ Spring Boot의 최신 기법은 “새 어노테이션 암기”보다 **운영 
 이 문서들을 바탕으로, 팀 도메인에 맞게 깊이를 더하면 실무 Spring Boot 역량이 빠르게 쌓인다.
 
 추가로 파고들 주제: Spring Authorization Server, Spring Modulith, Spring Batch, R2DBC, Spring Cloud Gateway, GraalVM 심화, ArchUnit 기반 아키텍처 테스트.
-0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$L2",null,{"posts":[{"slug":"laravel-01","title":"Laravel 11+와 현대 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$3","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$4","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$5","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$6","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$7","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$8","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$9","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$a","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$b","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$c","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"nextjs-01","title":"Next.js App Router로 프로젝트 시작하기","excerpt":"App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.","content":"$d","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":3,"order":1,"filePath":"nextjs/01-app-router-getting-started.md"},{"slug":"nextjs-02","title":"라우팅·레이아웃·동적 세그먼트","excerpt":"파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.","content":"$e","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":2,"filePath":"nextjs/02-routing-layouts-dynamic-segments.md"},{"slug":"nextjs-03","title":"Server Component와 Client Component","excerpt":"기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.","content":"$f","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":3,"filePath":"nextjs/03-server-client-components.md"},{"slug":"nextjs-04","title":"데이터 페칭과 캐시 전략","excerpt":"Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.","content":"$10","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":4,"filePath":"nextjs/04-data-fetching-caching.md"},{"slug":"nextjs-05","title":"SSG·generateStaticParams·정적 export","excerpt":"빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.","content":"$11","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":5,"filePath":"nextjs/05-ssg-generate-static-params-export.md"},{"slug":"nextjs-06","title":"Metadata·Open Graph·SEO 기본기","excerpt":"metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.","content":"$12","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":6,"filePath":"nextjs/06-metadata-open-graph-seo.md"},{"slug":"nextjs-07","title":"Route Handler와 Server Actions","excerpt":"앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.","content":"$13","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":7,"filePath":"nextjs/07-route-handlers-server-actions.md"},{"slug":"nextjs-08","title":"미들웨어와 인증 경계","excerpt":"middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.","content":"$14","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":8,"filePath":"nextjs/08-middleware-auth-boundaries.md"},{"slug":"nextjs-09","title":"이미지·폰트·성능 최적화","excerpt":"next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.","content":"$15","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":9,"filePath":"nextjs/09-image-font-performance.md"},{"slug":"nextjs-10","title":"배포 — Vercel·정적 호스팅·체크리스트","excerpt":"Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.","content":"$16","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":10,"filePath":"nextjs/10-deploy-vercel-static-checklist.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$17","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$18","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$19","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$1a","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$1b","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$1c","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$1d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$1e","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$1f","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$20","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$21","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$22","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$23","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$24","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$25","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$26","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$27","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$28","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$29","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$2a","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"}],"categories":[{"id":"laravel","label":"Laravel","count":10},{"id":"nextjs","label":"Next.js","count":10},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10}]}]],["$L2b"],"$L2c"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"zef7VGm4ERzZR0dEjCdjD"}
-2b:["$","script","script-0",{"src":"/_next/static/chunks/1u2my58i1zrhq.js","async":true}]
-2c:["$","$L2d",null,{"children":["$","$2e",null,{"name":"Next.MetadataOutlet","children":"$@2f"}]}]
-2f:null
+3c:T5da,# Vue 3 Composition API로 시작하기
+
+> 요약: createApp·SFC·setup·script setup 기준으로 Vue 3 프로젝트의 기본 구조와 Composition API 진입점을 정리한다.
+
+---
+
+## 1. 왜 Vue 3인가
+
+| 항목 | Vue 2 감각 | Vue 3 |
+|------|------------|-------|
+| API | Options 중심 | Composition + Options |
+| 반응형 | `Object.defineProperty` | Proxy |
+| 트리쉐이킹 | 제한적 | 개선 |
+| TypeScript | 보조 | 1급 시민에 가깝게 |
+
+신규는 **Vue 3 + `<script setup>`** 을 기본선으로 둔다.
+
+---
+
+## 2. 최소 앱
+
+```bash
+npm create vue@latest
+cd my-app
+npm install
+npm run dev
+```
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<template>
+  <button type="button" @click="count++">{{ count }}</button>
+</template>
+```
+
+`script setup`은 setup 문법 설탕으로, export 없이 최상위 바인딩이 템플릿에 노출된다.
+
+---
+
+## 3. SFC 구조
+
+```
+Component.vue
+├── <script setup>
+├── <template>
+└── <style scoped>
+```
+
+- 로직은 script, 마크업은 template, 스타일은 scoped가 기본
+- 컴포넌트 파일명은 PascalCase 권장
+
+---
+
+## 4. Options vs Composition
+
+Options(`data`/`methods`)도 동작하지만, 로직 재사용·TS·대형 컴포넌트에서는 Composition이 유리하다.  
+기존 Options 코드는 점진 이관하면 된다.
+
+---
+
+## 정리
+
+Vue 3 시작은 버전 논쟁보다 **`script setup` + Composition + SFC** 기본선을 고정하는 것이다.
+3d:T5ac,# ref·reactive로 반응형 상태 다루기
+
+> 요약: ref와 reactive의 차이, 언래핑, computed·watch까지 Vue 반응형 핵심 API 사용법을 정리한다.
+
+---
+
+## 1. ref
+
+```ts
+import { ref } from 'vue'
+
+const count = ref(0)
+count.value++ // script에서는 .value
+```
+
+템플릿에서는 자동 언래핑되어 `{{ count }}`로 쓴다.  
+**원시값·단일 값은 ref**가 기본 선택이다.
+
+---
+
+## 2. reactive
+
+```ts
+import { reactive } from 'vue'
+
+const state = reactive({ user: null as null | { name: string }, loading: false })
+state.loading = true
+```
+
+객체 전체에 Proxy를 씌운다. 구조 분해하면 반응형이 끊길 수 있어 `toRefs`를 검토한다.
+
+| | ref | reactive |
+|--|-----|----------|
+| 값 | `.value` | 직접 프로퍼티 |
+| 교체 | `count.value = 1` | 객체 통째 교체 어려움 |
+| 추천 | 원시·단일 | 관련 필드 묶음 |
+
+---
+
+## 3. computed · watch
+
+```ts
+import { computed, watch } from 'vue'
+
+const double = computed(() => count.value * 2)
+
+watch(count, (n, o) => {
+  console.log(o, '→', n)
+})
+```
+
+- `computed`: 파생 값 (캐시)
+- `watch` / `watchEffect`: 부수 효과 (API 호출 등)
+
+---
+
+## 4. 실수 포인트
+
+- script에서 `ref`의 `.value` 누락
+- `reactive` 객체를 재할당
+- deep watch 남용으로 성능 저하
+
+---
+
+## 정리
+
+상태를 만들 때 **“값인가, 필드 묶음인가”** 만 먼저 정하면 ref/reactive 선택이 단순해진다.
+3e:T744,# Vue Router와 Pinia로 화면·상태 구성
+
+> 요약: 라우트 맵핑, 네비게이션 가드, Pinia 스토어로 SPA의 화면 전환과 공유 상태를 구성하는 방법을 정리한다.
+
+---
+
+## 1. Vue Router
+
+```ts
+import { createRouter, createWebHistory } from 'vue-router'
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/', name: 'home', component: () => import('./pages/HomeView.vue') },
+    { path: '/posts/:id', name: 'post', component: () => import('./pages/PostView.vue'), props: true },
+  ],
+})
+```
+
+- 라우트 단위 **lazy import**로 초기 번들 축소
+- `params`/`query`는 컴포넌트에서 소비
+- 인증은 `beforeEach` 가드로
+
+---
+
+## 2. 네비게이션 가드
+
+```ts
+router.beforeEach((to) => {
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    return { name: 'login', query: { redirect: to.fullPath } }
+  }
+})
+```
+
+가드에서 무거운 API를 남발하면 전환이 느려진다. 최소 정보만.
+
+---
+
+## 3. Pinia
+
+```ts
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+
+export const useCounterStore = defineStore('counter', () => {
+  const count = ref(0)
+  const double = computed(() => count.value * 2)
+  function inc() {
+    count.value++
+  }
+  return { count, double, inc }
+})
+```
+
+- Vuex 대신 **Pinia**가 Vue 3 기본 권장
+- setup 스토어가 Composition과 잘 맞음
+- 서버 상태는 TanStack Query 등과 역할을 나누기도 한다
+
+---
+
+## 4. 경계
+
+| 상태 | 어디에 |
+|------|--------|
+| 폼 입력 | 컴포넌트 로컬 |
+| 로그인 세션 | Pinia (+ 쿠키/토큰) |
+| 서버 목록 캐시 | 데이터 페칭 라이브러리 검토 |
+
+모든 것을 스토어에 넣지 않는다.
+
+---
+
+## 정리
+
+Router는 **URL ↔ 화면**, Pinia는 **공유 클라이언트 상태** — 둘의 경계를 지키면 SPA가 단순해진다.
+3f:T682,# 데이터 바인딩과 ObservableCollection
+
+> 요약: INotifyPropertyChanged, ObservableCollection, DataTemplate로 UI와 상태를 동기화하는 핵심 패턴을 정리한다.
+
+---
+
+## 1. 바인딩 핵심
+
+WPF UI는 바인딩으로 상태를 읽고 반영한다.
+
+| 구성 | 역할 |
+|------|------|
+| DataContext | 바인딩 루트 |
+| Binding Path | 속성 경로 |
+| Mode | OneWay/TwoWay |
+| Converter | 타입 변환 |
+
+---
+
+## 2. 변경 통지
+
+```csharp
+public class UserViewModel : INotifyPropertyChanged {
+    private string _name = "";
+    public string Name {
+        get => _name;
+        set { _name = value; OnPropertyChanged(); }
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+    void OnPropertyChanged([CallerMemberName] string? m = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(m));
+}
+```
+
+속성 변경 알림이 없으면 화면이 갱신되지 않는다.
+
+---
+
+## 3. 목록 바인딩
+
+```csharp
+public ObservableCollection<string> Items { get; } = new();
+```
+
+```xml
+<ListBox ItemsSource="{Binding Items}" />
+```
+
+`ObservableCollection`은 add/remove 변경을 UI에 자동 반영한다.
+
+---
+
+## 4. DataTemplate
+
+```xml
+<ListBox ItemsSource="{Binding Users}">
+  <ListBox.ItemTemplate>
+    <DataTemplate>
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{Binding Name}" />
+      </StackPanel>
+    </DataTemplate>
+  </ListBox.ItemTemplate>
+</ListBox>
+```
+
+템플릿으로 리스트 항목 렌더링을 분리하면 유지보수가 쉬워진다.
+
+---
+
+## 정리
+
+WPF 생산성의 핵심은 컨트롤이 아니라 **변경 통지 + 컬렉션 + 템플릿** 조합이다.
+40:T60d,# 이벤트 대신 ICommand로 액션 연결하기
+
+> 요약: 버튼 클릭 로직을 코드비하인드에서 분리해 ICommand로 연결하고, CanExecute로 UI 상태를 제어하는 방법을 정리한다.
+
+---
+
+## 1. 왜 Command인가
+
+코드비하인드 이벤트만 쓰면 View 로직이 커진다. 
+MVVM에서는 ViewModel의 `ICommand`로 액션을 노출한다.
+
+---
+
+## 2. RelayCommand 예
+
+```csharp
+public class RelayCommand : ICommand {
+    private readonly Action _execute;
+    private readonly Func<bool>? _canExecute;
+
+    public RelayCommand(Action execute, Func<bool>? canExecute = null) {
+        _execute = execute;
+        _canExecute = canExecute;
+    }
+
+    public bool CanExecute(object? parameter) => _canExecute?.Invoke() ?? true;
+    public void Execute(object? parameter) => _execute();
+    public event EventHandler? CanExecuteChanged;
+    public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+}
+```
+
+---
+
+## 3. 버튼 바인딩
+
+```csharp
+public ICommand SaveCommand { get; }
+
+public MainViewModel() {
+    SaveCommand = new RelayCommand(Save, CanSave);
+}
+```
+
+```xml
+<Button Content="저장" Command="{Binding SaveCommand}" />
+```
+
+---
+
+## 4. CanExecute
+
+입력 값이 비어있을 때 버튼을 비활성화하는 식으로 UI 상태를 자연스럽게 제어할 수 있다.
+
+- 저장 가능 여부 계산
+- 변경 시 `RaiseCanExecuteChanged()`
+
+---
+
+## 정리
+
+WPF 액션 처리의 기본은 이벤트 남발이 아니라 **Command 중심의 테스트 가능한 흐름**이다.
+41:T5b1,# 스타일·리소스·테마 관리
+
+> 요약: ResourceDictionary, StaticResource/DynamicResource, 공통 스타일 분리로 WPF UI를 일관되게 운영하는 방법을 정리한다.
+
+---
+
+## 1. 리소스 계층
+
+WPF 스타일·브러시·템플릿은 리소스로 관리한다.
+
+| 위치 | 범위 |
+|------|------|
+| Control.Resources | 해당 컨트롤 |
+| Window.Resources | 창 범위 |
+| App.xaml | 앱 전역 |
+| 별도 Dictionary | 모듈/테마 분리 |
+
+---
+
+## 2. Static vs Dynamic
+
+- `StaticResource`: 로드 시점 해석 (일반적으로 빠름)
+- `DynamicResource`: 런타임 변경 반영 (테마 전환)
+
+```xml
+<SolidColorBrush x:Key="PrimaryBrush" Color="#0B6E4F" />
+<Button Background="{StaticResource PrimaryBrush}" />
+```
+
+---
+
+## 3. 공통 스타일
+
+```xml
+<Style TargetType="Button">
+  <Setter Property="Padding" Value="12,6" />
+  <Setter Property="Margin" Value="4" />
+</Style>
+```
+
+화면마다 버튼 속성을 반복하기보다 스타일로 합의한다.
+
+---
+
+## 4. 테마 분리
+
+```xml
+<ResourceDictionary.MergedDictionaries>
+  <ResourceDictionary Source="Resources/Colors.xaml" />
+  <ResourceDictionary Source="Resources/Controls.xaml" />
+</ResourceDictionary.MergedDictionaries>
+```
+
+색/타입/컨트롤 스타일을 파일별로 분리하면 규모가 커져도 관리가 쉽다.
+
+---
+
+## 정리
+
+WPF UI 품질은 개별 창 수정이 아니라 **리소스 사전을 중심으로 한 시스템화**에서 나온다.
+0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$L2",null,{"posts":[{"slug":"angular-01","title":"Angular 스탠드얼론으로 프로젝트 시작하기","excerpt":"NgModule 없이 standalone 컴포넌트·라우팅 기준으로 Angular 프로젝트를 세팅하고 기본 구조를 정리한다.","content":"$3","publishedAt":"2026-08-26","category":"angular","categoryLabel":"Angular","tags":["angular"],"readingMinutes":2,"order":1,"filePath":"angular/01-angular-standalone-start.md"},{"slug":"angular-02","title":"컴포넌트·템플릿·데이터 바인딩","excerpt":"인터폴레이션, property/event 바인딩, @if/@for, input/output으로 템플릿과 컴포넌트를 연결하는 방법을 정리한다.","content":"$4","publishedAt":"2026-08-26","category":"angular","categoryLabel":"Angular","tags":["angular"],"readingMinutes":2,"order":2,"filePath":"angular/02-components-templates-binding.md"},{"slug":"angular-03","title":"시그널·서비스·의존성 주입","excerpt":"signal/computed/effect와 providedIn 서비스로 상태와 의존성을 다루는 Angular의 핵심 패턴을 정리한다.","content":"$5","publishedAt":"2026-08-26","category":"angular","categoryLabel":"Angular","tags":["angular"],"readingMinutes":2,"order":3,"filePath":"angular/03-signals-services-di.md"},{"slug":"angular-04","title":"라우팅과 리액티브 폼","excerpt":"provideRouter, lazy 로드, 가드와 FormBuilder·validators로 화면 전환과 입력 검증을 구성하는 방법을 정리한다.","content":"$6","publishedAt":"2026-08-26","category":"angular","categoryLabel":"Angular","tags":["angular"],"readingMinutes":2,"order":4,"filePath":"angular/04-routing-forms.md"},{"slug":"angular-05","title":"Angular 앱 실무 체크리스트","excerpt":"구조, 성능, 테스트, 빌드·배포까지 Angular 앱을 내보내기 전에 볼 실무 체크리스트를 모은다.","content":"# Angular 앱 실무 체크리스트\n\n> 요약: 구조, 성능, 테스트, 빌드·배포까지 Angular 앱을 내보내기 전에 볼 실무 체크리스트를 모은다.\n\n---\n\n## 1. 구조·품질\n\n- [ ] standalone + TypeScript strict\n- [ ] 기능 폴더 단위, 순환 의존 없음\n- [ ] ESLint (`angular-eslint`)\n- [ ] 환경 설정(`fileReplacements` 또는 빌드 타임 env)에 시크릿 금지\n\n---\n\n## 2. 성능\n\n- [ ] 라우트 `loadComponent` / `loadChildren`\n- [ ] `track` / `trackBy`로 리스트 안정화\n- [ ] OnPush 또는 시그널로 불필요 CD 감소\n- [ ] `ng build` 번들 예산(budgets) 확인\n- [ ] 이미지: NgOptimizedImage 검토\n\n---\n\n## 3. 데이터·보안\n\n- [ ] HttpClient 에러·재시도 정책\n- [ ] interceptor로 인증 헤더 일관 처리\n- [ ] XSS: DomSanitizer 오남용 금지\n- [ ] CSRF/쿠키 정책은 백엔드와 합의\n\n---\n\n## 4. 테스트·품질\n\n- [ ] 핵심 서비스 단위 테스트\n- [ ] 주요 화면 컴포넌트 테스트 또는 e2e 소수\n- [ ] `ng test` / CI에서 깨지면 머지 금지\n\n---\n\n## 5. 배포\n\n- [ ] `ng build --configuration production`\n- [ ] 베이스 href / 자산 경로\n- [ ] SPA 폴백 (Nginx `try_files` → `index.html`)\n- [ ] 소스맵 공개 범위\n\n---\n\n## 정리\n\nAngular는 기능이 많아서가 아니라 **체크리스트를 통과하는 기본선**을 지키면 팀 규모에서 이득이 난다.\n","publishedAt":"2026-08-26","category":"angular","categoryLabel":"Angular","tags":["angular"],"readingMinutes":1,"order":5,"filePath":"angular/05-angular-app-checklist.md"},{"slug":"aws-01","title":"AWS 계정·IAM·빌링 기초 잡기","excerpt":"루트 계정 보호, IAM 사용자·MFA, 비용 알람까지 AWS를 안전하게 시작하는 최소 세팅을 정리한다.","content":"$7","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":2,"order":1,"filePath":"aws/01-account-iam-billing-basics.md"},{"slug":"aws-02","title":"VPC·서브넷·보안 그룹으로 네트워크 설계하기","excerpt":"퍼블릭/프라이빗 서브넷, 라우팅, 보안 그룹·NACL의 역할을 구분하고 실무에서 쓰는 최소 VPC 뼈대를 잡는다.","content":"# VPC·서브넷·보안 그룹으로 네트워크 설계하기\n\n> 요약: 퍼블릭/프라이빗 서브넷, 라우팅, 보안 그룹·NACL의 역할을 구분하고 실무에서 쓰는 최소 VPC 뼈대를 잡는다.\n\n---\n\n## 1. VPC가 하는 일\n\nVPC는 계정 안의 **격리된 네트워크**다. CIDR, 서브넷, 라우트 테이블, 게이트웨이로 구성한다.\n\n권장 시작:\n\n- CIDR: `10.0.0.0/16` (팀 표준이 있으면 그에 따름)\n- AZ 2개 이상\n- 퍼블릭 서브넷 + 프라이빗 서브넷\n\n---\n\n## 2. 퍼블릭 vs 프라이빗\n\n| 구분 | 특징 | 예 |\n|------|------|-----|\n| 퍼블릭 | IGW 경로, 공인 IP 가능 | ALB, NAT, 배스천 |\n| 프라이빗 | 인터넷 직접 노출 없음 | EC2 앱, RDS |\n\n앱 서버를 퍼블릭에 바로 두는 구성은 데모용으로만 두고, 실무는 **ALB(퍼블릭) → 앱(프라이빗)** 이 기본선이다.\n\n---\n\n## 3. 보안 그룹 vs NACL\n\n- **보안 그룹(SG)**: 인스턴스/ENI 방화벽. stateful. 허용 규칙 위주.\n- **NACL**: 서브넷 방화벽. stateless. 보조 계층.\n\n실무에서는 **SG를 주 통제**, NACL은 기본(allow)으로 두는 경우가 많다.\n\n```\nALB SG  : 0.0.0.0/0 → 443\nApp SG  : ALB SG → 8080\nDB SG   : App SG → 5432\n```\n\nCIDR을 넓게 열지 말고 **소스에 다른 SG ID**를 넣는 편이 안전하다.\n\n---\n\n## 4. NAT·엔드포인트\n\n프라이빗에서 아웃바운드(패키지 설치·API 호출)가 필요하면:\n\n- NAT Gateway (간단, 비용↑)\n- VPC Endpoint (S3/DynamoDB 등 비용·보안 유리)\n\n---\n\n## 정리\n\n네트워크는 “일단 다 연다”가 아니라 **계층(퍼블릭/프라이빗) + SG 최소 허용**으로 시작한다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":2,"order":2,"filePath":"aws/02-vpc-subnets-security-groups.md"},{"slug":"aws-03","title":"EC2 인스턴스 기초와 운영 포인트","excerpt":"AMI·인스턴스 타입·키페어·스토리지까지 EC2를 올리고 안전하게 접속·운영하는 기본을 정리한다.","content":"# EC2 인스턴스 기초와 운영 포인트\n\n> 요약: AMI·인스턴스 타입·키페어·스토리지까지 EC2를 올리고 안전하게 접속·운영하는 기본을 정리한다.\n\n---\n\n## 1. EC2 선택 체크리스트\n\n| 항목 | 고민 |\n|------|------|\n| AMI | Amazon Linux 2023 / Ubuntu LTS |\n| 타입 | `t3.micro` 실험, 부하는 측정 후 |\n| 스토리지 | gp3, 암호화 기본 |\n| 네트워크 | 프라이빗 서브넷 + SSM 권장 |\n| IAM 역할 | 인스턴스 프로필로 권한 부여 |\n\nSSH 키를 인터넷에 계속 열어두는 구성보다 **Systems Manager Session Manager**를 우선 검토한다.\n\n---\n\n## 2. 최소 생성 흐름\n\n1. IAM 역할: `AmazonSSMManagedInstanceCore` 등\n2. 보안 그룹: 필요한 포트만\n3. 유저 데이터로 패키지/에이전트 설치(선택)\n4. 태그: `Name`, `Env`, `Owner`\n\n```bash\naws ec2 describe-instances --filters Name=tag:Env,Values=dev\n```\n\n---\n\n## 3. 스토리지\n\n- **EBS**: 인스턴스에 붙는 블록. 스냅샷으로 백업.\n- **인스턴스 스토어**: 휘발성. 중요 데이터 금지.\n\n스냅샷 수명주기(DLM)를 초기에 걸어 두면 사고 대응이 쉬워진다.\n\n---\n\n## 4. 운영에서 자주 하는 일\n\n- CPU/메모리 알람\n- 오토스케일 전에 단일 인스턴스 헬스체크\n- 변경은 AMI 또는 구성 관리(이미지 베이킹)로 재현\n\n---\n\n## 정리\n\nEC2는 “서버 한 대”가 아니라 **역할·SG·스토리지·접속 경로**를 세트로 설계한다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":3,"filePath":"aws/03-ec2-instance-basics.md"},{"slug":"aws-04","title":"S3 버킷·접근 제어·수명주기","excerpt":"퍼블릭 차단, 버킷 정책·IAM, 버전관리·수명주기로 안전한 오브젝트 스토리지 운영 기준을 잡는다.","content":"# S3 버킷·접근 제어·수명주기\n\n> 요약: 퍼블릭 차단, 버킷 정책·IAM, 버전관리·수명주기로 안전한 오브젝트 스토리지 운영 기준을 잡는다.\n\n---\n\n## 1. S3의 위치\n\nS3는 무제한에 가까운 **오브젝트 스토리지**다. 정적 웹, 백업, 로그, 데이터 레이크에 쓴다.\n\n기본 원칙:\n\n- **Block Public Access** 유지\n- 퍼블릭 웹이 필요하면 CloudFront + OAC\n- 암호화(SSE-S3 또는 SSE-KMS)\n\n---\n\n## 2. 권한 모델\n\n| 방식 | 용도 |\n|------|------|\n| IAM 정책 | 누가(역할/사용자) 무엇을 |\n| 버킷 정책 | 이 버킷에 대한 리소스 정책 |\n| ACL | 레거시. 신규는 비권장 |\n\n앱은 **IAM 역할**로 `s3:GetObject` / `PutObject`만 연다. 와일드카드 `*` 버킷은 피한다.\n\n---\n\n## 3. 버전관리·수명주기\n\n- Versioning: 실수 삭제·덮어쓰기 복구\n- Lifecycle: 오래된 버전 → Glacier / 삭제\n- Replication: 재해 복구(필요 시)\n\n```json\n{\n  \"Rules\": [{\n    \"ID\": \"expire-old-logs\",\n    \"Status\": \"Enabled\",\n    \"Filter\": { \"Prefix\": \"logs/\" },\n    \"Expiration\": { \"Days\": 90 }\n  }]\n}\n```\n\n---\n\n## 4. 자주 하는 실수\n\n- 개발 편의로 퍼블릭 읽기 오픈\n- 액세스 키를 프론트에 심기\n- 버킷 이름을 추측 가능하게 만들고 민감 파일 방치\n\n---\n\n## 정리\n\nS3는 편하지만 **퍼블릭 차단 + 최소 IAM + 수명주기** 세 가지를 기본값으로 둔다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":4,"filePath":"aws/04-s3-buckets-access.md"},{"slug":"aws-05","title":"RDS로 관리형 데이터베이스 운영하기","excerpt":"엔진 선택, 서브넷 그룹, 백업·멀티 AZ까지 RDS를 안전하게 올리는 체크포인트를 정리한다.","content":"# RDS로 관리형 데이터베이스 운영하기\n\n> 요약: 엔진 선택, 서브넷 그룹, 백업·멀티 AZ까지 RDS를 안전하게 올리는 체크포인트를 정리한다.\n\n---\n\n## 1. 언제 RDS인가\n\n직접 EC2에 DB를 올리는 것보다 **패치·백업·페일오버**를 AWS에 맡길 때 RDS가 맞다.\n\n| 엔진 | 흔한 선택 |\n|------|-----------|\n| PostgreSQL | 일반 웹/API |\n| MySQL / MariaDB | 레거시·워드프레스 |\n| Aurora | 확장·고가용 요구 |\n\n---\n\n## 2. 네트워크\n\n- DB는 **프라이빗 서브넷**\n- SG: 앱 티어 SG에서만 포트 허용\n- 퍼블릭 액세스: 기본적으로 끔\n\n로컬에서 붙을 때는 배스천/SSM 포트포워딩 또는 VPN을 쓴다. `0.0.0.0/0`으로 3306/5432를 열지 않는다.\n\n---\n\n## 3. 운영 기본값\n\n- 자동 백업 켜기 (보존 기간 합의)\n- 스토리지 자동 확장 검토\n- 파라미터 그룹·옵션 그룹 문서화\n- 멀티 AZ: 프로덕션 권장\n\n```bash\naws rds describe-db-instances --query \"DBInstances[].{id:DBInstanceIdentifier,az:AvailabilityZone,multi:MultiAZ}\"\n```\n\n---\n\n## 4. 비용·성능\n\n- 인스턴스 클래스보다 먼저 **커넥션·인덱스·슬로우 쿼리**\n- 개발은 작은 클래스 + 스케줄 중지(가능 시)\n- 스냅샷이 쌓이면 비용도 쌓인다\n\n---\n\n## 정리\n\nRDS는 “DB 설치”가 아니라 **프라이빗 배치 · SG · 백업 · 멀티 AZ**를 세트로 계약하는 일이다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":5,"filePath":"aws/05-rds-managed-database.md"},{"slug":"aws-06","title":"IAM 역할과 최소 권한 설계","excerpt":"사용자·역할·정책을 구분하고, 인스턴스/서비스가 맡는 권한을 최소 권한으로 설계하는 방법을 정리한다.","content":"# IAM 역할과 최소 권한 설계\n\n> 요약: 사용자·역할·정책을 구분하고, 인스턴스/서비스가 맡는 권한을 최소 권한으로 설계하는 방법을 정리한다.\n\n---\n\n## 1. 핵심 용어\n\n| 용어 | 의미 |\n|------|------|\n| User | 사람(또는 장기 자격) |\n| Role | 맡길 수 있는 임시 권한 세트 |\n| Policy | Allow/Deny 문서 |\n| STS | 임시 자격 발급 |\n\n장기 액세스 키보다 **역할 Assume**이 기본선이다.\n\n---\n\n## 2. 누가 역할을 맡나\n\n- EC2 / ECS Task / Lambda → 실행 역할\n- CI (GitHub Actions 등) → OIDC로 역할 Assume\n- 사람 → SSO 또는 역할 전환\n\n```json\n{\n  \"Effect\": \"Allow\",\n  \"Action\": [\"s3:GetObject\"],\n  \"Resource\": \"arn:aws:s3:::my-app-assets/*\"\n}\n```\n\n`Resource`와 `Action`을 좁히는 것이 최소 권한의 전부다.\n\n---\n\n## 3. 실무 팁\n\n- 관리형 정책은 시작용. 나중에 고객 관리형으로 축소\n- `*` 리소스 + `iam:*` 조합은 사고 대기\n- Condition(`aws:RequestedRegion`, IP, MFA)으로 한 겹 더\n- Access Analyzer·IAM Access Advisor로 안 쓰는 권한 제거\n\n---\n\n## 4. 분리\n\n- 개발/스테이징/프로덕션 계정 분리(가능하면)\n- 같은 계정이면 태그·권한 경계(Permissions Boundary)\n\n---\n\n## 정리\n\nIAM은 기능이 아니라 **경계**다. “일단 Admin”을 없애는 순간부터 운영이 안정된다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":6,"filePath":"aws/06-iam-roles-least-privilege.md"},{"slug":"aws-07","title":"CloudWatch 로그·메트릭·알람","excerpt":"로그 수집, 핵심 메트릭, 알람·대시보드로 “이상할 때 알려주는” 관측 기본선을 만든다.","content":"# CloudWatch 로그·메트릭·알람\n\n> 요약: 로그 수집, 핵심 메트릭, 알람·대시보드로 “이상할 때 알려주는” 관측 기본선을 만든다.\n\n---\n\n## 1. 관측의 최소 세트\n\n| 신호 | 예 |\n|------|-----|\n| 메트릭 | CPU, 5xx, latency |\n| 로그 | 앱/ALB/RDS 로그 |\n| 알람 | 임계값 → SNS/Slack |\n| 대시보드 | 한 화면 요약 |\n\n모니터링 없이 스케일만 키우면 비용만 는다.\n\n---\n\n## 2. 로그\n\n- 앱 → CloudWatch Logs 에이전트 / 사이드카\n- 보존 기간을 정한다 (무기한은 비용)\n- 민감정보(토큰·PII) 마스킹\n\n로그 그룹 이름 규칙 예: `/app/${env}/${service}`\n\n---\n\n## 3. 알람 예시\n\n- ALB `HTTPCode_Target_5XX_Count` > 0 (평가 기간 합의)\n- RDS `FreeStorageSpace` 낮음\n- EC2 `StatusCheckFailed`\n- Billing 예상 비용\n\n알람은 **노이즈와 침묵** 사이 균형이 핵심이다. 처음엔 소수만.\n\n---\n\n## 4. X-Ray·기타\n\n분산 추적까지 가면 X-Ray / OpenTelemetry를 붙인다.  \n처음부터 전부 붙이기보다 **메트릭+로그+알람**을 먼저 안정화한다.\n\n---\n\n## 정리\n\n관측은 사후 도구가 아니라 **배포 완료 조건**에 넣는다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":7,"filePath":"aws/07-cloudwatch-logs-alarms.md"},{"slug":"aws-08","title":"ALB와 Auto Scaling으로 트래픽 받기","excerpt":"로드밸런서, 타깃 그룹, 헬스체크, Auto Scaling 정책으로 수평 확장의 기본 구성을 잡는다.","content":"# ALB와 Auto Scaling으로 트래픽 받기\n\n> 요약: 로드밸런서, 타깃 그룹, 헬스체크, Auto Scaling 정책으로 수평 확장의 기본 구성을 잡는다.\n\n---\n\n## 1. 기본 토폴로지\n\n```\n사용자 → ALB(퍼블릭) → 타깃 그룹 → EC2/ECS(프라이빗)\n```\n\n- HTTPS 리스너(443) + ACM 인증서\n- HTTP → HTTPS 리다이렉트\n- 헬스체크 경로: `/health` 같은 가벼운 엔드포인트\n\n---\n\n## 2. 타깃 그룹\n\n| 설정 | 포인트 |\n|------|--------|\n| 프로토콜/포트 | 앱이 실제로 듣는 포트 |\n| 헬스체크 | 성공 코드·주기·임계 |\n| stickiness | 세션 필요 시에만 |\n\n헬스체크가 실패하면 트래픽이 빠지므로, 배포 중 드레인 시간을 맞춘다.\n\n---\n\n## 3. Auto Scaling\n\n- 최소/희망/최대 용량\n- CPU 또는 ALB RequestCount 기반\n- 스케일 아웃은 빠르게, 인은 보수적으로\n\n```\n예: CPU 60% 5분 → +1\n    CPU 20% 15분 → -1\n```\n\n앱이 상태를 로컬 디스크에만 두면 스케일이 깨진다. **세션·파일은 외부화**.\n\n---\n\n## 4. 보안\n\n- ALB SG만 인터넷에 열고\n- 앱 SG는 ALB SG만 허용\n- WAF는 공개 API·로그인에 검토\n\n---\n\n## 정리\n\nALB + ASG는 “서버 여러 대”가 아니라 **헬스체크가 통과하는 동일한 타깃**을 만드는 설계다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":8,"filePath":"aws/08-alb-autoscaling.md"},{"slug":"aws-09","title":"AWS 배포·비용 실무 체크리스트","excerpt":"계정부터 관측·백업·비용까지, 서비스를 프로덕션에 올리기 전에 볼 실무 체크리스트를 모은다.","content":"# AWS 배포·비용 실무 체크리스트\n\n> 요약: 계정부터 관측·백업·비용까지, 서비스를 프로덕션에 올리기 전에 볼 실무 체크리스트를 모은다.\n\n---\n\n## 1. 계정·권한\n\n- [ ] 루트 MFA, 일상 작업은 IAM/SSO\n- [ ] 프로덕션 권한과 배포 파이프라인 분리\n- [ ] 시크릿은 Secrets Manager / SSM Parameter (평문 금지)\n\n---\n\n## 2. 네트워크·컴퓨트\n\n- [ ] 앱/DB 프라이빗, ALB만 퍼블릭\n- [ ] SG 최소 허용 (소스에 SG ID)\n- [ ] 멀티 AZ 또는 최소 2 AZ\n- [ ] 헬스체크·배포 롤링/블루그린 전략\n\n---\n\n## 3. 데이터\n\n- [ ] RDS/스냅샷 백업 주기·보존\n- [ ] S3 퍼블릭 차단, 버전관리(필요 시)\n- [ ] 암호화(저장·전송)\n\n---\n\n## 4. 관측·운영\n\n- [ ] 5xx·latency·디스크·빌링 알람\n- [ ] 로그 보존·개인정보 마스킹\n- [ ] 장애 시 연락 채널(SNS/Slack)\n- [ ] IaC(Terraform/CDK/CloudFormation)로 재현\n\n---\n\n## 5. 비용\n\n- [ ] 태그 필수 (`Project`, `Env`, `Owner`)\n- [ ] 개발 자원 스케줄 중지\n- [ ] NAT·ALB·퍼블릭 IPv4 비용 인지\n- [ ] 예산 알람\n\n---\n\n## 정리\n\n새 서비스보다 **체크리스트를 통과한 서비스**가 싸게, 오래 간다. AWS는 기능이 많아서가 아니라 경계를 명확히 해서 이긴다.\n","publishedAt":"2026-08-26","category":"aws","categoryLabel":"AWS","tags":["aws"],"readingMinutes":1,"order":9,"filePath":"aws/09-deploy-cost-checklist.md"},{"slug":"db-01","title":"PostgreSQL: 관계형 DB의 실무 기본선","excerpt":"트랜잭션·인덱스·JSON·확장까지, 웹/API 백엔드에서 PostgreSQL을 고르는 이유와 운영 기본을 정리한다.","content":"$8","publishedAt":"2026-08-26","category":"db","categoryLabel":"DB","tags":["db"],"readingMinutes":2,"order":1,"filePath":"db/01-postgresql.md"},{"slug":"db-02","title":"MySQL: 웹 서비스에서 가장 흔한 관계형 DB","excerpt":"InnoDB·문자셋·인덱스·레플리케이션 관점에서 MySQL(MariaDB 계열 포함) 실무 기본을 정리한다.","content":"$9","publishedAt":"2026-08-26","category":"db","categoryLabel":"DB","tags":["db"],"readingMinutes":2,"order":2,"filePath":"db/02-mysql.md"},{"slug":"db-03","title":"MongoDB: 문서형 DB로 유연한 스키마 다루기","excerpt":"컬렉션·도큐먼트·인덱스·트랜잭션 경계를 기준으로 MongoDB가 맞는 워크로드와 설계 주의를 정리한다.","content":"$a","publishedAt":"2026-08-26","category":"db","categoryLabel":"DB","tags":["db"],"readingMinutes":2,"order":3,"filePath":"db/03-mongodb.md"},{"slug":"db-04","title":"Redis: 인메모리 키-값으로 캐시·세션·큐","excerpt":"캐시, 세션, 레이트 리밋, 단순 큐까지 Redis를 쓰는 패턴과 영속성·만료·실수 포인트를 정리한다.","content":"# Redis: 인메모리 키-값으로 캐시·세션·큐\n\n> 요약: 캐시, 세션, 레이트 리밋, 단순 큐까지 Redis를 쓰는 패턴과 영속성·만료·실수 포인트를 정리한다.\n\n---\n\n## 1. 언제 Redis인가\n\n| 용도 | 예 |\n|------|-----|\n| 캐시 | API 응답, 핫 키 |\n| 세션 | 로그인 세션 스토어 |\n| 카운터·레이트리밋 | `INCR` + TTL |\n| 단순 큐/스트림 | 리스트, Streams |\n| 분산 락 | 신중히 (레드락 등) |\n\n주 데이터베이스를 대체하기보다 **빠르고 휘발·만료가 자연스러운 계층**으로 둔다.\n\n---\n\n## 2. 자료구조\n\n| 타입 | 용도 |\n|------|------|\n| String | 캐시 값, 카운터 |\n| Hash | 객체 필드 |\n| List | 단순 큐 |\n| Set / ZSet | 태그, 랭킹 |\n| Stream | 메시지 로그 |\n\n```bash\nSET user:42:profile '{\"name\":\"Ada\"}' EX 3600\nINCR ratelimit:42:2026082615\nEXPIRE ratelimit:42:2026082615 60\n```\n\n---\n\n## 3. 만료·메모리\n\n- TTL을 기본으로 설계\n- maxmemory + eviction 정책(`allkeys-lru` 등)\n- 큰 키·무제한 컬렉션(무제한 List) 주의\n- 핫 키 한곳에 몰리면 스케일 전에 병목\n\n---\n\n## 4. 영속성·운영\n\n- AOF / RDB는 **유실 허용 범위**에 맞게\n- 캐시 전용이면 재시작 유실을 전제로 앱이 동작해야 한다\n- 비밀번호·보호 모드·VPC 내부 노출\n- 클러스터/센티널은 필요 시\n\n---\n\n## 정리\n\nRedis는 DB라기보다 **저지연 데이터 구조 서버**다. TTL·메모리·유실 허용을 먼저 합의한다.\n","publishedAt":"2026-08-26","category":"db","categoryLabel":"DB","tags":["db"],"readingMinutes":1,"order":4,"filePath":"db/04-redis.md"},{"slug":"db-05","title":"SQLite: 파일 하나로 충분한 임베디드 SQL","excerpt":"서버 없이 파일 기반 SQL이 필요한 앱·도구·프로토타입에서 SQLite를 쓰는 기준과 한계를 정리한다.","content":"$b","publishedAt":"2026-08-26","category":"db","categoryLabel":"DB","tags":["db"],"readingMinutes":2,"order":5,"filePath":"db/05-sqlite.md"},{"slug":"flutter-01","title":"Flutter SDK와 프로젝트 시작하기","excerpt":"Flutter SDK 설치, 디바이스/에뮬레이터, 프로젝트 구조와 첫 실행까지 실무 기본선을 정리한다.","content":"# Flutter SDK와 프로젝트 시작하기\n\n> 요약: Flutter SDK 설치, 디바이스/에뮬레이터, 프로젝트 구조와 첫 실행까지 실무 기본선을 정리한다.\n\n---\n\n## 1. 왜 Flutter인가\n\n한 코드베이스로 **iOS·Android·웹·데스크톱**을 겨냥할 수 있다. UI는 위젯 트리, 언어는 Dart다.\n\n실무 기본 조합: **안정 채널 SDK + VS Code 또는 Android Studio + 실제 기기 한 대**.\n\n---\n\n## 2. 설치 확인\n\n```bash\nflutter doctor\nflutter devices\n```\n\n- Android: cmdline-tools, 라이선스, 에뮬레이터 또는 USB 디버깅\n- iOS: Xcode (macOS)\n- `doctor`의 빨간 항목은 배포 전에 없앤다\n\n---\n\n## 3. 생성·실행\n\n```bash\nflutter create my_app\ncd my_app\nflutter run\n```\n\n`lib/main.dart`가 진입점이다.\n\n---\n\n## 4. 디렉터리\n\n```\nlib/\n├── main.dart\n├── app.dart\n└── features/\nandroid/   ios/   web/\npubspec.yaml\ntest/\n```\n\n- 기능 단위 폴더를 일찍 나눈다\n- 에셋은 `pubspec.yaml`에 등록해야 번들에 포함된다\n\n---\n\n## 정리\n\nFlutter 시작은 위젯 암기가 아니라 **doctor가 통과하는 환경 + 재현 가능한 `flutter create`** 다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":1,"filePath":"flutter/01-sdk-project-start.md"},{"slug":"flutter-02","title":"Stateless와 Stateful 위젯","excerpt":"위젯이 화면의 구성 단위임을 기준으로 StatelessWidget과 StatefulWidget의 역할·생명주기를 정리한다.","content":"$c","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":2,"order":2,"filePath":"flutter/02-widgets-stateless-stateful.md"},{"slug":"flutter-03","title":"Row·Column·제약으로 레이아웃 잡기","excerpt":"부모 제약(constraints), Flex, Expanded, padding으로 Flutter 레이아웃이 깨지지 않게 짜는 방법을 정리한다.","content":"# Row·Column·제약으로 레이아웃 잡기\n\n> 요약: 부모 제약(constraints), Flex, Expanded, padding으로 Flutter 레이아웃이 깨지지 않게 짜는 방법을 정리한다.\n\n---\n\n## 1. 제약 박스\n\nFlutter 레이아웃은 **부모가 제약을 주고, 자식이 크기를 정한다**.  \n웹의 흐름 레이아웃과 달라, overflow는 보통 제약을 무시한 결과다.\n\n---\n\n## 2. 기본 축\n\n| 위젯 | 축 |\n|------|-----|\n| `Column` | 세로 |\n| `Row` | 가로 |\n| `Stack` | 겹침 |\n| `Wrap` | 줄바꿈 |\n\n```dart\nRow(\n  children: [\n    const Icon(Icons.star),\n    const SizedBox(width: 8),\n    Expanded(child: Text(title, overflow: TextOverflow.ellipsis)),\n  ],\n)\n```\n\n텍스트를 `Row`에 넣을 때는 **`Expanded` / `Flexible`** 가 거의 필수다.\n\n---\n\n## 3. 자주 쓰는 패턴\n\n- `Padding` / `SafeArea`\n- `Center` / `Align`\n- `SizedBox`로 간격 (임의 margin 남발 지양)\n- `ListView`는 스크롤 제약을 가짐 — `Column` 안에 무방비로 넣지 말 것\n\n무한 높이 안에 `ListView`를 두면 예외가 난다. `Expanded` 또는 `shrinkWrap`(신중)을 검토한다.\n\n---\n\n## 4. 디버그\n\n```dart\ndebugPaintSizeEnabled = true;\n```\n\n노란/검은 줄(overflow)이 보이면 제약부터 고친다.\n\n---\n\n## 정리\n\n레이아웃 버그는 위젯 이름이 아니라 **누가 얼마의 폭·높이를 허용했는가**에서 시작한다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":3,"filePath":"flutter/03-layout-constraints.md"},{"slug":"flutter-04","title":"Navigator와 라우트로 화면 전환","excerpt":"Navigator 2.0 감각, go_router, 인자 전달, 딥링크까지 Flutter 화면 전환의 실무 기본을 정리한다.","content":"# Navigator와 라우트로 화면 전환\n\n> 요약: Navigator 2.0 감각, go_router, 인자 전달, 딥링크까지 Flutter 화면 전환의 실무 기본을 정리한다.\n\n---\n\n## 1. 기본 스택\n\n```dart\nNavigator.of(context).push(\n  MaterialPageRoute(builder: (_) => const DetailPage()),\n);\n```\n\n작은 앱은 이것으로 충분하다. 웹 URL·딥링크가 필요하면 선언형 라우터를 검토한다.\n\n---\n\n## 2. go_router (권장 방향)\n\n```dart\nfinal router = GoRouter(\n  routes: [\n    GoRoute(path: '/', builder: (_, __) => const HomePage()),\n    GoRoute(\n      path: '/posts/:id',\n      builder: (_, state) => PostPage(id: state.pathParameters['id']!),\n    ),\n  ],\n);\n```\n\n- 경로가 곧 상태\n- 리다이렉트로 인증 게이트\n- 웹·모바일 URL을 맞추기 쉽다\n\n---\n\n## 3. 전달·복귀\n\n- path/query 파라미터\n- `extra` 객체 (웹 새로고침에 약할 수 있음)\n- `pop`으로 결과 반환\n\n---\n\n## 4. 주의\n\n- `BuildContext`가 unmounted인 뒤 `push` 하지 않기\n- 모달은 라우트와 역할을 섞지 않기\n- 탭 앱은 `StatefulShellRoute` 등 중첩 내비 검토\n\n---\n\n## 정리\n\n화면 전환은 함수 호출이 아니라 **스택(또는 URL)의 상태**다. 앱이 커지면 라우터를 한곳으로 모은다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":4,"filePath":"flutter/04-navigation-routes.md"},{"slug":"flutter-05","title":"setState부터 Provider·Riverpod까지 상태 관리","excerpt":"로컬 setState와 앱 전역 상태의 경계를 나누고, Provider/Riverpod를 고르는 기준을 정리한다.","content":"# setState부터 Provider·Riverpod까지 상태 관리\n\n> 요약: 로컬 setState와 앱 전역 상태의 경계를 나누고, Provider/Riverpod를 고르는 기준을 정리한다.\n\n---\n\n## 1. 먼저 로컬\n\n폼 입력, 토글, 애니메이션 진행도는 **위젯 근처 `setState`** 가 가장 싸다.\n\n전역 스토어에 모든 키 입력을 넣으면 리빌드와 복잡도가 는다.\n\n---\n\n## 2. 언제 전역인가\n\n| 상태 | 위치 |\n|------|------|\n| 로그인 세션 | 앱 스코프 |\n| 장바구니·설정 | 공유 레이어 |\n| 서버 목록 캐시 | 저장소/쿼리 계층 검토 |\n| 버튼 로딩 | 화면 로컬 |\n\n---\n\n## 3. 패키지 감각\n\n- **Provider**: 이해하기 쉽고 생태계가 큼\n- **Riverpod**: 컴파일 안전·테스트·스코프에 강점\n- **Bloc**: 이벤트/상태 파이프라인을 팀이 원할 때\n\n하나를 팀 표준으로 고정한다. 한 앱에 세 종류를 섞지 않는다.\n\n```dart\n// 개념: 읽기\nfinal user = context.watch<Auth>();\n```\n\n---\n\n## 4. 리빌드\n\n- `watch` 범위를 좁힌다\n- 큰 트리는 위젯 분리\n- `const` 생성자로 불필요 리빌드 감소\n\n---\n\n## 정리\n\n상태 관리 프레임워크보다 **“이 값이 누구의 기억인가”** 를 먼저 정한다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":5,"filePath":"flutter/05-state-setstate-provider.md"},{"slug":"flutter-06","title":"비동기·HTTP·JSON으로 서버 연동","excerpt":"Future/async, http 클라이언트, JSON 디코딩, 로딩·에러 UI까지 Flutter 네트워킹 기본을 정리한다.","content":"# 비동기·HTTP·JSON으로 서버 연동\n\n> 요약: Future/async, http 클라이언트, JSON 디코딩, 로딩·에러 UI까지 Flutter 네트워킹 기본을 정리한다.\n\n---\n\n## 1. async 기본\n\n```dart\nFuture<User> fetchUser(String id) async {\n  final res = await http.get(Uri.parse('$base/users/$id'));\n  if (res.statusCode != 200) {\n    throw HttpException('status ${res.statusCode}');\n  }\n  return User.fromJson(jsonDecode(res.body) as Map<String, dynamic>);\n}\n```\n\nUI 스레드를 막지 않는다. 파싱이 크면 `compute`로 Isolate를 검토한다.\n\n---\n\n## 2. UI 연결\n\n- `FutureBuilder` / `StreamBuilder`는 간단한 화면에 적합\n- 복잡한 화면은 상태 계층에서 로딩/데이터/에러를 모델링\n\n세 상태(로딩·성공·실패)를 항상 그린다.\n\n---\n\n## 3. 클라이언트\n\n- 타임아웃·재시도 정책을 정한다\n- 인증 헤더는 인터셉터/래퍼로 일관\n- 인증 토큰을 소스에 하드코딩하지 않는다\n\n---\n\n## 4. 모델\n\n- `fromJson` 계약을 명확히\n- 코드젠(`json_serializable`, freezed)은 팀 합의 후\n- null·타입 오류는 서버 계약 문제로 다룬다\n\n---\n\n## 정리\n\n네트워킹은 호출 성공이 아니라 **실패·로딩·파싱 계약을 UI가 흡수하는가**다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":6,"filePath":"flutter/06-async-http-json.md"},{"slug":"flutter-07","title":"리스트·키·성능의 기본","excerpt":"ListView.builder, key, 이미지 캐시, 불필요 리빌드를 줄여 스크롤 성능을 지키는 방법을 정리한다.","content":"# 리스트·키·성능의 기본\n\n> 요약: ListView.builder, key, 이미지 캐시, 불필요 리빌드를 줄여 스크롤 성능을 지키는 방법을 정리한다.\n\n---\n\n## 1. 빌더 리스트\n\n아이템이 많으면 `Column` + map이 아니라 **`ListView.builder`**.\n\n```dart\nListView.builder(\n  itemCount: items.length,\n  itemBuilder: (context, index) {\n    final item = items[index];\n    return ListTile(\n      key: ValueKey(item.id),\n      title: Text(item.title),\n    );\n  },\n)\n```\n\n화면에 보이는 만큼만 빌드한다.\n\n---\n\n## 2. Key\n\n같은 타입 위젯이 재배열되면 Flutter는 key로 정체성을 맞춘다.  \n폼·애니메이션·리스트 아이템에 **안정적 id 키**를 준다.\n\n---\n\n## 3. 스크롤 성능\n\n- 무거운 위젯을 타일 안에 중첩하지 않기\n- 네트워크 이미지는 캐시 패키지·사이즈 지정\n- `RepaintBoundary`는 측정 후\n- DevTools Performance / rebuild 하이라이트\n\n---\n\n## 4. const와 분리\n\n변하지 않는 서브트리는 `const` 위젯으로 분리한다.  \n상위 `setState`가 리스트 전체를 흔들지 않게 타일을 Stateless로 둔다.\n\n---\n\n## 정리\n\n리스트 성능은 마법이 아니라 **빌더 + 키 + 작은 타일**의 합이다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":7,"filePath":"flutter/07-lists-keys-performance.md"},{"slug":"flutter-08","title":"ThemeData로 머티리얼 디자인 토큰","excerpt":"ColorScheme, TextTheme, 다크모드, 컴포넌트 테마로 앱 전체 시각 언어를 일관되게 만드는 방법을 정리한다.","content":"# ThemeData로 머티리얼 디자인 토큰\n\n> 요약: ColorScheme, TextTheme, 다크모드, 컴포넌트 테마로 앱 전체 시각 언어를 일관되게 만드는 방법을 정리한다.\n\n---\n\n## 1. 테마를 한곳\n\n```dart\nMaterialApp(\n  theme: ThemeData(\n    colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0B6E4F)),\n    useMaterial3: true,\n  ),\n  darkTheme: ThemeData(\n    colorScheme: ColorScheme.fromSeed(\n      seedColor: const Color(0xFF0B6E4F),\n      brightness: Brightness.dark,\n    ),\n    useMaterial3: true,\n  ),\n);\n```\n\n위젯마다 하드코딩 hex를 뿌리지 않는다. `Theme.of(context).colorScheme`을 쓴다.\n\n---\n\n## 2. 타이포\n\n`textTheme`으로 제목/본문 단계를 고정한다.  \n접근성: 시스템 글자 크기 확대에 깨지지 않게 overflow를 설계한다.\n\n---\n\n## 3. 컴포넌트 테마\n\n`AppBarTheme`, `FilledButtonTheme` 등으로 버튼·입력 모양을 통일한다.  \n예외 스타일은 해당 화면만 덮는다.\n\n---\n\n## 4. 플랫폼\n\nCupertino는 iOS 느낌을 낼 때. 한 앱에서 Material/Cupertino를 무작정 섞으면 내비게이션 패턴이 흔들린다. **주 디자인 언어를 하나** 고른다.\n\n---\n\n## 정리\n\n디자인은 화면 장식이 아니라 **ColorScheme + TextTheme 계약**이다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":8,"filePath":"flutter/08-theming-material.md"},{"slug":"flutter-09","title":"로컬 저장·설정 영속화","excerpt":"shared_preferences, 파일, SQLite까지 앱 데이터를 기기에 남기는 선택지와 보안 주의를 정리한다.","content":"# 로컬 저장·설정 영속화\n\n> 요약: shared_preferences, 파일, SQLite까지 앱 데이터를 기기에 남기는 선택지와 보안 주의를 정리한다.\n\n---\n\n## 1. 무엇을 어디에\n\n| 데이터 | 후보 |\n|--------|------|\n| 플래그·테마 | `shared_preferences` |\n| 비밀(토큰) | secure storage (키체인/키스토어) |\n| 구조화 목록 | SQLite / drift / isar |\n| 캐시 파일 | 캐시 디렉터리 + 만료 |\n\n일반 prefs에 액세스 토큰을 두지 않는다.\n\n---\n\n## 2. prefs 예\n\n```dart\nfinal prefs = await SharedPreferences.getInstance();\nawait prefs.setBool('onboarding.done', true);\nfinal done = prefs.getBool('onboarding.done') ?? false;\n```\n\n키 이름을 도메인처럼 짓는다. 마이그레이션 계획이 없으면 키 폭증이 난다.\n\n---\n\n## 3. SQLite\n\n오프라인 큐, 검색, 관계가 있으면 SQL 쪽이 낫다.  \n스키마 버전·마이그레이션을 앱 릴리스와 함께 관리한다.\n\n---\n\n## 4. 백업·멀티 기기\n\n로컬은 유실될 수 있다. 서버가 소스 오브 트루스인지, 기기 전용인지 제품에서 합의한다.\n\n---\n\n## 정리\n\n영속화는 패키지 선택이 아니라 **민감도·수명·오프라인 요구**를 표로 먼저 나누는 일이다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":9,"filePath":"flutter/09-local-storage-persistence.md"},{"slug":"flutter-10","title":"Flutter 빌드·배포 실무 체크리스트","excerpt":"아이콘·서명·난독화·스토어 제출까지 Flutter 앱을 릴리스하기 전에 볼 실무 체크리스트를 모은다.","content":"# Flutter 빌드·배포 실무 체크리스트\n\n> 요약: 아이콘·서명·난독화·스토어 제출까지 Flutter 앱을 릴리스하기 전에 볼 실무 체크리스트를 모은다.\n\n---\n\n## 1. 품질\n\n- [ ] null-safety / 분석 옵션(`analysis_options.yaml`) 통과\n- [ ] 주요 흐름 위젯·유닛 테스트\n- [ ] 접근성: 대비, 큰 글자, 스크린 리더 라벨\n- [ ] 가로·노치·키보드 오버플로 확인\n\n---\n\n## 2. 성능·용량\n\n- [ ] 릴리스 모드에서 체감 (`flutter run --release`)\n- [ ] 이미지 해상도·webp\n- [ ] 불필요 에셋·디버그 로그 제거\n- [ ] DevTools로 jank 구간 확인\n\n---\n\n## 3. Android\n\n- [ ] applicationId, versionCode/Name\n- [ ] 키스토어·Play App Signing\n- [ ] minify/shrink 설정\n- [ ] 권한 최소화\n\n```bash\nflutter build appbundle\n```\n\n---\n\n## 4. iOS\n\n- [ ] Bundle ID, 인증서, 프로비저닝\n- [ ] 권한 설명 문구(Info.plist)\n- [ ] `flutter build ipa` / Xcode Archive\n\n---\n\n## 5. 보안·운영\n\n- [ ] API 키를 앱에 박지 않기 (가능하면 백엔드)\n- [ ] 인증서 피닝은 팀 정책\n- [ ] 크래시 리포트(Firebase Crashlytics 등)\n- [ ] 환경(dev/prod) 분리\n\n---\n\n## 정리\n\nFlutter 릴리스는 `flutter build` 한 줄이 아니라 **서명·권한·스토어 메타·관측**이 체크리스트를 통과하는 일이다.\n","publishedAt":"2026-08-26","category":"flutter","categoryLabel":"Flutter","tags":["flutter"],"readingMinutes":1,"order":10,"filePath":"flutter/10-build-release-checklist.md"},{"slug":"html-css-01","title":"시맨틱 HTML로 문서 뼈대 잡기","excerpt":"header·main·nav·section 등 시맨틱 태그로 문서 구조를 잡고, 접근성·SEO에 유리한 HTML 기본선을 정리한다.","content":"$d","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":1,"filePath":"html-css/01-semantic-html-document.md"},{"slug":"html-css-02","title":"CSS 박스 모델과 display 기초","excerpt":"content·padding·border·margin과 box-sizing, display 값의 차이를 정리해 레이아웃 사고의 기본을 잡는다.","content":"$e","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":2,"filePath":"html-css/02-css-box-model-display.md"},{"slug":"html-css-03","title":"Flexbox로 1차원 레이아웃 잡기","excerpt":"주축·교차축, justify/align, gap, flex 단축 속성으로 실무에서 가장 많이 쓰는 Flex 패턴을 정리한다.","content":"# Flexbox로 1차원 레이아웃 잡기\n\n> 요약: 주축·교차축, justify/align, gap, flex 단축 속성으로 실무에서 가장 많이 쓰는 Flex 패턴을 정리한다.\n\n---\n\n## 1. Flex가 맞는 경우\n\n한 방향으로 나열·정렬할 때: 내비, 툴바, 카드 액션, 폼 한 줄.\n\n```css\n.row {\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  gap: 12px;\n}\n```\n\n---\n\n## 2. 축을 먼저 정한다\n\n| 속성 | 의미 |\n|------|------|\n| `flex-direction` | 주축 방향 (`row` / `column`) |\n| `justify-content` | 주축 정렬 |\n| `align-items` | 교차축 정렬 |\n| `flex-wrap` | 줄바꿈 |\n| `gap` | 아이템 간격 |\n\n`margin: auto`로 한쪽을 밀어내는 트릭도 여전히 유용하다.\n\n---\n\n## 3. 아이템 성장\n\n```css\n.grow { flex: 1 1 auto; }\n.fixed { flex: 0 0 240px; }\n```\n\n- `flex-grow`: 남는 공간 분배\n- `flex-shrink`: 부족할 때 축소\n- `flex-basis`: 기본 크기\n\n텍스트 잘림이 필요하면 자식에 `min-width: 0`을 주는 경우가 많다.\n\n---\n\n## 4. 자주 쓰는 패턴\n\n**가운데 정렬**\n\n```css\n.center {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n```\n\n**왼쪽 묶음 + 오른쪽 액션**\n\n```css\n.bar { display: flex; gap: 8px; }\n.bar__spacer { margin-left: auto; }\n```\n\n---\n\n## 정리\n\nFlex는 “만능 그리드”가 아니라 **한 줄(또는 한 열) 정렬 도구**다. 2차원이면 Grid를 본다.\n","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":3,"filePath":"html-css/03-flexbox-layout.md"},{"slug":"html-css-04","title":"CSS Grid로 2차원 레이아웃 잡기","excerpt":"행·열 트랙, fr, auto-fit, 영역 이름까지 Grid로 페이지·카드 그리드를 설계하는 방법을 정리한다.","content":"$f","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":4,"filePath":"html-css/04-css-grid-layout.md"},{"slug":"html-css-05","title":"반응형 디자인과 미디어 쿼리","excerpt":"모바일 우선, 브레이크포인트, fluid 단위·clamp로 화면 폭에 대응하는 반응형 기본 전략을 정리한다.","content":"# 반응형 디자인과 미디어 쿼리\n\n> 요약: 모바일 우선, 브레이크포인트, fluid 단위·clamp로 화면 폭에 대응하는 반응형 기본 전략을 정리한다.\n\n---\n\n## 1. 모바일 우선\n\n작은 화면 스타일을 기본으로 두고, 넓어질 때 강화한다.\n\n```css\n.nav { display: none; }\n@media (min-width: 768px) {\n  .nav { display: flex; }\n}\n```\n\n`max-width`만으로 데스크톱을 먼저 짜면 예외가 쌓이기 쉽다.\n\n---\n\n## 2. 브레이크포인트\n\n팀에서 **소수만** 합의한다. 예:\n\n| 이름 | 예 |\n|------|-----|\n| sm | 640px |\n| md | 768px |\n| lg | 1024px |\n\n기기 목록을 쫓지 말고 **레이아웃이 깨지는 지점**에 둔다.\n\n---\n\n## 3. Fluid 기법\n\n```css\n.container {\n  width: min(100% - 2rem, 72rem);\n  margin-inline: auto;\n}\n.title {\n  font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem);\n}\n```\n\n- `%` / `vw` / `rem` / `clamp`\n- 고정 px 남발보다 **한계(min/max)가 있는 유동**\n\n---\n\n## 4. 이미지·터치\n\n- `srcset` / `sizes`로 해상도 대응\n- 터치 타깃 충분히 (대략 44px 전후)\n- hover 전용 정보는 터치에서도 도달 가능하게\n\n```css\n@media (hover: hover) and (pointer: fine) {\n  .card:hover { transform: translateY(-2px); }\n}\n```\n\n---\n\n## 정리\n\n반응형은 미디어쿼리 개수가 아니라 **기본(좁은 화면) + 필요한 지점만 확장**하는 설계다.\n","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":1,"order":5,"filePath":"html-css/05-responsive-media-queries.md"},{"slug":"html-css-06","title":"타이포·색·CSS 변수로 디자인 토큰","excerpt":"글꼴·행간·색 대비와 CSS 커스텀 프로퍼티로 일관된 디자인 토큰을 만드는 방법을 정리한다.","content":"$10","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":6,"filePath":"html-css/06-typography-color-variables.md"},{"slug":"html-css-07","title":"폼·포커스·접근성 기본","excerpt":"label 연결, 키보드 포커스, aria·시맨틱으로 쓸 수 있는 폼과 UI 접근성 최소 기준을 정리한다.","content":"# 폼·포커스·접근성 기본\n\n> 요약: label 연결, 키보드 포커스, aria·시맨틱으로 쓸 수 있는 폼과 UI 접근성 최소 기준을 정리한다.\n\n---\n\n## 1. 폼의 최소 규칙\n\n```html\n<label for=\"email\">이메일</label>\n<input id=\"email\" name=\"email\" type=\"email\" autocomplete=\"email\" required />\n```\n\n- `label` ↔ `id` 연결\n- `button`에 빈 아이콘만 두지 말고 접근 가능한 이름(`aria-label` 등)\n- 에러는 입력 근처에 텍스트로\n\n`div`로 만든 “가짜 체크박스”는 키보드·스크린 리더 비용이 크다. 네이티브 컨트롤을 우선한다.\n\n---\n\n## 2. 포커스\n\n```css\n:focus-visible {\n  outline: 2px solid var(--color-accent);\n  outline-offset: 2px;\n}\n```\n\n`outline: none`만 남기는 것은 금지에 가깝다. **보이는 포커스**를 디자인한다.\n\n---\n\n## 3. 의미·상태\n\n| 상황 | 접근 |\n|------|------|\n| 펼침 메뉴 | `aria-expanded` |\n| 모달 | 포커스 트랩 + `Esc` |\n| 필수 | `required` + 시각 표시 |\n| 로딩 버튼 | `disabled` + 상태 텍스트 |\n\n장식 아이콘은 `aria-hidden=\"true\"`.\n\n---\n\n## 4. 운동·대비\n\n```css\n@media (prefers-reduced-motion: reduce) {\n  * {\n    animation: none !important;\n    transition: none !important;\n  }\n}\n```\n\n색 대비·텍스트 크기 확대를 실제 기기에서 한 번이라도 확인한다.\n\n---\n\n## 정리\n\n접근성은 나중에 덧칠하는 옵션이 아니라 **HTML을 올바르게 쓰는 습관**이다.\n","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":7,"filePath":"html-css/07-forms-accessibility.md"},{"slug":"html-css-08","title":"모던 HTML/CSS 실무 체크리스트","excerpt":"시맨틱·레이아웃·반응형·토큰·접근성까지, 페이지를 내보내기 전에 볼 HTML/CSS 실무 체크리스트를 모은다.","content":"# 모던 HTML/CSS 실무 체크리스트\n\n> 요약: 시맨틱·레이아웃·반응형·토큰·접근성까지, 페이지를 내보내기 전에 볼 HTML/CSS 실무 체크리스트를 모은다.\n\n---\n\n## 1. HTML\n\n- [ ] `lang`, charset, viewport\n- [ ] `h1` 하나 + 제목 계층\n- [ ] `main` / `nav` / `button`·`a` 구분\n- [ ] 이미지 `alt`, 가능하면 크기 지정\n- [ ] 폼 `label` 연결\n\n---\n\n## 2. 레이아웃\n\n- [ ] `box-sizing: border-box`\n- [ ] 1D → Flex, 2D → Grid\n- [ ] `gap`으로 간격 통일\n- [ ] 넘침: `minmax(0, 1fr)` / `min-width: 0`\n- [ ] 컨테이너 폭 `min(100% - gutter, max)`\n\n---\n\n## 3. 반응형·시각\n\n- [ ] 모바일 우선 미디어쿼리\n- [ ] `clamp` 등 fluid 타이포 검토\n- [ ] 다크모드/테마는 변수로\n- [ ] 색 대비 확인\n\n---\n\n## 4. 접근성·품질\n\n- [ ] `:focus-visible` 스타일\n- [ ] 키보드만으로 주요 흐름 가능\n- [ ] `prefers-reduced-motion`\n- [ ] 불필요한 `!important` / 과도한 특이도 정리\n\n---\n\n## 5. 모던 기능(필요 시)\n\n| 기능 | 언제 |\n|------|------|\n| Container Queries | 컴포넌트 폭 기준 반응 |\n| `:has()` | 부모 상태 스타일 |\n| cascade layers | 라이브러리·앱 스타일 경계 |\n| `color-mix()` | 토큰 기반 파생색 |\n\n새 문법은 **지원 범위와 팀 합의** 후 도입한다.\n\n---\n\n## 정리\n\nHTML/CSS 실력은 트릭 개수가 아니라 **체크리스트를 통과하는 페이지를 반복해서 만드는 힘**이다.\n","publishedAt":"2026-08-26","category":"html-css","categoryLabel":"HTML/CSS","tags":["html-css"],"readingMinutes":2,"order":8,"filePath":"html-css/08-modern-css-checklist.md"},{"slug":"laravel-01","title":"Laravel 11+와 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$11","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$12","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$13","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$14","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$15","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$16","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$17","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$18","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$19","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$1a","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"nextjs-01","title":"Next.js App Router로 프로젝트 시작하기","excerpt":"App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.","content":"$1b","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":3,"order":1,"filePath":"nextjs/01-app-router-getting-started.md"},{"slug":"nextjs-02","title":"라우팅·레이아웃·동적 세그먼트","excerpt":"파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.","content":"$1c","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":2,"filePath":"nextjs/02-routing-layouts-dynamic-segments.md"},{"slug":"nextjs-03","title":"Server Component와 Client Component","excerpt":"기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.","content":"$1d","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":3,"filePath":"nextjs/03-server-client-components.md"},{"slug":"nextjs-04","title":"데이터 페칭과 캐시 전략","excerpt":"Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.","content":"$1e","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":4,"filePath":"nextjs/04-data-fetching-caching.md"},{"slug":"nextjs-05","title":"SSG·generateStaticParams·정적 export","excerpt":"빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.","content":"$1f","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":5,"filePath":"nextjs/05-ssg-generate-static-params-export.md"},{"slug":"nextjs-06","title":"Metadata·Open Graph·SEO 기본기","excerpt":"metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.","content":"$20","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":6,"filePath":"nextjs/06-metadata-open-graph-seo.md"},{"slug":"nextjs-07","title":"Route Handler와 Server Actions","excerpt":"앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.","content":"$21","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":7,"filePath":"nextjs/07-route-handlers-server-actions.md"},{"slug":"nextjs-08","title":"미들웨어와 인증 경계","excerpt":"middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.","content":"$22","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":8,"filePath":"nextjs/08-middleware-auth-boundaries.md"},{"slug":"nextjs-09","title":"이미지·폰트·성능 최적화","excerpt":"next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.","content":"$23","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":9,"filePath":"nextjs/09-image-font-performance.md"},{"slug":"nextjs-10","title":"배포 — Vercel·정적 호스팅·체크리스트","excerpt":"Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.","content":"$24","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":10,"filePath":"nextjs/10-deploy-vercel-static-checklist.md"},{"slug":"nginx-01","title":"Nginx 리버스 프록시 기초","excerpt":"정적 파일 서빙과 upstream 프록시로 앱 앞단에 Nginx를 두는 최소 구성을 정리한다.","content":"$25","publishedAt":"2026-08-26","category":"nginx","categoryLabel":"Nginx","tags":["nginx"],"readingMinutes":2,"order":1,"filePath":"nginx/01-nginx-reverse-proxy-basics.md"},{"slug":"nginx-02","title":"Nginx에서 HTTPS·TLS 종단하기","excerpt":"인증서 배치, 443 리스너, HTTP→HTTPS 리다이렉트까지 실무에서 쓰는 TLS 기본 구성을 정리한다.","content":"$26","publishedAt":"2026-08-26","category":"nginx","categoryLabel":"Nginx","tags":["nginx"],"readingMinutes":2,"order":2,"filePath":"nginx/02-nginx-tls-https.md"},{"slug":"nginx-03","title":"Nginx 운영·보안 체크리스트","excerpt":"타임아웃, 버퍼, 로그, 보안 헤더, gzip까지 배포 전에 볼 Nginx 실무 체크리스트를 모은다.","content":"$27","publishedAt":"2026-08-26","category":"nginx","categoryLabel":"Nginx","tags":["nginx"],"readingMinutes":2,"order":3,"filePath":"nginx/03-nginx-ops-checklist.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$28","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$29","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$2a","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$2b","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$2c","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$2d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$2e","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$2f","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$30","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$31","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$32","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$33","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$34","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$35","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$36","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$37","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$38","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$39","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$3a","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$3b","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"},{"slug":"vue-01","title":"Vue 3 Composition API로 시작하기","excerpt":"createApp·SFC·setup·script setup 기준으로 Vue 3 프로젝트의 기본 구조와 Composition API 진입점을 정리한다.","content":"$3c","publishedAt":"2026-08-26","category":"vue","categoryLabel":"Vue","tags":["vue"],"readingMinutes":2,"order":1,"filePath":"vue/01-vue3-composition-setup.md"},{"slug":"vue-02","title":"ref·reactive로 반응형 상태 다루기","excerpt":"ref와 reactive의 차이, 언래핑, computed·watch까지 Vue 반응형 핵심 API 사용법을 정리한다.","content":"$3d","publishedAt":"2026-08-26","category":"vue","categoryLabel":"Vue","tags":["vue"],"readingMinutes":2,"order":2,"filePath":"vue/02-reactivity-ref-reactive.md"},{"slug":"vue-03","title":"컴포넌트 props·emits·슬롯","excerpt":"부모-자식 데이터 흐름, 타입 안전한 props/emits, 슬롯으로 UI를 조합하는 패턴을 정리한다.","content":"# 컴포넌트 props·emits·슬롯\n\n> 요약: 부모-자식 데이터 흐름, 타입 안전한 props/emits, 슬롯으로 UI를 조합하는 패턴을 정리한다.\n\n---\n\n## 1. 단방향 흐름\n\n부모 → 자식: **props**  \n자식 → 부모: **emits**  \nUI 구멍: **slots**\n\n```vue\n<!-- Parent -->\n<UserCard :user=\"user\" @select=\"onSelect\">\n  <template #actions>\n    <button type=\"button\">편집</button>\n  </template>\n</UserCard>\n```\n\n---\n\n## 2. props · emits (script setup)\n\n```ts\nconst props = defineProps<{\n  title: string\n  count?: number\n}>()\n\nconst emit = defineEmits<{\n  select: [id: string]\n  close: []\n}>()\n\nfunction onClick() {\n  emit('select', '42')\n}\n```\n\n- props를 자식에서 직접 mutate하지 않는다\n- 이벤트 이름은 의트를 명확히 (`update:modelValue` 등)\n\n---\n\n## 3. v-model\n\n```vue\n<SearchInput v-model=\"query\" />\n```\n\n자식은 `modelValue` + `update:modelValue` 관례를 따르면 양방향처럼 쓸 수 있다.  \nVue 3.4+ `defineModel`도 팀 합의 후 사용.\n\n---\n\n## 4. 슬롯\n\n| 종류 | 용도 |\n|------|------|\n| default | 기본 삽입 |\n| named | 여러 구역 |\n| scoped | 자식 데이터를 부모 템플릿에 노출 |\n\n레이아웃·디자인 시스템에서 슬롯이 재사용의 핵심이다.\n\n---\n\n## 정리\n\n컴포넌트 API는 화려함보다 **props/emits/slots 계약을 좁고 명확하게** 가져가는 것이 유지보수에 이득이다.\n","publishedAt":"2026-08-26","category":"vue","categoryLabel":"Vue","tags":["vue"],"readingMinutes":2,"order":3,"filePath":"vue/03-components-props-emits.md"},{"slug":"vue-04","title":"Vue Router와 Pinia로 화면·상태 구성","excerpt":"라우트 맵핑, 네비게이션 가드, Pinia 스토어로 SPA의 화면 전환과 공유 상태를 구성하는 방법을 정리한다.","content":"$3e","publishedAt":"2026-08-26","category":"vue","categoryLabel":"Vue","tags":["vue"],"readingMinutes":2,"order":4,"filePath":"vue/04-vue-router-pinia.md"},{"slug":"vue-05","title":"Vue 앱 실무 체크리스트","excerpt":"프로젝트 구조, 성능, 접근성, 빌드·배포까지 Vue 앱을 내보내기 전에 볼 실무 체크리스트를 모은다.","content":"# Vue 앱 실무 체크리스트\n\n> 요약: 프로젝트 구조, 성능, 접근성, 빌드·배포까지 Vue 앱을 내보내기 전에 볼 실무 체크리스트를 모은다.\n\n---\n\n## 1. 구조·품질\n\n- [ ] Vue 3 + `script setup` + TypeScript 기본선\n- [ ] 컴포넌트 단일 책임, props/emits 계약 명확\n- [ ] ESLint + (가능하면) oxlint/vitest 등 팀 표준\n- [ ] 환경 변수 `VITE_` 접두사·시크릿 프론트 금지\n\n---\n\n## 2. 성능\n\n- [ ] 라우트·모달 등 무거운 화면 lazy import\n- [ ] `v-for`에 안정적 `key`\n- [ ] 큰 리스트는 가상 스크롤 검토\n- [ ] 불필요한 deep `watch` / 과도한 `reactive` 지양\n- [ ] 프로덕션 빌드·번들 분석\n\n---\n\n## 3. UX·접근성\n\n- [ ] 버튼/링크 시맨틱, 포커스 스타일\n- [ ] 비동기 UI에 로딩·에러·빈 상태\n- [ ] 폼 validation 메시지\n- [ ] 라우트 전환 후 스크롤·포커스 정책\n\n---\n\n## 4. 데이터·보안\n\n- [ ] API 에러·타임아웃 처리\n- [ ] XSS: `v-html` 최소화·살균\n- [ ] 인증 토큰 저장 위치 합의 (메모리/쿠키)\n- [ ] CSRF/쿠키 SameSite 정책 (백엔드와)\n\n---\n\n## 5. 배포\n\n- [ ] `vite build` 산출물·베이스 경로\n- [ ] SPA 폴백(Nginx `try_files` 등)\n- [ ] 소스맵·콘솔 노출 정책\n- [ ] 버전/헬스 엔드포인트(필요 시)\n\n---\n\n## 정리\n\nVue 실력은 API 암기가 아니라 **체크리스트를 통과하는 앱을 반복해서 만드는 힘**이다.\n","publishedAt":"2026-08-26","category":"vue","categoryLabel":"Vue","tags":["vue"],"readingMinutes":1,"order":5,"filePath":"vue/05-vue-app-checklist.md"},{"slug":"wpf-01","title":"WPF와 XAML·MVVM 시작하기","excerpt":"WPF 프로젝트 구조, XAML, DataContext, MVVM 분리를 기준으로 데스크톱 앱 기본선을 정리한다.","content":"# WPF와 XAML·MVVM 시작하기\n\n> 요약: WPF 프로젝트 구조, XAML, DataContext, MVVM 분리를 기준으로 데스크톱 앱 기본선을 정리한다.\n\n---\n\n## 1. 왜 WPF인가\n\nWPF는 .NET 기반 Windows 데스크톱 UI 프레임워크다. \nXAML 선언형 UI + C# 로직 분리, 데이터 바인딩이 강점이다.\n\n| 항목 | 특징 |\n|------|------|\n| UI 선언 | XAML |\n| 로직 | C# |\n| 패턴 | MVVM |\n| 렌더링 | DirectX 기반 |\n\n---\n\n## 2. 기본 구조\n\n```\nApp.xaml\nMainWindow.xaml\nMainWindow.xaml.cs\nViewModels/\nModels/\nServices/\n```\n\n- View: XAML\n- ViewModel: 상태/명령\n- Model: 도메인 데이터\n\n---\n\n## 3. 첫 MVVM 연결\n\n```csharp\npublic class MainViewModel {\n    public string Title { get; } = \"Hello WPF\";\n}\n```\n\n```xml\n<Window ...>\n  <Window.DataContext>\n    <local:MainViewModel />\n  </Window.DataContext>\n  <TextBlock Text=\"{Binding Title}\" />\n</Window>\n```\n\n---\n\n## 4. 실무 팁\n\n- 코드비하인드 이벤트를 최소화\n- ViewModel 테스트 가능 구조로 유지\n- 리소스/스타일은 App 또는 사전(Dictionary)로 분리\n\n---\n\n## 정리\n\nWPF 시작은 컨트롤 암기가 아니라 **XAML + 바인딩 + MVVM 경계**를 먼저 고정하는 일이다.\n","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":1,"order":1,"filePath":"wpf/01-wpf-xaml-mvvm-start.md"},{"slug":"wpf-02","title":"데이터 바인딩과 ObservableCollection","excerpt":"INotifyPropertyChanged, ObservableCollection, DataTemplate로 UI와 상태를 동기화하는 핵심 패턴을 정리한다.","content":"$3f","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":2,"order":2,"filePath":"wpf/02-data-binding-observable.md"},{"slug":"wpf-03","title":"이벤트 대신 ICommand로 액션 연결하기","excerpt":"버튼 클릭 로직을 코드비하인드에서 분리해 ICommand로 연결하고, CanExecute로 UI 상태를 제어하는 방법을 정리한다.","content":"$40","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":2,"order":3,"filePath":"wpf/03-commands-and-events.md"},{"slug":"wpf-04","title":"스타일·리소스·테마 관리","excerpt":"ResourceDictionary, StaticResource/DynamicResource, 공통 스타일 분리로 WPF UI를 일관되게 운영하는 방법을 정리한다.","content":"$41","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":2,"order":4,"filePath":"wpf/04-styles-resources-themes.md"},{"slug":"wpf-05","title":"화면 전환과 다이얼로그 패턴","excerpt":"Frame/Page, UserControl 전환, 대화상자 서비스 추상화로 WPF에서 화면 흐름을 깔끔하게 만드는 방법을 정리한다.","content":"# 화면 전환과 다이얼로그 패턴\n\n> 요약: Frame/Page, UserControl 전환, 대화상자 서비스 추상화로 WPF에서 화면 흐름을 깔끔하게 만드는 방법을 정리한다.\n\n---\n\n## 1. 전환 방식 선택\n\n| 방식 | 적합 |\n|------|------|\n| Window 다중 | 독립 툴 창 |\n| Frame + Page | 마법사/내비게이션 |\n| UserControl 교체 | 단일 메인 셸 |\n\n작은 앱은 UserControl 교체 패턴이 단순하다.\n\n---\n\n## 2. ViewModel 기반 전환\n\n현재 ViewModel을 바꿔 ContentControl에 템플릿 매핑하는 방식이 흔하다.\n\n```xml\n<ContentControl Content=\"{Binding CurrentViewModel}\" />\n```\n\nDataTemplate으로 ViewModel → View 연결.\n\n---\n\n## 3. 다이얼로그 추상화\n\nMessageBox를 ViewModel에서 직접 호출하지 말고 서비스로 감싼다.\n\n```csharp\npublic interface IDialogService {\n    bool Confirm(string message);\n}\n```\n\n테스트에서는 mock 구현으로 대체 가능하다.\n\n---\n\n## 4. 파일/폴더 선택\n\nOpenFileDialog, SaveFileDialog도 서비스 계층으로 감싸면 ViewModel 순수성이 높아진다.\n\n---\n\n## 정리\n\nWPF 전환 구조는 초기에 결정하면 이득이 크다. **CurrentViewModel + DialogService** 조합이 실무에서 단순하고 강하다.\n","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":1,"order":5,"filePath":"wpf/05-navigation-dialogs.md"},{"slug":"wpf-06","title":"WPF 앱 실무 체크리스트","excerpt":"아키텍처, 성능, 배포, 예외 처리까지 WPF 앱 릴리스 전에 확인할 실무 체크리스트를 정리한다.","content":"# WPF 앱 실무 체크리스트\n\n> 요약: 아키텍처, 성능, 배포, 예외 처리까지 WPF 앱 릴리스 전에 확인할 실무 체크리스트를 정리한다.\n\n---\n\n## 1. 아키텍처\n\n- [ ] MVVM 경계 유지 (ViewModel에 UI API 직접 호출 최소화)\n- [ ] Command 기반 액션\n- [ ] 공통 서비스(대화상자/파일/설정) 추상화\n- [ ] 폴더 구조(Views/ViewModels/Services) 일관성\n\n---\n\n## 2. 성능\n\n- [ ] 큰 리스트는 virtualization 확인\n- [ ] 무거운 바인딩/컨버터 남용 점검\n- [ ] 이미지 리소스 크기 최적화\n- [ ] UI 스레드 블로킹 작업은 async/Task로 분리\n\n---\n\n## 3. 안정성\n\n- [ ] 전역 예외 로깅(App.xaml.cs)\n- [ ] 저장/로드 실패 메시지 처리\n- [ ] 설정 파일 마이그레이션 전략\n\n---\n\n## 4. 배포\n\n- [ ] 대상 .NET 런타임 확인\n- [ ] MSIX/설치 프로그램 서명\n- [ ] 환경별 설정(dev/prod) 분리\n- [ ] 자동 업데이트 정책 검토\n\n---\n\n## 5. UX\n\n- [ ] 키보드 탭 순서\n- [ ] 최소 창 크기와 DPI 스케일\n- [ ] 다크 모드/고대비 정책(필요 시)\n\n---\n\n## 정리\n\nWPF 품질은 컨트롤 개수가 아니라 **MVVM 규율 + 배포 체크리스트**를 끝까지 지키는 데서 나온다.\n","publishedAt":"2026-08-26","category":"wpf","categoryLabel":"WPF","tags":["wpf"],"readingMinutes":1,"order":6,"filePath":"wpf/06-wpf-app-checklist.md"}],"categories":[{"id":"angular","label":"Angular","count":5},{"id":"aws","label":"AWS","count":9},{"id":"db","label":"DB","count":5},{"id":"flutter","label":"Flutter","count":10},{"id":"html-css","label":"HTML/CSS","count":8},{"id":"laravel","label":"Laravel","count":10},{"id":"nextjs","label":"Next.js","count":10},{"id":"nginx","label":"Nginx","count":3},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10},{"id":"vue","label":"Vue","count":5},{"id":"wpf","label":"WPF","count":6}]}]],["$L42"],"$L43"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+42:["$","script","script-0",{"src":"/_next/static/chunks/1u2my58i1zrhq.js","async":true}]
+43:["$","$L44",null,{"children":["$","$45",null,{"name":"Next.MetadataOutlet","children":"$@46"}]}]
+46:null

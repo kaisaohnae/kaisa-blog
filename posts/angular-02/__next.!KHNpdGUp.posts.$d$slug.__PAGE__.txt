@@ -1,0 +1,86 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+8:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+9:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T6ce,# 컴포넌트·템플릿·데이터 바인딩
+
+> 요약: 인터폴레이션, property/event 바인딩, @if/@for, input/output으로 템플릿과 컴포넌트를 연결하는 방법을 정리한다.
+
+---
+
+## 1. 바인딩 네 가지
+
+| 문법 | 방향 | 예 |
+|------|------|-----|
+| `{{ }}` | 컴포넌트 → 뷰 | 텍스트 |
+| `[prop]` | → | DOM/컴포넌트 입력 |
+| `(event)` | ← | 클릭·커스텀 이벤트 |
+| `[(ngModel)]` | 양방향 | 폼 (FormsModule 필요) |
+
+```html
+<button type="button" [disabled]="loading" (click)="save()">
+  {{ label }}
+</button>
+```
+
+---
+
+## 2. 제어 흐름 (신규 문법)
+
+```html
+@if (user) {
+  <p>{{ user.name }}</p>
+} @else {
+  <p>로그인 필요</p>
+}
+
+@for (item of items; track item.id) {
+  <li>{{ item.title }}</li>
+}
+```
+
+`*ngIf` / `*ngFor`도 동작하지만, 신규는 **내장 제어 흐름**을 우선한다. `track`은 리스트 성능에 중요하다.
+
+---
+
+## 3. input / output
+
+```ts
+import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'app-user-card',
+  standalone: true,
+  template: `
+    <p>{{ name() }}</p>
+    <button type="button" (click)="select.emit(name())">선택</button>
+  `,
+})
+export class UserCardComponent {
+  name = input.required<string>();
+  select = output<string>();
+}
+```
+
+시그널 기반 `input()`/`output()`이 최신 기본선이다. 데코레이터 `@Input`도 혼재할 수 있다.
+
+---
+
+## 4. 주의
+
+- 템플릿에 무거운 로직·구독 남발 금지
+- XSS: `[innerHTML]`는 살균 후에만
+- `ChangeDetectionStrategy.OnPush`는 시그널/불변 업데이트와 잘 맞는다
+
+---
+
+## 정리
+
+템플릿은 뷰의 계약이다. **표시는 바인딩, 분기는 @if/@for, 소통은 input/output**으로 좁힌다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"컴포넌트·템플릿·데이터 바인딩\",\"description\":\"인터폴레이션, property/event 바인딩, @if/@for, input/output으로 템플릿과 컴포넌트를 연결하는 방법을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/angular-02/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"angular\",\"keywords\":\"angular\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"컴포넌트·템플릿·데이터 바인딩\",\"item\":\"https://blog.kaisa.co.kr/posts/angular-02/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"컴포넌트·템플릿·데이터 바인딩"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[["$","$L2",null,{"href":"/posts/angular-01/","className":"blog-post__adjacent-link","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"이전 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"Angular 스탠드얼론으로 프로젝트 시작하기"}]]}],["$","$L2",null,{"href":"/posts/angular-03/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"시그널·서비스·의존성 주입"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],"$L5","$L6"],"$L7"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+5:["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}]
+6:["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]
+7:["$","$L8",null,{"children":["$","$9",null,{"name":"Next.MetadataOutlet","children":"$@a"}]}]
+a:null

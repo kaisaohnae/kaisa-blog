@@ -1,0 +1,76 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+5:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T5d9,# Vue 3 Composition API로 시작하기
+
+> 요약: createApp·SFC·setup·script setup 기준으로 Vue 3 프로젝트의 기본 구조와 Composition API 진입점을 정리한다.
+
+---
+
+## 1. 왜 Vue 3인가
+
+| 항목 | Vue 2 감각 | Vue 3 |
+|------|------------|-------|
+| API | Options 중심 | Composition + Options |
+| 반응형 | `Object.defineProperty` | Proxy |
+| 트리쉐이킹 | 제한적 | 개선 |
+| TypeScript | 보조 | 1급 시민에 가깝게 |
+
+신규는 **Vue 3 + `<script setup>`** 을 기본선으로 둔다.
+
+---
+
+## 2. 최소 앱
+
+```bash
+npm create vue@latest
+cd my-app
+npm install
+npm run dev
+```
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const count = ref(0)
+</script>
+
+<template>
+  <button type="button" @click="count++">{{ count }}</button>
+</template>
+```
+
+`script setup`은 setup 문법 설탕으로, export 없이 최상위 바인딩이 템플릿에 노출된다.
+
+---
+
+## 3. SFC 구조
+
+```
+Component.vue
+├── <script setup>
+├── <template>
+└── <style scoped>
+```
+
+- 로직은 script, 마크업은 template, 스타일은 scoped가 기본
+- 컴포넌트 파일명은 PascalCase 권장
+
+---
+
+## 4. Options vs Composition
+
+Options(`data`/`methods`)도 동작하지만, 로직 재사용·TS·대형 컴포넌트에서는 Composition이 유리하다.  
+기존 Options 코드는 점진 이관하면 된다.
+
+---
+
+## 정리
+
+Vue 3 시작은 버전 논쟁보다 **`script setup` + Composition + SFC** 기본선을 고정하는 것이다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"Vue 3 Composition API로 시작하기\",\"description\":\"createApp·SFC·setup·script setup 기준으로 Vue 3 프로젝트의 기본 구조와 Composition API 진입점을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/vue-01/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"vue\",\"keywords\":\"vue\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Vue 3 Composition API로 시작하기\",\"item\":\"https://blog.kaisa.co.kr/posts/vue-01/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"Vue 3 Composition API로 시작하기"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[null,["$","$L2",null,{"href":"/posts/vue-02/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"ref·reactive로 반응형 상태 다루기"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+7:null

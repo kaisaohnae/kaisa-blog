@@ -1,0 +1,80 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+5:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T5ff,# 타이포·색·CSS 변수로 디자인 토큰
+
+> 요약: 글꼴·행간·색 대비와 CSS 커스텀 프로퍼티로 일관된 디자인 토큰을 만드는 방법을 정리한다.
+
+---
+
+## 1. 타이포 기본
+
+| 항목 | 권장 |
+|------|------|
+| 본문 | 16px 전후 (`1rem`) |
+| 행간 | 1.5 전후 |
+| 제목 | 단계적으로, 과도한 단계 수 금지 |
+| 줄길이 | 대략 45–75자 |
+
+```css
+:root {
+  --font-sans: "Pretendard", system-ui, sans-serif;
+  --text-body: 1rem;
+  --leading: 1.6;
+}
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading);
+}
+```
+
+---
+
+## 2. 색과 대비
+
+- 본문/배경 대비를 확보한다 (대략 WCAG AA 목표)
+- “브랜드 색 = 본문 색”으로 쓰지 않는다
+- 상태색(성공/위험)은 색만으로 전달하지 말고 아이콘·텍스트 병행
+
+---
+
+## 3. CSS 변수(토큰)
+
+```css
+:root {
+  --color-bg: #f7f7f5;
+  --color-text: #1a1a1a;
+  --color-accent: #0b6e4f;
+  --space-2: 0.5rem;
+  --space-4: 1rem;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-text: #f2f2f2;
+  }
+}
+```
+
+컴포넌트는 raw hex 대신 **토큰만** 참조하게 하면 테마 전환이 쉽다.
+
+---
+
+## 4. 간격 스케일
+
+`4 / 8 / 12 / 16 / 24 / 32`처럼 제한된 스케일을 쓰면 화면이 정돈된다.  
+임의 `13px` 간격이 늘수록 디자인이 흔들린다.
+
+---
+
+## 정리
+
+예쁜 한 페이지보다 **토큰이 있는 시스템**이 다음 페이지를 싸게 만든다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"타이포·색·CSS 변수로 디자인 토큰\",\"description\":\"글꼴·행간·색 대비와 CSS 커스텀 프로퍼티로 일관된 디자인 토큰을 만드는 방법을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/html-css-06/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"html-css\",\"keywords\":\"html-css\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"타이포·색·CSS 변수로 디자인 토큰\",\"item\":\"https://blog.kaisa.co.kr/posts/html-css-06/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"타이포·색·CSS 변수로 디자인 토큰"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[["$","$L2",null,{"href":"/posts/html-css-05/","className":"blog-post__adjacent-link","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"이전 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"반응형 디자인과 미디어 쿼리"}]]}],["$","$L2",null,{"href":"/posts/html-css-07/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"폼·포커스·접근성 기본"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+7:null

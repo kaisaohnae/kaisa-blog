@@ -1,0 +1,86 @@
+1:"$Sreact.fragment"
+2:I[22016,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],""]
+3:I[55489,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/1jf0sqznr2yfq.js","/_next/static/chunks/1p-4hr1yu7b2y.js"],"default"]
+5:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+6:"$Sreact.suspense"
+:HL["/_next/static/chunks/0br7e7j26qkj3.css","style"]
+:HL["/_next/static/chunks/21i9-auhncr4a.css","style"]
+4:T74c,# 시맨틱 HTML로 문서 뼈대 잡기
+
+> 요약: header·main·nav·section 등 시맨틱 태그로 문서 구조를 잡고, 접근성·SEO에 유리한 HTML 기본선을 정리한다.
+
+---
+
+## 1. 왜 시맨틱인가
+
+`div`만으로도 화면은 만들 수 있다. 다만 **의미 있는 태그**를 쓰면:
+
+- 스크린 리더·검색엔진이 구조를 읽기 쉽다
+- CSS·JS 선택자가 의도에 맞게 유지된다
+- 팀원에게 HTML만으로도 레이아웃 의도가 전달된다
+
+---
+
+## 2. 기본 뼈대
+
+```html
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>페이지 제목</title>
+  </head>
+  <body>
+    <header>…</header>
+    <nav aria-label="주요">…</nav>
+    <main>
+      <article>
+        <h1>…</h1>
+        <section>…</section>
+      </article>
+    </main>
+    <aside>…</aside>
+    <footer>…</footer>
+  </body>
+</html>
+```
+
+- `lang`은 실제 언어에 맞춘다
+- `main`은 문서당 하나
+- 제목은 `h1`~`h6` 계층을 건너뛰지 않는다
+
+---
+
+## 3. 태그 선택 가이드
+
+| 의도 | 태그 |
+|------|------|
+| 사이트 헤더/푸터 | `header` / `footer` |
+| 주요 내비 | `nav` |
+| 독립 글 | `article` |
+| 주제 구역 | `section` |
+| 보조 정보 | `aside` |
+| 버튼이 아닌 링크 | `a` |
+| 동작 트리거 | `button` |
+
+클릭 가능한 `div` + `onclick`은 피하고, **`button`/`a`** 를 쓴다.
+
+---
+
+## 4. 이미지·대체 텍스트
+
+```html
+<img src="/hero.webp" alt="강아지 산책 사진" width="800" height="450" />
+```
+
+- 의미 있는 이미지 → 구체적 `alt`
+- 장식 이미지 → `alt=""`
+- 가능하면 `width`/`height`로 CLS 완화
+
+---
+
+## 정리
+
+HTML의 첫 목표는 예쁘게 그리는 것이 아니라 **문서의 뼈대를 올바르게 선언**하는 것이다.0:{"rsc":["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@graph\":[{\"@type\":\"BlogPosting\",\"headline\":\"시맨틱 HTML로 문서 뼈대 잡기\",\"description\":\"header·main·nav·section 등 시맨틱 태그로 문서 구조를 잡고, 접근성·SEO에 유리한 HTML 기본선을 정리한다.\",\"datePublished\":\"2026-08-26\",\"url\":\"https://blog.kaisa.co.kr/posts/html-css-01/\",\"author\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"Kaisa Blog\",\"url\":\"https://blog.kaisa.co.kr/\"},\"articleSection\":\"html-css\",\"keywords\":\"html-css\"},{\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Kaisa Blog\",\"item\":\"https://blog.kaisa.co.kr/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Posts\",\"item\":\"https://blog.kaisa.co.kr/posts/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"시맨틱 HTML로 문서 뼈대 잡기\",\"item\":\"https://blog.kaisa.co.kr/posts/html-css-01/\"}]}]}"}}],["$","main",null,{"className":"blog-main","children":["$","div",null,{"className":"site-shell","children":["$","article",null,{"className":"blog-post site-shell__inner","children":[["$","$L2",null,{"href":"/posts/","className":"blog-post__back","children":"← 목록으로"}],["$","div",null,{"className":"blog-post__meta","children":["$","span",null,{"children":"2026-08-26"}]}],["$","h1",null,{"className":"blog-post__title","children":"시맨틱 HTML로 문서 뼈대 잡기"}],["$","$L3",null,{"content":"$4"}],["$","nav",null,{"className":"blog-post__footer-nav","aria-label":"포스트 이동","children":[["$","div",null,{"className":"blog-post__adjacent","children":[null,["$","$L2",null,{"href":"/posts/html-css-02/","className":"blog-post__adjacent-link blog-post__adjacent-link--next","children":[["$","span",null,{"className":"blog-post__adjacent-label","children":"다음 글"}],["$","span",null,{"className":"blog-post__adjacent-title","children":"CSS 박스 모델과 display 기초"}]]}]]}],["$","$L2",null,{"href":"/posts/","className":"blog-post__back blog-post__back--footer","children":"← 목록으로"}]]}]]}]}]}]],[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0br7e7j26qkj3.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/21i9-auhncr4a.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/1jf0sqznr2yfq.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/1p-4hr1yu7b2y.js","async":true}]],["$","$L5",null,{"children":["$","$6",null,{"name":"Next.MetadataOutlet","children":"$@7"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"T8uMBF7QVnmz7RDNdfXzi"}
+7:null
