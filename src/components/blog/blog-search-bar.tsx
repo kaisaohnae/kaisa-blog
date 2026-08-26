@@ -6,14 +6,19 @@ import {Ex3Field, Ex3Input} from '@/ui-kit';
 
 type BlogSearchBarProps = {
   className?: string;
+  listBasePath?: string;
 };
 
-export default function BlogSearchBar({className}: BlogSearchBarProps) {
+export default function BlogSearchBar({
+  className,
+  listBasePath = '/issues/',
+}: BlogSearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const urlQuery = searchParams.get('q') || '';
   const categoryId = searchParams.get('categoryId') || '';
   const [query, setQuery] = useState(urlQuery);
+  const base = listBasePath.endsWith('/') ? listBasePath : `${listBasePath}/`;
 
   useEffect(() => {
     setQuery(urlQuery);
@@ -25,7 +30,7 @@ export default function BlogSearchBar({className}: BlogSearchBarProps) {
     if (next) params.set('q', next);
     if (categoryId) params.set('categoryId', categoryId);
     const qs = params.toString();
-    router.push(qs ? `/?${qs}` : '/');
+    router.push(qs ? `${base}?${qs}` : base);
   };
 
   const submit = (event: FormEvent) => {

@@ -16,12 +16,14 @@ type IssueItem = {
   traffic?: string | null;
   publishedAt?: string | null;
   detailUrl?: string;
+  geo?: string | null;
 };
 
 type GoogleNewsSection = {
   keyword: string;
   rank: number;
   traffic?: string | null;
+  geo?: string | null;
   news: IssueNewsItem[];
 };
 
@@ -38,7 +40,7 @@ const INITIAL: SourceState = {items: [], loading: false, error: ''};
 const SOURCE_META: Record<SourceKey, {title: string}> = {
   naver: {title: 'Naver'},
   daum: {title: 'Daum'},
-  google: {title: 'Google Trends (4시간)'},
+  google: {title: 'Google Trends KR/US (4시간)'},
 };
 
 const COPY_FOOTER_PROMPT =
@@ -58,14 +60,34 @@ function formatSourceList(title: string, items: IssueItem[]) {
   return `[${title}]\n${lines.join('\n')}`;
 }
 
+function formatGoogleTrendSections(items: IssueItem[]) {
+  if (!items.length) {
+    return '';
+  }
+
+  const grouped = new Map<string, IssueItem[]>();
+  for (const item of items) {
+    const geo = (item.geo || 'KR').toUpperCase();
+    const list = grouped.get(geo) || [];
+    list.push(item);
+    grouped.set(geo, list);
+  }
+
+  return [...grouped.entries()]
+    .map(([geo, list]) => formatSourceList(`Google Trends ${geo} (4시간)`, list))
+    .filter(Boolean)
+    .join('\n\n');
+}
+
 function formatGoogleNews(sections: GoogleNewsSection[]) {
   if (!sections.length) {
     return '';
   }
 
   const lines = sections.flatMap((section) => {
+    const geo = section.geo ? ` [${section.geo}]` : '';
     const traffic = section.traffic ? ` (${section.traffic})` : '';
-    const header = `${section.rank}. ${section.keyword}${traffic}`;
+    const header = `${section.rank}. ${section.keyword}${geo}${traffic}`;
     const articles = section.news.map((article) => {
       const source = article.source ? ` - ${article.source}` : '';
       return `• ${article.title}${source}`;
@@ -89,7 +111,7 @@ function buildIssuesCopyText({
   daum: IssueItem[];
 }) {
   const body = [
-    formatSourceList(SOURCE_META.google.title, googleTrends),
+    formatGoogleTrendSections(googleTrends),
     formatGoogleNews(googleNews),
     formatSourceList(SOURCE_META.naver.title, naver),
     formatSourceList(SOURCE_META.daum.title, daum),
@@ -291,13 +313,18 @@ function GoogleTrendsCard({
         try {
           const newsBody = await apiPost<{news: IssueNewsItem[]}>(
             'bl/get-issue-list',
-            {source: 'google', keyword: item.title},
+            {
+              source: 'google',
+              keyword: item.title,
+              ...(item.geo ? {geo: item.geo} : {}),
+            },
             'admin',
           );
           sections.push({
             keyword: item.title,
             rank: item.rank ?? sections.length + 1,
             traffic: item.traffic,
+            geo: item.geo,
             news: newsBody.data.news || [],
           });
           setNewsSections([...sections]);
@@ -330,8 +357,9 @@ function GoogleTrendsCard({
         <div className="manager-issues__box">
           <ol className="manager-issues__list manager-issues__list--google">
             {trends.map((item, index) => (
-              <li key={`${item.title}-${index}`} className="manager-issues__trend-row">
+              <li key={`${item.geo || 'KR'}-${item.title}-${index}`} className="manager-issues__trend-row">
                 <span className="manager-issues__rank">{item.rank ?? index + 1}</span>
+                {item.geo ? <span className="manager-issues__geo">{item.geo}</span> : null}
                 <span className="manager-issues__keyword">{item.title}</span>
                 {item.traffic ? <span className="manager-issues__traffic">{item.traffic}</span> : null}
               </li>
@@ -352,6 +380,7 @@ function GoogleTrendsCard({
               <article key={section.keyword} className="manager-issues__news-group">
                 <h3 className="manager-issues__news-group-title">
                   <span className="manager-issues__rank">{section.rank}</span>
+                  {section.geo ? <span className="manager-issues__geo">{section.geo}</span> : null}
                   {section.keyword}
                   {section.traffic ? <span className="manager-issues__traffic">{section.traffic}</span> : null}
                 </h3>

@@ -83,11 +83,14 @@ export function buildHomeListHref(params: {
   page: number;
   keyword?: string;
   categoryId?: string;
+  basePath?: string;
 }): string {
+  const base = params.basePath ?? '/issues/';
+  const normalized = base.endsWith('/') ? base : `${base}/`;
   const search = new URLSearchParams();
   if (params.keyword) search.set('q', params.keyword);
   if (params.categoryId) search.set('categoryId', params.categoryId);
   if (params.page > 1) search.set('page', String(params.page));
   const qs = search.toString();
-  return qs ? `/?${qs}` : '/';
+  return qs ? `${normalized}?${qs}` : normalized;
 }

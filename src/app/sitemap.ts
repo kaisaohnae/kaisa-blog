@@ -1,10 +1,10 @@
 import type {MetadataRoute} from 'next';
 import {absoluteUrl} from '@/config/site';
-import {getBlogPostSlugs} from '@/data/blog-posts';
+import {getAllBlogPosts} from '@/data/blog-posts';
 
 export const dynamic = 'force-static';
 
-const PUBLIC_PAGES = ['/', '/login/', '/register/', '/find-id/', '/reset-password/'];
+const PUBLIC_PAGES = ['/', '/posts/', '/issues/', '/login/', '/register/', '/find-id/', '/reset-password/'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -12,13 +12,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = PUBLIC_PAGES.map(path => ({
     url: absoluteUrl(path),
     lastModified: now,
-    changeFrequency: path === '/' ? 'daily' : 'monthly',
-    priority: path === '/' ? 1 : 0.4,
+    changeFrequency: path === '/' || path === '/posts/' ? 'daily' : 'monthly',
+    priority: path === '/' || path === '/posts/' ? 1 : path === '/issues/' ? 0.5 : 0.4,
   }));
 
-  const posts: MetadataRoute.Sitemap = getBlogPostSlugs().map(slug => ({
-    url: absoluteUrl(`/posts/${slug}/`),
-    lastModified: now,
+  const posts: MetadataRoute.Sitemap = getAllBlogPosts().map(post => ({
+    url: absoluteUrl(`/posts/${post.slug}/`),
+    lastModified: new Date(post.publishedAt),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));

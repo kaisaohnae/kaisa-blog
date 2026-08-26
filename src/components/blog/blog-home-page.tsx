@@ -17,12 +17,13 @@ type PostListResponse = {
   perPage?: number;
 };
 
-function BlogHomeContent() {
+function BlogHomeContent({listBasePath = '/issues/'}: {listBasePath?: string}) {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('q')?.trim() || '';
   const categoryId = searchParams.get('categoryId')?.trim() || '';
   const pageParam = Number(searchParams.get('page') || '1');
   const page = Number.isFinite(pageParam) && pageParam > 0 ? Math.floor(pageParam) : 1;
+  const base = listBasePath.endsWith('/') ? listBasePath : `${listBasePath}/`;
 
   const [categories, setCategories] = useState<BlogCategory[]>([]);
   const [totalPostCount, setTotalPostCount] = useState(0);
@@ -98,20 +99,24 @@ function BlogHomeContent() {
   }, [categoryName, keyword]);
 
   const buildHref = (nextPage: number) =>
-    buildHomeListHref({page: nextPage, keyword, categoryId});
+    buildHomeListHref({page: nextPage, keyword, categoryId, basePath: base});
 
   return (
     <main className="blog-main">
       <div className="site-shell">
         <div className="site-shell__inner blog-home">
           <div className="blog-search-area">
-            <BlogSearchBar className="blog-search--home" />
-            <BlogCategoryFilter categories={categories} totalPostCount={totalPostCount} />
+            <BlogSearchBar className="blog-search--home" listBasePath={base} />
+            <BlogCategoryFilter
+              categories={categories}
+              totalPostCount={totalPostCount}
+              listBasePath={base}
+            />
           </div>
           {error && <p className="form-error">{error}</p>}
-          <section className="blog-list" aria-label="Blog posts">
+          <section className="blog-list" aria-label="Issues">
             {posts.map((post) => (
-              <BlogPostCard key={post.postNo} post={post} />
+              <BlogPostCard key={post.postNo} post={post} detailBasePath="/issues/view/" />
             ))}
             {!loading && !error && posts.length === 0 && <p className="muted empty-state">{emptyMessage}</p>}
           </section>
@@ -126,10 +131,10 @@ function BlogHomeContent() {
   );
 }
 
-export default function BlogHomePage() {
+export default function BlogHomePage({listBasePath = '/issues/'}: {listBasePath?: string}) {
   return (
     <Suspense fallback={<main className="blog-main" aria-busy="true" />}>
-      <BlogHomeContent />
+      <BlogHomeContent listBasePath={listBasePath} />
     </Suspense>
   );
 }

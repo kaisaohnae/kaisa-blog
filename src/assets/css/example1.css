@@ -1427,6 +1427,19 @@
   color: var(--ex1-muted);
 }
 
+.manager-issues__geo {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ex1-muted);
+  background: color-mix(in srgb, var(--ex1-muted) 14%, transparent);
+}
+
 .manager-issues__keyword {
   flex: 1;
   min-width: 0;

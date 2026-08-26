@@ -1,13 +1,18 @@
 'use client';
 
-import {Suspense, useEffect, useState} from 'react';
+import {Suspense, useEffect, useMemo, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import PostEditor, {isEditorEmpty} from '@/components/editor/post-editor';
+import {
+  buildCategoryTree,
+  flattenCategoryOptions,
+  type FlatCategory,
+} from '@/components/manager/category-tree-utils';
 import {apiPost} from '@/config/api-config';
 import {LoadingFallback} from '@/ui-components';
 import {Ex3Button, Ex3Field, Ex3Input, Ex3Select, Ex3Toggle} from '@/ui-kit';
 
-type Category = {categoryId: number; categoryName: string};
+type Category = FlatCategory;
 
 function slugify(title: string) {
   return title
@@ -33,7 +38,7 @@ function PostWriteForm() {
   const [ready, setReady] = useState(!postNo);
 
   useEffect(() => {
-    apiPost<{list: Category[]}>('bl/get-category-list', {})
+    apiPost<{list: Category[]}>('bl/get-category-list', {adminYn: 'Y'}, 'admin')
       .then((body) => setCategories(body.data.list || []))
       .catch(() => setCategories([]));
   }, []);
@@ -47,11 +52,24 @@ function PostWriteForm() {
         setSlug(post.slug || '');
         setExcerpt(post.excerpt || '');
         setContent(post.content || '');
-        setCategoryId(String(post.categoryId || ''));
+        setCategoryId(post.categoryId != null ? String(post.categoryId) : '');
         setIsDisplay(post.isDisplay || 'Y');
       })
       .finally(() => setReady(true));
   }, [postNo]);
+
+  const categoryOptions = useMemo(() => {
+    const byId = new Map(categories.map((c) => [String(c.categoryId), c]));
+    return flattenCategoryOptions(buildCategoryTree(categories)).map((option) => {
+      const category = byId.get(option.id);
+      const hidden = category?.isDisplay === 'N';
+      const indent = option.depth > 0 ? `${'—'.repeat(option.depth)} ` : '';
+      return {
+        id: option.id,
+        label: `${indent}${option.label}${hidden ? ' (비공개)' : ''}`,
+      };
+    });
+  }, [categories]);
 
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,9 +121,12 @@ function PostWriteForm() {
         <Ex3Field label="카테고리" htmlFor="post-category">
           <Ex3Select id="post-category" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
             <option value="">선택</option>
-            {categories.map((c) => (
-              <option key={c.categoryId} value={c.categoryId}>
-                {c.categoryName}
+            {categoryId && !categoryOptions.some((c) => c.id === categoryId) ? (
+              <option value={categoryId}>선택된 카테고리 #{categoryId}</option>
+            ) : null}
+            {categoryOptions.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.label}
               </option>
             ))}
           </Ex3Select>

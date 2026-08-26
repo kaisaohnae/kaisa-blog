@@ -11,7 +11,7 @@ export default function Page() {
         </main>
       }
     >
-          <BlogPostViewPage listHref="/issues/" />
-        </Suspense>
-      );
+      <BlogPostViewPage listHref="/issues/" />
+    </Suspense>
+  );
 }

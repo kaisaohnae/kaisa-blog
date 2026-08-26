@@ -17,11 +17,12 @@ type Post = {
   category?: {categoryName?: string};
 };
 
-export default function BlogPostViewPage() {
+export default function BlogPostViewPage({listHref = '/issues/'}: {listHref?: string}) {
   const searchParams = useSearchParams();
   const slug = searchParams.get('slug') || '';
   const [post, setPost] = useState<Post | null>(null);
   const [error, setError] = useState('');
+  const list = listHref.endsWith('/') ? listHref : `${listHref}/`;
 
   useEffect(() => {
     if (!slug) {
@@ -45,7 +46,7 @@ export default function BlogPostViewPage() {
       <main className="blog-main">
         <div className="site-shell">
           <p className="form-error">{error}</p>
-          <Link href="/">목록으로</Link>
+          <Link href={list}>목록으로</Link>
         </div>
       </main>
     );
@@ -63,7 +64,7 @@ export default function BlogPostViewPage() {
     <main className="blog-main">
       <div className="site-shell">
         <article className="blog-post site-shell__inner">
-          <Link href="/" className="blog-post__back">
+          <Link href={list} className="blog-post__back">
             ← 목록으로
           </Link>
           <div className="blog-post__meta">

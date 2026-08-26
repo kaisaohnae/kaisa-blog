@@ -10,9 +10,16 @@ export type BlogListItem = {
   category?: {categoryName?: string};
 };
 
-export default function BlogPostCard({post}: {post: BlogListItem}) {
+export default function BlogPostCard({
+  post,
+  detailBasePath = '/issues/view/',
+}: {
+  post: BlogListItem;
+  detailBasePath?: string;
+}) {
+  const base = detailBasePath.endsWith('/') ? detailBasePath : `${detailBasePath}/`;
   return (
-    <Link href={`/posts/view/?slug=${encodeURIComponent(post.slug)}`} className="blog-card">
+    <Link href={`${base}?slug=${encodeURIComponent(post.slug)}`} className="blog-card">
       <div className="blog-card__meta">
         <span className="blog-card__date">{post.createDt ? String(post.createDt).slice(0, 10) : ''}</span>
         <span className="blog-card__category">{post.category?.categoryName || 'Blog'}</span>

@@ -77,7 +77,8 @@ export function postJsonLd(post: BlogPost) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           {'@type': 'ListItem', position: 1, name: SITE_NAME, item: absoluteUrl('/')},
-          {'@type': 'ListItem', position: 2, name: post.title, item: absoluteUrl(`/posts/${post.slug}/`)},
+          {'@type': 'ListItem', position: 2, name: 'Posts', item: absoluteUrl('/posts/')},
+          {'@type': 'ListItem', position: 3, name: post.title, item: absoluteUrl(`/posts/${post.slug}/`)},
         ],
       },
     ],

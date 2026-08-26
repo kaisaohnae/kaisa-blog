@@ -16,6 +16,7 @@ type BlogCategoryFilterProps = {
   categories: BlogCategory[];
   totalPostCount?: number;
   className?: string;
+  listBasePath?: string;
 };
 
 function CategoryLabel({label, count}: {label: string; count: number}) {
@@ -31,11 +32,13 @@ export default function BlogCategoryFilter({
   categories,
   totalPostCount = 0,
   className,
+  listBasePath = '/issues/',
 }: BlogCategoryFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const keyword = searchParams.get('q')?.trim() || '';
   const selectedId = searchParams.get('categoryId')?.trim() || '';
+  const base = listBasePath.endsWith('/') ? listBasePath : `${listBasePath}/`;
 
   const countById = useMemo(() => {
     const map = new Map<string, number>();
@@ -55,7 +58,7 @@ export default function BlogCategoryFilter({
     if (keyword) params.set('q', keyword);
     if (categoryId) params.set('categoryId', categoryId);
     const qs = params.toString();
-    router.push(qs ? `/?${qs}` : '/');
+    router.push(qs ? `${base}?${qs}` : base);
   };
 
   if (!options.length) return null;

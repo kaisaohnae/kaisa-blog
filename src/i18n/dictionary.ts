@@ -6,6 +6,36 @@ export const dictionary: Record<string, LocaleEntry> = {
     "zh": "登录",
     "hi": "लॉगिन"
   },
+  "Posts": {
+    "ko": "포스트",
+    "zh": "文章",
+    "hi": "पोस्ट"
+  },
+  "Issues": {
+    "ko": "이슈",
+    "zh": "议题",
+    "hi": "मुद्दे"
+  },
+  "Main navigation": {
+    "ko": "주 메뉴",
+    "zh": "主导航",
+    "hi": "मुख्य नेविगेशन"
+  },
+  "Mobile navigation": {
+    "ko": "모바일 메뉴",
+    "zh": "移动导航",
+    "hi": "मोबाइल नेविगेशन"
+  },
+  "Open menu": {
+    "ko": "메뉴 열기",
+    "zh": "打开菜单",
+    "hi": "मेनू खोलें"
+  },
+  "Close menu": {
+    "ko": "메뉴 닫기",
+    "zh": "关闭菜单",
+    "hi": "मेनू बंद करें"
+  },
   "Register": {
     "ko": "회원가입",
     "zh": "注册",

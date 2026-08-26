@@ -5,19 +5,26 @@ import {getBlogPost, getBlogPostSlugs} from '@/data/blog-posts';
 import {postJsonLd, postPageMetadata} from '@/lib/seo';
 import {notFound} from 'next/navigation';
 
+type PageProps = {
+  params: Promise<{slug: string}>;
+};
+
 export function generateStaticParams() {
-  return getBlogPostSlugs().map(slug => ({slug}));
+  return getBlogPostSlugs().map((slug) => ({slug}));
 }
 
-export function generateMetadata({params}: {params: {slug: string}}): Metadata {
-  const post = getBlogPost(params.slug);
+export async function generateMetadata({params}: PageProps): Promise<Metadata> {
+  const {slug} = await params;
+  const post = getBlogPost(slug);
   if (!post) return {};
   return postPageMetadata(post);
 }
 
-export default function Page({params}: {params: {slug: string}}) {
-  const post = getBlogPost(params.slug);
+export default async function Page({params}: PageProps) {
+  const {slug} = await params;
+  const post = getBlogPost(slug);
   if (!post) notFound();
+
   return (
     <>
       <JsonLd data={postJsonLd(post)} />
