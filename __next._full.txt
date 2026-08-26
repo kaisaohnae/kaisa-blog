@@ -7,18 +7,23 @@
 7:I[22067,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
 8:I[78481,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
 9:I[2105,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default"]
-a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"LocaleProvider"]
-b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
-c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
-d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
-e:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js"],"default"]
-f:I[15539,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/31_3thyp_teuk.js","/_next/static/chunks/0c2dsw9jztopz.js"],"default"]
-3b:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
+a:I[69033,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js"],"LocaleProvider"]
+b:I[45872,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js"],"default"]
+c:I[20683,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js"],"default"]
+d:I[86979,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/30wx_tsebapsb.js"],"default"]
+11:I[68027,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"default",1]
 :HL["/_next/static/chunks/3n6tbxvq3ysio.css","style"]
 :HL["/_next/static/chunks/3nvq7s-jdhde9.css","style"]
 :HL["/_next/static/media/0c795a286deabae8-s.p.3vm0tq4e-zz_5.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/5c285b27cdda1fe8-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-10:T13e2,# Laravel 11+와 현대 PHP 시작하기
+0:{"P":null,"c":["",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"ko","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var KEY='kaisa-locale';var loc=null;try{loc=sessionStorage.getItem(KEY);}catch(e){}function fromNav(){var list=[navigator.language].concat(navigator.languages||[]);for(var i=0;i<list.length;i++){var l=String(list[i]||'').toLowerCase();if(l.indexOf('ko')===0)return 'ko';if(l.indexOf('zh')===0)return 'zh';if(l.indexOf('hi')===0)return 'hi';if(l.indexOf('en')===0)return 'en';}return null;}if(loc!=='en'&&loc!=='ko'&&loc!=='zh'&&loc!=='hi')loc=fromNav();if(loc!=='en'&&loc!=='ko'&&loc!=='zh'&&loc!=='hi')loc='ko';document.documentElement.lang=loc;}catch(e){document.documentElement.lang='ko';}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/3iv45donp3zt0.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],"$Le"]}]}]]}],{"children":["$Lf",{},null,false,null]},null,false,null]},null,false,null],"$L10",false]],"m":"$undefined","G":["$11",["$L12","$L13"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"-ZJ8zyEiZIvyiuphEEEE2"}
+14:I[44604,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js"],"default"]
+15:I[15539,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js","/_next/static/chunks/1zc2_-8y7cq_w.js","/_next/static/chunks/23376vl-bxl5y.js","/_next/static/chunks/3iv45donp3zt0.js","/_next/static/chunks/0c2dsw9jztopz.js"],"default"]
+40:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
+42:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
+43:"$Sreact.suspense"
+e:["$","$L14",null,{}]
+16:T13e2,# Laravel 11+와 현대 PHP 시작하기
 
 > 요약: Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.
 
@@ -249,7 +254,7 @@ curl http://127.0.0.1:8000/api/hello
 2. `.env`에서 SQLite ↔ MySQL/Postgres 중 하나로 DB를 연결한다.
 3. `OrderStatus` Enum을 만들어 `tinker`에서 출력해 본다.
 4. `php artisan route:list`로 등록된 라우트를 확인한다.
-11:T142f,# 라우팅·미들웨어·컨트롤러 — 요청 생명주기
+17:T142f,# 라우팅·미들웨어·컨트롤러 — 요청 생명주기
 
 > 요약: 요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.
 
@@ -481,7 +486,7 @@ $exceptions->shouldRenderJsonWhen(function (Request $request, Throwable $e) {
 2. `PublishPostController` invokable을 만든다.
 3. `admin` 미들웨어로 삭제 API를 보호한다.
 4. `throttle:10,1`을 로그인 시도 라우트에 건다.
-12:T14b7,# Eloquent ORM과 데이터베이스
+18:T14b7,# Eloquent ORM과 데이터베이스
 
 > 요약: 마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.
 
@@ -744,7 +749,7 @@ php artisan make:observer PostObserver --model=Post
 2. `published` 스코프와 factory state를 구현한다.
 3. `preventLazyLoading`을 켜고 N+1을 `with`로 고친다.
 4. 주문 생성 시 트랜잭션으로 order + items를 저장한다.
-13:T15e5,# Validation, Form Request, API Resource
+19:T15e5,# Validation, Form Request, API Resource
 
 > 요약: 입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.
 
@@ -982,7 +987,7 @@ $path = $request->file('cover')->store('covers', 's3');
 2. `PostResource`로 show/index 응답을 통일한다.
 3. 검증 실패 JSON 포맷을 커스터마이즈한다.
 4. 이미지 업로드 필드 검증 + `storage` 저장을 구현한다.
-14:T1291,# 인증·인가 — Sanctum, Policy, Gate
+1a:T1291,# 인증·인가 — Sanctum, Policy, Gate
 
 > 요약: 세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.
 
@@ -1187,7 +1192,7 @@ Policy 안에서 role/permission을 읽게 중앙화하자.
 2. `PostPolicy`로 본인 글만 수정·삭제 가능하게 한다.
 3. 로그인 라우트에 `throttle`을 건다.
 4. `/me` Resource 응답을 구현한다.
-15:T10b4,# 테스트 — PHPUnit, Pest, Feature 테스트
+1b:T10b4,# 테스트 — PHPUnit, Pest, Feature 테스트
 
 > 요약: Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.
 
@@ -1379,7 +1384,7 @@ Http::fake([
 2. Policy 403 시나리오를 고정한다.
 3. `Http::fake`로 외부 결제 클라이언트를 테스트한다.
 4. `Queue::fake`로 환영 메일 Job이 쌓이는지 확인한다.
-16:T1249,# 큐·Job·이벤트·스케줄링
+1c:T1249,# 큐·Job·이벤트·스케줄링
 
 > 요약: 무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.
 
@@ -1602,7 +1607,7 @@ $user->notify(new InvoicePaid($invoice));
 2. `OrderPlaced` 이벤트 + 큐 리스너를 만든다.
 3. 실패를 강제하고 `queue:failed`를 확인한다.
 4. 매일 자정에 임시 파일 정리 스케줄을 등록한다.
-17:Teb5,# 캐시·Redis·성능 최적화
+1d:Teb5,# 캐시·Redis·성능 최적화
 
 > 요약: 캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.
 
@@ -1798,7 +1803,7 @@ p95 지연, 쿼리 수, Redis hit ratio, 큐 wait time을 같이 본다.
 2. Redis lock으로 중복 결제 요청을 막는다.
 3. `route:cache` / `config:cache`를 스테이징에서 검증한다.
 4. 목록 API 쿼리 수를 `with` 전후로 비교한다.
-18:T1220,# Blade·Livewire·Inertia와 API 프론트 전략
+1e:T1220,# Blade·Livewire·Inertia와 API 프론트 전략
 
 > 요약: 서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.
 
@@ -2004,7 +2009,7 @@ php artisan filament:install --panels
 2. Livewire 검색 리스트를 구현한다 **또는** Inertia 페이지 하나를 연결한다.
 3. API Resource와 Inertia props 중 하나로 게시글 상세를 내려준다.
 4. (선택) Reverb로 간단 알림 이벤트를 방송한다.
-19:T15c0,# 운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트
+1f:T15c0,# 운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트
 
 > 요약: Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.
 
@@ -2212,7 +2217,7 @@ DB/Redis까지 보려면 커스텀 health 체크 추가.
 이 문서들을 바탕으로, 도메인에 Filament·Inertia·Vapor·Event Sourcing 등을 선택적으로 더하면 실무 생산성이 빠르게 오른다.
 
 추가로 파고들 주제: Laravel Pennant(피처 플래그), Folio, Volt, Tenancy, DDD/Action 패턴, Arch 테스트, CI with GitHub Actions.
-1a:Ta57,# Next.js App Router로 프로젝트 시작하기
+20:Ta57,# Next.js App Router로 프로젝트 시작하기
 
 > 요약: App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.
 
@@ -2333,7 +2338,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 1. `create-next-app`으로 프로젝트를 만든다.
 2. `/about` 라우트와 공통 헤더 레이아웃을 추가한다.
 3. 정적 export가 필요한지 팀 기준으로 한 줄 결정한다.
-1b:T8c3,# 라우팅·레이아웃·동적 세그먼트
+21:T8c3,# 라우팅·레이아웃·동적 세그먼트
 
 > 요약: 파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.
 
@@ -2428,7 +2433,7 @@ import Link from 'next/link';
 1. `/posts/[slug]`와 `generateStaticParams` 2개를 만든다.
 2. `(marketing)` / `(app)` 그룹으로 레이아웃을 나눈다.
 3. 모든 내부 링크에 trailing slash 정책을 맞춘다.
-1c:T841,# Server Component와 Client Component
+22:T841,# Server Component와 Client Component
 
 > 요약: 기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.
 
@@ -2519,7 +2524,7 @@ export default async function PostsPage() {
 1. 서버 페이지 + 클라이언트 검색 입력 조합을 만든다.
 2. 불필요하게 `'use client'`인 파일을 찾아 서버로 되돌린다.
 3. Client bundle에 큰 의존성이 들어가는지 빌드 분석으로 확인한다.
-1d:T966,# 데이터 페칭과 캐시 전략
+23:T966,# 데이터 페칭과 캐시 전략
 
 > 요약: Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.
 
@@ -2610,7 +2615,7 @@ app/posts/[slug]/error.tsx
 1. `revalidate: 60` fetch와 `no-store` fetch를 비교한다.
 2. `content/` MD를 읽어 목록 페이지를 만든다.
 3. 정적 export 환경이면 “빌드 타임에만 읽기”로 데이터 소스를 정리한다.
-1e:T836,# SSG·generateStaticParams·정적 export
+24:T836,# SSG·generateStaticParams·정적 export
 
 > 요약: 빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.
 
@@ -2697,7 +2702,7 @@ if (!post) notFound();
 1. 동적 `[slug]` 3개를 SSG로 빌드해 `out/` HTML을 연다.
 2. `await params`로 바꾼 뒤에도 정적 HTML인지 확인한다.
 3. export 모드에서 깨지는 API를 목록으로 적는다.
-1f:T842,# Metadata·Open Graph·SEO 기본기
+25:T842,# Metadata·Open Graph·SEO 기본기
 
 > 요약: metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.
 
@@ -2798,7 +2803,7 @@ robots: {index: false, follow: false}
 1. 글 상세에 `generateMetadata` + canonical을 붙인다.
 2. sitemap에 글 URL만 넣고 인증 페이지는 제외/noindex 한다.
 3. 카톡·슬랙에 URL을 붙여 OG 미리보기를 확인한다.
-20:T90d,# Route Handler와 Server Actions
+26:T90d,# Route Handler와 Server Actions
 
 > 요약: 앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.
 
@@ -2901,7 +2906,7 @@ export async function updatePost(id: string) {
 1. `POST /api/echo` Route Handler를 만든다 (Node 런타임 호스팅에서).
 2. 간단한 Server Action 폼을 만든다.
 3. 현재 배포가 export면 “Next API 없이” 설계도를 그린다.
-21:T951,# 미들웨어와 인증 경계
+27:T951,# 미들웨어와 인증 경계
 
 > 요약: middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.
 
@@ -2988,7 +2993,7 @@ export default async function ManagerLayout({children}: {children: React.ReactNo
 1. `/manager/*` 미들웨어 리다이렉트를 만든다 (Node 호스팅).
 2. 레이아웃에서 세션 없는 사용자를 `redirect` 한다.
 3. export 배포라면 클라이언트 가드 + API 401 처리 흐름을 문서화한다.
-22:T6c6,# 이미지·폰트·성능 최적화
+28:T6c6,# 이미지·폰트·성능 최적화
 
 > 요약: next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.
 
@@ -3074,7 +3079,7 @@ npm run build
 1. 히어로에 `next/image` + `priority`를 적용한다.
 2. `next/font`로 본문 폰트를 옮긴다.
 3. export 모드면 `unoptimized` 필요 여부를 확인한다.
-23:T811,# 배포 — Vercel·정적 호스팅·체크리스트
+29:T811,# 배포 — Vercel·정적 호스팅·체크리스트
 
 > 요약: Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.
 
@@ -3163,7 +3168,7 @@ Next.js 배포는 “어디서 돌릴지”가 아키텍처다.
 1. 현재 프로젝트가 Vercel형인지 export형인지 한 줄로 적는다.
 2. `NEXT_PUBLIC_SITE_URL`이 sitemap·OG에 쓰이는지 확인한다.
 3. 위 체크리스트를 통과/미통과로 표시한다.
-24:T10fd,# React Native와 Expo로 시작하기
+2a:T10fd,# React Native와 Expo로 시작하기
 
 > 요약: 최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.
 
@@ -3350,7 +3355,7 @@ props·API 응답·네비게이션 파라미터에 타입을 걸면 앱 규모�
 2. 홈 화면에 이름·버전 텍스트를 표시한다.
 3. `app.json`의 `name`, `scheme`을 바꿔 반영을 확인한다.
 4. TypeScript로 `User` 타입과 표시 컴포넌트를 만든다.
-25:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
+2b:T12ef,# 컴포넌트·스타일·레이아웃 — Flex와 StyleSheet
 
 > 요약: RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.
 
@@ -3584,7 +3589,7 @@ Tailwind 문법을 쓰고 싶다면 NativeWind. 팀 합의 후 도입.
 2. `SafeAreaView` + 헤더/본문/하단 CTA 레이아웃을 구성한다.
 3. iOS/Android 그림자를 `Platform.select`로 맞춘다.
 4. `expo-image`로 원격 이미지를 표시한다.
-26:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
+2c:T12e5,# 상태·훅·폼 — 사용자 입력과 데이터 흐름
 
 > 요약: `useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.
 
@@ -3787,7 +3792,7 @@ UI 로직이 반복되면 훅으로 추출. 다만 성급한 추상화는 피한
 2. zod + react-hook-form으로 회원가입 검증을 붙인다.
 3. `useRef`로 비밀번호 필드 자동 포커스를 구현한다.
 4. `useToggle` 커스텀 훅으로 비밀번호 표시/숨김을 만든다.
-27:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
+2d:T1361,# 리스트·네비게이션 — FlatList와 Expo Router
 
 > 요약: 가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.
 
@@ -4005,7 +4010,7 @@ Universal Links / App Links는 EAS·도메인 검증이 필요 (운영 배포 �
 2. pull-to-refresh와 empty 상태를 구현한다.
 3. Expo Router로 탭 + 상세(`[id]`) 화면을 연결한다.
 4. 로그인 여부에 따라 `(auth)` / `(tabs)`로 분기한다.
-28:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
+2e:T128f,# 네트워킹 — Fetch, React Query, 에러 처리
 
 > 요약: API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.
 
@@ -4219,7 +4224,7 @@ useQuery({
 2. 게시글 목록 `useQuery` + 에러/로딩 UI를 구현한다.
 3. 생성 `useMutation` 후 목록 invalidate.
 4. `useInfiniteQuery` + FlatList 무한 스크롤을 연결한다.
-29:T1644,# 인증·보안 저장소·디바이스 권한
+2f:T1644,# 인증·보안 저장소·디바이스 권한
 
 > 요약: 토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.
 
@@ -4459,7 +4464,7 @@ queryClient.clear();
 2. `AuthProvider` + Router 가드를 연결한다.
 3. 이미지 피커 권한 플로우(거절 안내 포함)를 만든다.
 4. (선택) 앱 포그라운드 복귀 시 생체 잠금을 추가한다.
-2a:T127b,# 애니메이션·제스처·사용자 경험
+30:T127b,# 애니메이션·제스처·사용자 경험
 
 > 요약: Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.
 
@@ -4659,7 +4664,7 @@ OS “동작 줄이기”가 켜져 있으면 큰 애니메이션을 스킵하�
 2. 스와이프로 삭제할 수 있는 리스트 행을 구현한다.
 3. 모달 화면 `presentation: 'modal'`을 추가한다.
 4. 주요 CTA에 햅틱 피드백을 붙인다.
-2b:T1112,# 상태 관리·아키텍처·모듈화
+31:T1112,# 상태 관리·아키텍처·모듈화
 
 > 요약: 전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.
 
@@ -4841,7 +4846,7 @@ npx expo install eslint prettier
 2. Zustand로 장바구니(또는 최근 검색어)를 persist한다.
 3. Theme Context로 라이트/다크를 토글한다.
 4. 라우트 단위 ErrorBoundary를 추가한다.
-2c:Tf29,# 테스트·디버깅·성능
+32:Tf29,# 테스트·디버깅·성능
 
 > 요약: 컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.
 
@@ -5012,7 +5017,7 @@ npx expo install @sentry/react-native
 2. SecureStore·fetch를 mock한 Auth 훅 테스트를 만든다.
 3. FlashList/FlatList 행을 memo로 최적화하고 스크롤을 비교한다.
 4. (선택) Maestro로 로그인→홈 플로우를 자동화한다.
-2d:T14ef,# EAS 빌드·스토어 배포·OTA
+33:T14ef,# EAS 빌드·스토어 배포·OTA
 
 > 요약: EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.
 
@@ -5240,7 +5245,7 @@ eas update --branch production --message "Fix checkout crash"
 이 문서들을 바탕으로, 도메인에 맞게 결제·지도·오프라인(SQLite/WatermelonDB)·실시간(웹소켓)을 얹으면 실무 앱으로 확장할 수 있다.
 
 추가로 파고들 주제: Expo Modules API(커스텀 네이티브), Skia, React Native Web, Brownfield(기존 네이티브에 RN 삽입), Detox CI.
-2e:T19ae,# Spring Boot 3와 Java 21 시작하기
+34:T19ae,# Spring Boot 3와 Java 21 시작하기
 
 > 요약: Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.
 
@@ -5502,7 +5507,7 @@ java -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 2. `GET /api/health-demo` 엔드포인트를 추가하고 record로 응답한다.
 3. `local` / `prod` 프로파일을 나누고, `prod`에서는 로그 레벨을 INFO로 맞춘다.
 4. Actuator `/actuator/health`가 200을 반환하는지 확인한다.
-2f:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
+35:T1897,# IoC, Bean, Configuration — 현대적인 의존성 주입
 
 > 요약: Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.
 
@@ -5772,7 +5777,7 @@ MyWorker myWorker() { return new MyWorker(); }
 1. `AppProperties(record)`를 만들고 `app.greeting` 값을 주입받아 API로 반환한다.
 2. `Clock` Bean을 등록하고 서비스에서 “지금 시각”을 출력한다. 테스트에서는 고정 `Clock`으로 교체한다.
 3. `local` 프로필에만 동작하는 `DevBanner` 컴포넌트를 만든다.
-30:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
+36:T1b55,# REST API 설계 — Validation, Problem Details, RestClient
 
 > 요약: Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.
 
@@ -6045,7 +6050,7 @@ DTO/컨트롤러에 `@Operation`, `@Schema`로 계약을 보강하면 협업 비
 2. 존재하지 않는 상품 조회 시 `ProblemDetail` 404를 반환한다.
 3. `RestClient`로 공개 API(예: JSONPlaceholder)를 호출하는 서비스를 만든다.
 4. springdoc으로 Swagger UI에서 API를 확인한다.
-31:T1b02,# Spring Data JPA와 영속성 계층
+37:T1b02,# Spring Data JPA와 영속성 계층
 
 > 요약: JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.
 
@@ -6352,7 +6357,7 @@ public abstract class BaseEntity {
 2. 게시글 목록 + 작성자 이메일을 **fetch join 또는 DTO 쿼리**로 N+1 없이 조회한다.
 3. Flyway로 테이블을 생성하고 `ddl-auto: validate`로 맞춘다.
 4. `open-in-view: false`에서 지연 로딩 예외가 안 나는지 확인한다.
-32:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
+38:T1bf5,# Spring Security 6 — 인증·인가·OAuth2·JWT
 
 > 요약: Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.
 
@@ -6609,7 +6614,7 @@ class UserControllerSecurityTest {
 2. 회원가입 시 BCrypt로 비밀번호를 저장한다.
 3. JWT 로그인 + Bearer 인증 필터를 구현하거나, Resource Server + issuer-uri로 구성한다.
 4. `@PreAuthorize`로 ADMIN 전용 삭제 API를 만든다.
-33:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
+39:T16ce,# 테스트 — JUnit 5, MockMvc, Testcontainers
 
 > 요약: 단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.
 
@@ -6834,7 +6839,7 @@ Clock fixedClock() {
 2. `@WebMvcTest`로 validation 400 응답을 검증한다.
 3. Testcontainers PostgreSQL로 리포지토리/서비스 IT를 작성한다.
 4. `@ServiceConnection`으로 datasource 자동 연결을 확인해 본다.
-34:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
+3a:T166f,# Observability — Actuator, Micrometer, OpenTelemetry
 
 > 요약: 헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.
 
@@ -7078,7 +7083,7 @@ Zipkin/Jaeger/Grafana Tempo 등으로 트레이스를 시각화한다.
 2. 비즈니스 카운터 `order.created`를 추가한다.
 3. 로그 패턴에 `traceId`를 넣고, 요청 로그와 연결해 본다.
 4. (선택) OpenTelemetry collector + Jaeger로 트레이스를 시각화한다.
-35:T18ce,# 비동기·메시징·Virtual Threads
+3b:T18ce,# 비동기·메시징·Virtual Threads
 
 > 요약: `@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.
 
@@ -7308,7 +7313,7 @@ Kafka는 로그/이벤트 스트림·재생에 강하고, Rabbit은 작업 큐�
 2. `OrderCreatedEvent` + `@TransactionalEventListener(AFTER_COMMIT)`로 메일 발송(로그로 대체)을 구현한다.
 3. (선택) Kafka Testcontainers로 produce/consume 통합 테스트를 작성한다.
 4. Outbox 테이블 설계를 문서/코드로 스케치한다.
-36:T146f,# 캐시·Resilience·성능 최적화
+3c:T146f,# 캐시·Resilience·성능 최적화
 
 > 요약: 캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.
 
@@ -7518,7 +7523,7 @@ public class IdempotencyKey { ... }
 2. 외부 호출에 Resilience4j CircuitBreaker + Retry를 적용한다.
 3. RestClient read timeout을 3초로 설정한다.
 4. 느린 목록 API를 키셋 페이지네이션으로 바꾼다.
-37:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
+3d:T17f5,# 운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트
 
 > 요약: 로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.
 
@@ -7772,17 +7777,14 @@ Spring Boot의 최신 기법은 “새 어노테이션 암기”보다 **운영 
 이 문서들을 바탕으로, 팀 도메인에 맞게 깊이를 더하면 실무 Spring Boot 역량이 빠르게 쌓인다.
 
 추가로 파고들 주제: Spring Authorization Server, Spring Modulith, Spring Batch, R2DBC, Spring Cloud Gateway, GraalVM 심화, ArchUnit 기반 아키텍처 테스트.
-0:{"P":null,"c":["",""],"q":"","i":false,"f":[[["",{"children":["(site)",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",16],[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/22o2e8l1llles.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/18x8cntxsqa7x.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"en","className":"syne_53f86cd1-module__kiT3Eq__variable dm_sans_fd62f040-module__0jgVUW__variable","suppressHydrationWarning":true,"children":[["$","head",null,{"children":["$","script",null,{"async":true,"src":"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2641553863829571","crossOrigin":"anonymous"}]}],["$","body",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=null;document.cookie.split(';').forEach(function(c){var p=c.trim().split('=');if(p[0]==='kaisa-theme')t=decodeURIComponent(p[1]||'');});document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');}catch(e){document.documentElement.setAttribute('data-theme','light');}})();"}}],[["$","$L2",null,{"src":"https://www.googletagmanager.com/gtag/js?id=G-STX4YRQBC7","strategy":"afterInteractive"}],["$","$L2",null,{"id":"google-analytics","strategy":"afterInteractive","children":"\n          window.dataLayer = window.dataLayer || [];\n          function gtag(){dataLayer.push(arguments);}\n          gtag('js', new Date());\n          gtag('config', 'G-STX4YRQBC7');\n        "}]],["$","$L3",null,{}],["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}],["$","$L7",null,{}],["$","$L8",null,{}],["$","$L9",null,{}]]}]]}]]}],{"children":[["$","$1","c",{"children":[[["$","script","script-0",{"src":"/_next/static/chunks/1zc2_-8y7cq_w.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/23376vl-bxl5y.js","async":true,"nonce":"$undefined"}],["$","script","script-2",{"src":"/_next/static/chunks/31_3thyp_teuk.js","async":true,"nonce":"$undefined"}]],["$","$La",null,{"children":["$","div",null,{"className":"site-layout","children":[["$","$Lb",null,{}],["$","$Lc",null,{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$d","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/30wx_tsebapsb.js","async":true}]],"template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","div",null,{"className":"error-page","children":["$","div",null,{"className":"error-page__inner","children":[["$","p",null,{"className":"error-page__code","children":"404"}],["$","h1",null,{"className":"error-page__title","children":"Page Not Found"}],["$","p",null,{"className":"error-page__desc","children":"요청하신 페이지를 찾을 수 없습니다."}],["$","$L6",null,{"href":"/","className":"error-page__cta","children":"HOME"}]]}]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}],["$","$Le",null,{}]]}]}]]}],{"children":[["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$Lf",null,{"posts":[{"slug":"laravel-01","title":"Laravel 11+와 현대 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$10","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$11","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$12","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$13","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$14","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$15","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$16","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$17","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$18","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$19","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"nextjs-01","title":"Next.js App Router로 프로젝트 시작하기","excerpt":"App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.","content":"$1a","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":3,"order":1,"filePath":"nextjs/01-app-router-getting-started.md"},{"slug":"nextjs-02","title":"라우팅·레이아웃·동적 세그먼트","excerpt":"파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.","content":"$1b","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":2,"filePath":"nextjs/02-routing-layouts-dynamic-segments.md"},{"slug":"nextjs-03","title":"Server Component와 Client Component","excerpt":"기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.","content":"$1c","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":3,"filePath":"nextjs/03-server-client-components.md"},{"slug":"nextjs-04","title":"데이터 페칭과 캐시 전략","excerpt":"Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.","content":"$1d","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":4,"filePath":"nextjs/04-data-fetching-caching.md"},{"slug":"nextjs-05","title":"SSG·generateStaticParams·정적 export","excerpt":"빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.","content":"$1e","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":5,"filePath":"nextjs/05-ssg-generate-static-params-export.md"},{"slug":"nextjs-06","title":"Metadata·Open Graph·SEO 기본기","excerpt":"metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.","content":"$1f","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":6,"filePath":"nextjs/06-metadata-open-graph-seo.md"},{"slug":"nextjs-07","title":"Route Handler와 Server Actions","excerpt":"앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.","content":"$20","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":7,"filePath":"nextjs/07-route-handlers-server-actions.md"},{"slug":"nextjs-08","title":"미들웨어와 인증 경계","excerpt":"middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.","content":"$21","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":8,"filePath":"nextjs/08-middleware-auth-boundaries.md"},{"slug":"nextjs-09","title":"이미지·폰트·성능 최적화","excerpt":"next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.","content":"$22","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":9,"filePath":"nextjs/09-image-font-performance.md"},{"slug":"nextjs-10","title":"배포 — Vercel·정적 호스팅·체크리스트","excerpt":"Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.","content":"$23","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":10,"filePath":"nextjs/10-deploy-vercel-static-checklist.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$24","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$25","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$26","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$27","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$28","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$29","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$2a","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$2b","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$2c","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$2d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$2e","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$2f","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$30","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$31","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$32","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$33","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$34","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$35","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$36","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$37","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"}],"categories":[{"id":"laravel","label":"Laravel","count":10},{"id":"nextjs","label":"Next.js","count":10},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10}]}]],["$L38"],"$L39"]}],{},null,false,null]},null,false,null]},null,false,null],"$L3a",false]],"m":"$undefined","G":["$3b",["$L3c","$L3d"]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"YR8XEmou2GuDkjzPoP5hZ"}
-3e:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
-3f:"$Sreact.suspense"
-41:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"ViewportBoundary"]
-43:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"MetadataBoundary"]
-38:["$","script","script-0",{"src":"/_next/static/chunks/0c2dsw9jztopz.js","async":true,"nonce":"$undefined"}]
-39:["$","$L3e",null,{"children":["$","$3f",null,{"name":"Next.MetadataOutlet","children":"$@40"}]}]
-3a:["$","$1","h",{"children":[null,["$","$L41",null,{"children":"$L42"}],["$","div",null,{"hidden":true,"children":["$","$L43",null,{"children":["$","$3f",null,{"name":"Next.Metadata","children":"$L44"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
-3c:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
-3d:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
-42:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-45:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
-40:null
-44:[["$","title","0",{"children":"Kaisa Blog"}],["$","meta","1",{"name":"description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/"}],["$","meta","6",{"property":"og:title","content":"Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"en_US"}],["$","meta","11",{"property":"og:type","content":"website"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L45","18",{}]]
+f:["$","$1","c",{"children":[[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"name\":\"Kaisa Blog\",\"description\":\"Development, design, and notes from Kaisa — articles on building products and tools.\",\"url\":\"https://blog.kaisa.co.kr/\"}"}}],["$","$L15",null,{"posts":[{"slug":"laravel-01","title":"Laravel 11+와 현대 PHP 시작하기","excerpt":"Laravel 11/12 + PHP 8.2/8.3 기준으로 프로젝트를 세팅하고, 슬림해진 구조와 최신 관례를 이해한다.","content":"$16","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":1,"filePath":"laravel/01-laravel-11-modern-php.md"},{"slug":"laravel-02","title":"라우팅·미들웨어·컨트롤러 — 요청 생명주기","excerpt":"요청이 라우트 → 미들웨어 → 컨트롤러로 흐르는 구조를 이해하고, 리소스·단일 액션·미들웨어 그룹을 실무처럼 쓴다.","content":"$17","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":2,"filePath":"laravel/02-routing-middleware-controller.md"},{"slug":"laravel-03","title":"Eloquent ORM과 데이터베이스","excerpt":"마이그레이션·Eloquent 관계·쿼리·트랜잭션을 올바르게 쓰고, N+1과 스키마 관리 함정을 피한다.","content":"$18","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":3,"filePath":"laravel/03-eloquent-orm.md"},{"slug":"laravel-04","title":"Validation, Form Request, API Resource","excerpt":"입력 검증을 Form Request로 분리하고, API Resource로 응답 계약을 안정적으로 만든다.","content":"$19","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":4,"filePath":"laravel/04-validation-form-request-resource.md"},{"slug":"laravel-05","title":"인증·인가 — Sanctum, Policy, Gate","excerpt":"세션/토큰 인증을 상황에 맞게 고르고, Policy 기반 인가로 리소스 권한을 명확히 한다.","content":"$1a","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":5,"filePath":"laravel/05-auth-sanctum-policy.md"},{"slug":"laravel-06","title":"테스트 — PHPUnit, Pest, Feature 테스트","excerpt":"Feature/Unit 테스트로 API·인가·DB 동작을 고정하고, Pest 스타일의 가독성 있는 테스트를 익힌다.","content":"$1b","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":6,"filePath":"laravel/06-testing-pest.md"},{"slug":"laravel-07","title":"큐·Job·이벤트·스케줄링","excerpt":"무거운 작업을 큐로 분리하고, 이벤트/리스너·스케줄러·실패 처리까지 운영 가능하게 구성한다.","content":"$1c","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":7,"filePath":"laravel/07-queue-job-events.md"},{"slug":"laravel-08","title":"캐시·Redis·성능 최적화","excerpt":"캐시 전략, Redis, 쿼리/응답 최적화를 측정 기반으로 적용한다.","content":"$1d","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":8,"filePath":"laravel/08-cache-redis-performance.md"},{"slug":"laravel-09","title":"Blade·Livewire·Inertia와 API 프론트 전략","excerpt":"서버 렌더(Blade/Livewire) vs Inertia vs 순수 API+SPA를 상황별로 선택하고, 각각의 Laravel다운 패턴을 익힌다.","content":"$1e","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":4,"order":9,"filePath":"laravel/09-blade-livewire-inertia.md"},{"slug":"laravel-10","title":"운영 배포 — Sail, Forge/Vapor, 프로덕션 체크리스트","excerpt":"Laravel 앱을 안전하게 빌드·배포·감시하는 운영 기본기를 정리한다.","content":"$1f","publishedAt":"2026-08-26","category":"laravel","categoryLabel":"Laravel","tags":["laravel"],"readingMinutes":5,"order":10,"filePath":"laravel/10-ops-sail-forge.md"},{"slug":"nextjs-01","title":"Next.js App Router로 프로젝트 시작하기","excerpt":"App Router 기준으로 Next.js 프로젝트를 세팅하고, 디렉터리·렌더 모드·실무 기본선을 정리한다.","content":"$20","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":3,"order":1,"filePath":"nextjs/01-app-router-getting-started.md"},{"slug":"nextjs-02","title":"라우팅·레이아웃·동적 세그먼트","excerpt":"파일 기반 라우팅, 동적·캐치올 세그먼트, 중첩 레이아웃으로 URL과 UI 구조를 설계한다.","content":"$21","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":2,"filePath":"nextjs/02-routing-layouts-dynamic-segments.md"},{"slug":"nextjs-03","title":"Server Component와 Client Component","excerpt":"기본은 서버 컴포넌트로 두고, 상호작용이 필요할 때만 Client Component로 경계를 나눈다.","content":"$22","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":3,"filePath":"nextjs/03-server-client-components.md"},{"slug":"nextjs-04","title":"데이터 페칭과 캐시 전략","excerpt":"Server Component에서 데이터를 가져오고, fetch 캐시·재검증·정적 데이터 소스를 상황에 맞게 고른다.","content":"$23","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":4,"filePath":"nextjs/04-data-fetching-caching.md"},{"slug":"nextjs-05","title":"SSG·generateStaticParams·정적 export","excerpt":"빌드 타임에 HTML을 고정하는 SSG와 generateStaticParams, output export의 제약까지 정리한다.","content":"$24","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":5,"filePath":"nextjs/05-ssg-generate-static-params-export.md"},{"slug":"nextjs-06","title":"Metadata·Open Graph·SEO 기본기","excerpt":"metadata API와 generateMetadata로 title·description·canonical·OG를 페이지마다 맞춘다.","content":"$25","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":6,"filePath":"nextjs/06-metadata-open-graph-seo.md"},{"slug":"nextjs-07","title":"Route Handler와 Server Actions","excerpt":"앱 내 API(Route Handler)와 폼용 Server Actions의 역할·제약·정적 export와의 관계를 정리한다.","content":"$26","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":7,"filePath":"nextjs/07-route-handlers-server-actions.md"},{"slug":"nextjs-08","title":"미들웨어와 인증 경계","excerpt":"middleware로 경로 보호·리다이렉트를 다루고, 세션·토큰을 어디에 둘지 실무 기준으로 정리한다.","content":"$27","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":8,"filePath":"nextjs/08-middleware-auth-boundaries.md"},{"slug":"nextjs-09","title":"이미지·폰트·성능 최적화","excerpt":"next/image·next/font와 번들·스트리밍으로 Core Web Vitals에 가까운 기본기를 갖춘다.","content":"$28","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":9,"filePath":"nextjs/09-image-font-performance.md"},{"slug":"nextjs-10","title":"배포 — Vercel·정적 호스팅·체크리스트","excerpt":"Vercel·GitHub Pages 등 배포 선택과 환경변수·캐시·도메인·롤백을 점검 목록으로 정리한다.","content":"$29","publishedAt":"2026-08-26","category":"nextjs","categoryLabel":"Next.js","tags":["nextjs"],"readingMinutes":2,"order":10,"filePath":"nextjs/10-deploy-vercel-static-checklist.md"},{"slug":"react-native-01","title":"React Native와 Expo로 시작하기","excerpt":"최신 React Native(New Architecture) + Expo 기준으로 프로젝트를 세팅하고, 네이티브 앱 개발의 기본 지도를 잡는다.","content":"$2a","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":1,"filePath":"react-native/01-react-native-expo.md"},{"slug":"react-native-02","title":"컴포넌트·스타일·레이아웃 — Flex와 StyleSheet","excerpt":"RN 핵심 컴포넌트와 Flexbox 레이아웃, StyleSheet 패턴, 안전한 스타일 작성법을 익힌다.","content":"$2b","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":2,"filePath":"react-native/02-components-style-layout.md"},{"slug":"react-native-03","title":"상태·훅·폼 — 사용자 입력과 데이터 흐름","excerpt":"`useState`/`useEffect`/`useRef`와 폼 패턴, 파생 상태 함정을 이해하고 실무적인 입력 UX를 만든다.","content":"$2c","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":3,"filePath":"react-native/03-state-hooks-forms.md"},{"slug":"react-native-04","title":"리스트·네비게이션 — FlatList와 Expo Router","excerpt":"가상화 리스트로 성능을 지키고, Expo Router로 타입 안전한 화면 이동을 구성한다.","content":"$2d","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":4,"filePath":"react-native/04-lists-navigation-expo-router.md"},{"slug":"react-native-05","title":"네트워킹 — Fetch, React Query, 에러 처리","excerpt":"API 클라이언트를 정리하고, TanStack Query로 캐시·로딩·에러·재시도를 표준화한다.","content":"$2e","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":5,"filePath":"react-native/05-networking-react-query.md"},{"slug":"react-native-06","title":"인증·보안 저장소·디바이스 권한","excerpt":"토큰 안전 저장, 세션 복구, 생체인증·앱 권한(카메라/앨범/알림)의 현대적 패턴을 익힌다.","content":"$2f","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":6,"filePath":"react-native/06-auth-secure-store-permissions.md"},{"slug":"react-native-07","title":"애니메이션·제스처·사용자 경험","excerpt":"Reanimated와 Gesture Handler로 부드러운 60fps 인터랙션을 만들고, 접근성·햅틱까지 챙긴다.","content":"$30","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":7,"filePath":"react-native/07-animation-gesture-ux.md"},{"slug":"react-native-08","title":"상태 관리·아키텍처·모듈화","excerpt":"전역 상태를 최소화하고, Feature 단위 구조와 Zustand/Context 선택 기준을 익힌다.","content":"$31","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":8,"filePath":"react-native/08-state-architecture.md"},{"slug":"react-native-09","title":"테스트·디버깅·성능","excerpt":"컴포넌트/통합 테스트와 디버깅 도구를 쓰고, 리스트·렌더·번들 성능을 체계적으로 개선한다.","content":"$32","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":4,"order":9,"filePath":"react-native/09-testing-debug-performance.md"},{"slug":"react-native-10","title":"EAS 빌드·스토어 배포·OTA","excerpt":"EAS Build/Submit/Update로 스토어 출시와 OTA 핫픽스 파이프라인을 구성하고, 프로덕션 체크리스트를 점검한다.","content":"$33","publishedAt":"2026-08-26","category":"react-native","categoryLabel":"React Native","tags":["react-native"],"readingMinutes":5,"order":10,"filePath":"react-native/10-eas-build-store-ota.md"},{"slug":"spring-boot-01","title":"Spring Boot 3와 Java 21 시작하기","excerpt":"Spring Boot 3.x + Java 17/21 기준으로 프로젝트를 올바르게 세팅하고, 최신 생태계의 기본 개념을 잡는다.","content":"$34","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":1,"filePath":"spring-boot/01-spring-boot-3-java-21.md"},{"slug":"spring-boot-02","title":"IoC, Bean, Configuration — 현대적인 의존성 주입","excerpt":"Spring IoC 컨테이너의 핵심을 이해하고, 생성자 주입·구성 클래스·조건부 Bean 등 실무 패턴을 익힌다.","content":"$35","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":2,"filePath":"spring-boot/02-ioc-bean-configuration.md"},{"slug":"spring-boot-03","title":"REST API 설계 — Validation, Problem Details, RestClient","excerpt":"Spring MVC 기반 REST API를 명확한 계약·검증·에러 응답·HTTP 클라이언트로 설계한다.","content":"$36","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":3,"filePath":"spring-boot/03-rest-api-validation-problem-details.md"},{"slug":"spring-boot-04","title":"Spring Data JPA와 영속성 계층","excerpt":"JPA 엔티티·리포지토리·트랜잭션을 올바르게 다루고, N+1·마이그레이션·성능 함정을 피한다.","content":"$37","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":6,"order":4,"filePath":"spring-boot/04-spring-data-jpa.md"},{"slug":"spring-boot-05","title":"Spring Security 6 — 인증·인가·OAuth2·JWT","excerpt":"Spring Security 6의 SecurityFilterChain 기반으로 API 인증·인가를 설계하고, JWT/OAuth2 패턴을 이해한다.","content":"$38","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":7,"order":5,"filePath":"spring-boot/05-spring-security-6.md"},{"slug":"spring-boot-06","title":"테스트 — JUnit 5, MockMvc, Testcontainers","excerpt":"단위·슬라이스·통합 테스트를 균형 있게 구성하고, Testcontainers로 실제에 가까운 DB/미들웨어 검증을 한다.","content":"$39","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":6,"filePath":"spring-boot/06-testing-junit-testcontainers.md"},{"slug":"spring-boot-07","title":"Observability — Actuator, Micrometer, OpenTelemetry","excerpt":"헬스체크·메트릭·트레이싱·구조화 로그로 “왜 느리고 어디서 깨졌는지”를 관측 가능하게 만든다.","content":"$3a","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":7,"filePath":"spring-boot/07-observability-actuator-otel.md"},{"slug":"spring-boot-08","title":"비동기·메시징·Virtual Threads","excerpt":"`@Async`, 이벤트, Kafka/RabbitMQ, Java 21 Virtual Threads를 상황에 맞게 선택한다.","content":"$3b","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":8,"filePath":"spring-boot/08-async-messaging-virtual-threads.md"},{"slug":"spring-boot-09","title":"캐시·Resilience·성능 최적화","excerpt":"캐시, 재시도, 서킷브레이커, 타임아웃으로 장애를 격리하고, 병목을 체계적으로 줄인다.","content":"$3c","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":4,"order":9,"filePath":"spring-boot/09-cache-resilience-performance.md"},{"slug":"spring-boot-10","title":"운영 배포 — Docker, 설정, Native Image, 프로덕션 체크리스트","excerpt":"로컬에서 잘 되는 앱을 안전하게 빌드·배포·운영하는 최신 기본기를 정리한다.","content":"$3d","publishedAt":"2026-08-26","category":"spring-boot","categoryLabel":"Spring Boot","tags":["spring-boot"],"readingMinutes":5,"order":10,"filePath":"spring-boot/10-ops-docker-native.md"}],"categories":[{"id":"laravel","label":"Laravel","count":10},{"id":"nextjs","label":"Next.js","count":10},{"id":"react-native","label":"React Native","count":10},{"id":"spring-boot","label":"Spring Boot","count":10}]}]],["$L3e"],"$L3f"]}]
+10:["$","$1","h",{"children":[null,["$","$L40",null,{"children":"$L41"}],["$","div",null,{"hidden":true,"children":["$","$L42",null,{"children":["$","$43",null,{"name":"Next.Metadata","children":"$L44"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}]
+12:["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/3n6tbxvq3ysio.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+13:["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/3nvq7s-jdhde9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]
+45:I[97367,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"OutletBoundary"]
+3e:["$","script","script-0",{"src":"/_next/static/chunks/0c2dsw9jztopz.js","async":true,"nonce":"$undefined"}]
+3f:["$","$L45",null,{"children":["$","$43",null,{"name":"Next.MetadataOutlet","children":"$@46"}]}]
+41:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+47:I[27201,["/_next/static/chunks/22o2e8l1llles.js","/_next/static/chunks/18x8cntxsqa7x.js"],"IconMark"]
+44:[["$","title","0",{"children":"Kaisa Blog"}],["$","meta","1",{"name":"description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","meta","2",{"name":"application-name","content":"Kaisa Blog"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","meta","4",{"name":"naver-site-verification","content":"4bc13b857695ff44988c260cb26124eedbcda90e"}],["$","link","5",{"rel":"canonical","href":"https://blog.kaisa.co.kr/"}],["$","meta","6",{"property":"og:title","content":"Kaisa Blog"}],["$","meta","7",{"property":"og:description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","meta","8",{"property":"og:url","content":"https://blog.kaisa.co.kr/"}],["$","meta","9",{"property":"og:site_name","content":"Kaisa Blog"}],["$","meta","10",{"property":"og:locale","content":"ko_KR"}],["$","meta","11",{"property":"og:type","content":"website"}],["$","meta","12",{"name":"twitter:card","content":"summary"}],["$","meta","13",{"name":"twitter:title","content":"Kaisa Blog"}],["$","meta","14",{"name":"twitter:description","content":"Development, design, and notes from Kaisa — articles on building products and tools."}],["$","link","15",{"rel":"shortcut icon","href":"/img/common/favicon.svg"}],["$","link","16",{"rel":"icon","href":"/img/common/favicon.svg"}],["$","link","17",{"rel":"apple-touch-icon","href":"/img/common/favicon.svg"}],["$","$L47","18",{}]]
+46:null
