@@ -1,7 +1,12 @@
 'use client';
 
 import {createContext, useCallback, useContext, useEffect, useState, type ReactNode} from 'react';
-import {persistLocale, resolveLocale} from './detect';
+import {
+  DEFAULT_LOCALE,
+  peekStoredLocale,
+  persistLocale,
+  resolveLocale,
+} from './detect';
 import {translate} from './translate';
 import type {Locale} from './types';
 
@@ -13,24 +18,32 @@ interface LocaleContextValue {
 }
 
 const LocaleContext = createContext<LocaleContextValue>({
-  locale: 'en',
+  locale: DEFAULT_LOCALE,
   country: null,
   t: (key: string) => key,
-  setLocale: () => undefined
+  setLocale: () => undefined,
 });
 
+function applyDocumentLang(locale: Locale) {
+  if (typeof document === 'undefined') return;
+  document.documentElement.lang = locale;
+}
+
 export function LocaleProvider({children}: {children: ReactNode}) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+  const [locale, setLocaleState] = useState<Locale>(() => peekStoredLocale() ?? DEFAULT_LOCALE);
   const [country, setCountry] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-    resolveLocale().then(result => {
+    applyDocumentLang(peekStoredLocale() ?? DEFAULT_LOCALE);
+
+    resolveLocale().then((result) => {
       if (cancelled) return;
       setLocaleState(result.locale);
       setCountry(result.country);
-      document.documentElement.lang = result.locale;
+      applyDocumentLang(result.locale);
     });
+
     return () => {
       cancelled = true;
     };
@@ -40,14 +53,14 @@ export function LocaleProvider({children}: {children: ReactNode}) {
     setLocaleState(next);
     setCountry(nextCountry);
     persistLocale(next, nextCountry);
-    document.documentElement.lang = next;
+    applyDocumentLang(next);
   }, []);
 
   const value: LocaleContextValue = {
     locale,
     country,
     t: (key: string) => translate(key, locale),
-    setLocale
+    setLocale,
   };
 
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;

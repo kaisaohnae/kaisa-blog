@@ -30,7 +30,7 @@ export function buildPageMetadata({
       title: isSiteRoot ? SITE_NAME : `${title} · ${SITE_NAME}`,
       description,
       url,
-      locale: 'en_US',
+      locale: 'ko_KR',
     },
     twitter: {
       card: 'summary',
