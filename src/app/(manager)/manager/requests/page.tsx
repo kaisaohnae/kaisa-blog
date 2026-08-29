@@ -222,7 +222,6 @@ export default function ManagerRequestsPage() {
     [updateDisplay],
   );
 
-  const pathSelectValue = siteCode && toolKey ? `${siteCode}::${toolKey}` : '';
   const hasFilter = Boolean(siteCode || toolKey);
 
   return (
@@ -230,7 +229,7 @@ export default function ManagerRequestsPage() {
       <ManagerGridCrudBar
         total={totalCount}
         selected={selected}
-        hint="최신 댓글 순 · 사이트/경로 필터 · 표시/숨김 · 선택 삭제"
+        hint="최신 댓글 순 · 사이트 필터 · 표시/숨김 · 선택 삭제"
         onDelete={deleteSelected}
         deleteLabel="선택 삭제"
       />
@@ -249,27 +248,6 @@ export default function ManagerRequestsPage() {
             {SITE_CODES.map(opt => (
               <option key={opt.value || 'all'} value={opt.value}>
                 {opt.label}
-              </option>
-            ))}
-          </KaisaSelect>
-          <KaisaSelect
-            uiSize="sm"
-            value={pathSelectValue}
-            onChange={e => {
-              const value = e.target.value;
-              if (!value) {
-                setToolKey('');
-                return;
-              }
-              const sep = value.indexOf('::');
-              applyPathFilter(value.slice(0, sep), value.slice(sep + 2));
-            }}
-            aria-label="경로 필터"
-          >
-            <option value="">전체 경로</option>
-            {toolStats.map(stat => (
-              <option key={statValue(stat)} value={statValue(stat)}>
-                {stat.siteCode} / {stat.toolKey} ({stat.displayCount}/{stat.totalCount})
               </option>
             ))}
           </KaisaSelect>
