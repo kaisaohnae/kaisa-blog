@@ -5,14 +5,19 @@ import {KaisaButton, KaisaTextarea} from '@/ui-kit';
 import {apiPost} from '@/config/api-config';
 import useMemberStore from '@/store/use-member-store';
 
+const SITE_CODE = 'kaisa-blog';
+const COMMENT_MAX = 500;
+
 type CommentItem = {
-  commentNo: number;
-  parentCommentNo?: number | null;
-  memberId?: string;
+  requestNo: number;
+  parentRequestNo?: number | null;
+  nickname: string;
   content: string;
-  createDt?: string;
-  updateDt?: string;
-  member?: {memberName?: string; email?: string};
+  createDt?: string | null;
+};
+
+type ListResponse = {
+  list: CommentItem[];
 };
 
 function buildThreads(list: CommentItem[]) {
@@ -20,10 +25,10 @@ function buildThreads(list: CommentItem[]) {
   const replies = new Map<number, CommentItem[]>();
 
   for (const item of list) {
-    if (item.parentCommentNo) {
-      const bucket = replies.get(item.parentCommentNo) || [];
+    if (item.parentRequestNo) {
+      const bucket = replies.get(item.parentRequestNo) || [];
       bucket.push(item);
-      replies.set(item.parentCommentNo, bucket);
+      replies.set(item.parentRequestNo, bucket);
     } else {
       roots.push(item);
     }
@@ -32,197 +37,68 @@ function buildThreads(list: CommentItem[]) {
   return {roots, replies};
 }
 
-export default function CommentSection({postNo}: {postNo: number}) {
-  const member = useMemberStore((s) => s.member);
-  const hydrated = useMemberStore((s) => s.hydrated);
+function formatDate(value?: string | null) {
+  if (!value) return '';
+  return String(value).slice(0, 16).replace('T', ' ');
+}
+
+export default function CommentSection({pathKey}: {pathKey: string}) {
+  const member = useMemberStore(s => s.member);
+  const hydrated = useMemberStore(s => s.hydrated);
+  const hydrate = useMemberStore(s => s.hydrate);
   const [list, setList] = useState<CommentItem[]>([]);
   const [content, setContent] = useState('');
   const [message, setMessage] = useState('');
-  const [editingNo, setEditingNo] = useState<number | null>(null);
-  const [editingContent, setEditingContent] = useState('');
   const [replyingNo, setReplyingNo] = useState<number | null>(null);
   const [replyContent, setReplyContent] = useState('');
-  const [busyNo, setBusyNo] = useState<number | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const threads = useMemo(() => buildThreads(list), [list]);
 
   const load = () => {
-    apiPost<{list: CommentItem[]}>('bl/get-comment-list', {postNo})
-      .then((body) => setList(body.data.list || []))
+    apiPost<ListResponse>('tl/get-request-list', {
+      siteCode: SITE_CODE,
+      toolKey: pathKey,
+      page: 1,
+      pageSize: 50,
+    })
+      .then(body => setList(body.data.list || []))
       .catch(() => setList([]));
   };
 
   useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  useEffect(() => {
     load();
-  }, [postNo]);
+  }, [pathKey]);
 
-  const submit = async () => {
-    setMessage('');
-    try {
-      await apiPost('bl/set-comment', {postNo, content, mode: 'C'}, 'member');
-      setContent('');
-      load();
-    } catch (e: any) {
-      setMessage(e.message || '댓글 등록에 실패했습니다.');
-    }
-  };
-
-  const submitReply = async (parentCommentNo: number) => {
-    if (!replyContent.trim()) return;
-    setBusyNo(parentCommentNo);
+  const submit = async (text: string, parentRequestNo?: number) => {
+    const trimmed = text.trim();
+    if (!trimmed) return;
+    setBusy(true);
     setMessage('');
     try {
       await apiPost(
-        'bl/set-comment',
-        {postNo, content: replyContent.trim(), parentCommentNo, mode: 'C'},
+        'tl/set-request',
+        {
+          siteCode: SITE_CODE,
+          toolKey: pathKey,
+          content: trimmed,
+          parentRequestNo,
+        },
         'member',
       );
-      setReplyingNo(null);
+      setContent('');
       setReplyContent('');
+      setReplyingNo(null);
       load();
-    } catch (e: any) {
-      setMessage(e.message || '답글 등록에 실패했습니다.');
+    } catch (err: any) {
+      setMessage(err.message || '댓글 등록에 실패했습니다.');
     } finally {
-      setBusyNo(null);
+      setBusy(false);
     }
-  };
-
-  const startEdit = (item: CommentItem) => {
-    setEditingNo(item.commentNo);
-    setEditingContent(item.content);
-    setReplyingNo(null);
-    setMessage('');
-  };
-
-  const cancelEdit = () => {
-    setEditingNo(null);
-    setEditingContent('');
-  };
-
-  const startReply = (commentNo: number) => {
-    setReplyingNo(commentNo);
-    setReplyContent('');
-    cancelEdit();
-    setMessage('');
-  };
-
-  const cancelReply = () => {
-    setReplyingNo(null);
-    setReplyContent('');
-  };
-
-  const saveEdit = async (commentNo: number) => {
-    if (!editingContent.trim()) return;
-    setBusyNo(commentNo);
-    setMessage('');
-    try {
-      await apiPost('bl/set-comment', {commentNo, content: editingContent.trim(), mode: 'U'}, 'member');
-      cancelEdit();
-      load();
-    } catch (e: any) {
-      setMessage(e.message || '댓글 수정에 실패했습니다.');
-    } finally {
-      setBusyNo(null);
-    }
-  };
-
-  const remove = async (commentNo: number) => {
-    if (!window.confirm('댓글을 삭제할까요?')) return;
-    setBusyNo(commentNo);
-    setMessage('');
-    try {
-      await apiPost('bl/set-comment', {commentNo, mode: 'D'}, 'member');
-      if (editingNo === commentNo) cancelEdit();
-      if (replyingNo === commentNo) cancelReply();
-      load();
-    } catch (e: any) {
-      setMessage(e.message || '댓글 삭제에 실패했습니다.');
-    } finally {
-      setBusyNo(null);
-    }
-  };
-
-  const formatDate = (value?: string) => (value ? String(value).slice(0, 16).replace('T', ' ') : '');
-
-  const renderComment = (item: CommentItem, isReply = false) => {
-    const isOwner = member?.memberId && item.memberId === member.memberId;
-    const isEditing = editingNo === item.commentNo;
-    const isReplying = replyingNo === item.commentNo;
-    const isBusy = busyNo === item.commentNo;
-    const canReply = Boolean(member) && !item.parentCommentNo;
-
-    return (
-      <li key={item.commentNo} className={isReply ? 'comment-item comment-item--reply' : 'comment-item'}>
-        <div className="comment-item__head">
-          <div className="comment-item__meta">
-            <strong>{item.member?.memberName || '회원'}</strong>
-            {isReply ? <span className="comment-item__badge">답글</span> : null}
-            <time dateTime={item.createDt}>{formatDate(item.createDt)}</time>
-            {item.updateDt && item.updateDt !== item.createDt ? (
-              <span className="comment-item__edited">수정됨</span>
-            ) : null}
-          </div>
-          <div className="comment-item__actions">
-            {canReply && !isEditing ? (
-              <button type="button" className="text-btn" onClick={() => startReply(item.commentNo)} disabled={isBusy}>
-                답글
-              </button>
-            ) : null}
-            {isOwner && !isEditing ? (
-              <>
-                <button type="button" className="text-btn" onClick={() => startEdit(item)} disabled={isBusy}>
-                  수정
-                </button>
-                <button type="button" className="text-btn text-btn--danger" onClick={() => remove(item.commentNo)} disabled={isBusy}>
-                  삭제
-                </button>
-              </>
-            ) : null}
-          </div>
-        </div>
-
-        {isEditing ? (
-          <div className="comment-edit kaisa-kit">
-            <KaisaTextarea
-              value={editingContent}
-              onChange={(e) => setEditingContent(e.target.value)}
-              rows={3}
-              disabled={isBusy}
-            />
-            <div className="comment-edit__actions">
-              <KaisaButton variant="secondary" uiSize="sm" onClick={cancelEdit} disabled={isBusy}>
-                취소
-              </KaisaButton>
-              <KaisaButton uiSize="sm" onClick={() => saveEdit(item.commentNo)} disabled={isBusy || !editingContent.trim()}>
-                저장
-              </KaisaButton>
-            </div>
-          </div>
-        ) : (
-          <p className="comment-item__content">{item.content}</p>
-        )}
-
-        {isReplying ? (
-          <div className="comment-reply-form kaisa-kit">
-            <KaisaTextarea
-              value={replyContent}
-              onChange={(e) => setReplyContent(e.target.value)}
-              placeholder="답글을 입력해 주세요"
-              rows={3}
-              disabled={isBusy}
-            />
-            <div className="comment-edit__actions">
-              <KaisaButton variant="secondary" uiSize="sm" onClick={cancelReply} disabled={isBusy}>
-                취소
-              </KaisaButton>
-              <KaisaButton uiSize="sm" onClick={() => submitReply(item.commentNo)} disabled={isBusy || !replyContent.trim()}>
-                답글 등록
-              </KaisaButton>
-            </div>
-          </div>
-        ) : null}
-      </li>
-    );
   };
 
   return (
@@ -238,39 +114,97 @@ export default function CommentSection({postNo}: {postNo: number}) {
         <div className="comment-form kaisa-kit">
           <KaisaTextarea
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={e => setContent(e.target.value)}
             placeholder="댓글을 남겨 주세요"
             rows={4}
+            maxLength={COMMENT_MAX}
           />
           <div className="comment-form__actions">
-            <span className="comment-form__user">{member.memberName}님으로 작성 중</span>
-            <KaisaButton onClick={submit} disabled={!content.trim()}>
+            <span className="comment-form__user">
+              {member.memberName}님으로 작성 중 ({content.length}/{COMMENT_MAX})
+            </span>
+            <KaisaButton onClick={() => void submit(content)} disabled={busy || !content.trim()}>
               등록
             </KaisaButton>
           </div>
         </div>
       ) : (
         <div className="comment-guest">
-          <p className="comment-guest__text">댓글은 회원만 작성할 수 있습니다.</p>
+          <p className="comment-guest__text">댓글은 로그인 후 작성할 수 있습니다.</p>
         </div>
       )}
 
-      {message && <p className="form-error comment-box__message">{message}</p>}
+      {message ? <p className="form-error comment-box__message">{message}</p> : null}
 
       {list.length === 0 ? (
         <p className="comment-empty">아직 댓글이 없습니다. 첫 댓글을 남겨보세요.</p>
       ) : (
         <ul className="comment-list">
-          {threads.roots.map((item) => {
-            const replies = threads.replies.get(item.commentNo) || [];
+          {threads.roots.map(item => {
+            const childReplies = threads.replies.get(item.requestNo) || [];
             return (
-              <li key={item.commentNo} className="comment-thread">
+              <li key={item.requestNo} className="comment-thread">
                 <ul className="comment-list comment-list--flat">
-                  {renderComment(item)}
+                  <li className="comment-item">
+                    <div className="comment-item__head">
+                      <div className="comment-item__meta">
+                        <strong>{item.nickname}</strong>
+                        <time dateTime={item.createDt || undefined}>{formatDate(item.createDt)}</time>
+                      </div>
+                      {hydrated && member ? (
+                        <div className="comment-item__actions">
+                          <button type="button" className="text-btn" onClick={() => setReplyingNo(item.requestNo)}>
+                            답글
+                          </button>
+                        </div>
+                      ) : null}
+                    </div>
+                    <p className="comment-item__content">{item.content}</p>
+                    {hydrated && member && replyingNo === item.requestNo ? (
+                      <div className="comment-reply-form kaisa-kit">
+                        <KaisaTextarea
+                          value={replyContent}
+                          onChange={e => setReplyContent(e.target.value)}
+                          placeholder="답글을 입력해 주세요"
+                          rows={3}
+                          maxLength={COMMENT_MAX}
+                          disabled={busy}
+                        />
+                        <div className="comment-edit__actions">
+                          <span className="comment-form__user">
+                            {member.memberName}님으로 작성 중 ({replyContent.length}/{COMMENT_MAX})
+                          </span>
+                          <div className="comment-edit__buttons">
+                          <KaisaButton variant="secondary" uiSize="sm" onClick={() => setReplyingNo(null)} disabled={busy}>
+                            취소
+                          </KaisaButton>
+                          <KaisaButton
+                            uiSize="sm"
+                            onClick={() => void submit(replyContent, item.requestNo)}
+                            disabled={busy || !replyContent.trim()}
+                          >
+                            답글 등록
+                          </KaisaButton>
+                          </div>
+                        </div>
+                      </div>
+                    ) : null}
+                  </li>
                 </ul>
-                {replies.length ? (
+                {childReplies.length ? (
                   <ul className="comment-replies">
-                    {replies.map((reply) => renderComment(reply, true))}
+                    {childReplies.map(reply => (
+                      <li key={reply.requestNo} className="comment-item comment-item--reply">
+                        <div className="comment-item__head">
+                          <div className="comment-item__meta">
+                            <strong>{reply.nickname}</strong>
+                            <span className="comment-item__badge">답글</span>
+                            <time dateTime={reply.createDt || undefined}>{formatDate(reply.createDt)}</time>
+                          </div>
+                        </div>
+                        <p className="comment-item__content">{reply.content}</p>
+                      </li>
+                    ))}
                   </ul>
                 ) : null}
               </li>

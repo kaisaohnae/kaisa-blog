@@ -784,17 +784,9 @@ html[data-theme='dark'] .menu__link,
 }
 .blog-post__adjacent {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
-}
-@media (min-width: 640px) {
-  .blog-post__adjacent {
-    grid-template-columns: 1fr 1fr;
-  }
-  .blog-post__adjacent-link--next {
-    text-align: right;
-    justify-self: end;
-  }
+  align-items: start;
 }
 .blog-post__adjacent-link {
   display: flex;
@@ -805,6 +797,15 @@ html[data-theme='dark'] .menu__link,
   color: inherit;
   text-decoration: none;
   min-width: 0;
+  grid-column: 1;
+  justify-self: start;
+  text-align: left;
+}
+.blog-post__adjacent-link--next {
+  grid-column: 2;
+  text-align: right;
+  justify-self: end;
+  align-items: flex-end;
 }
 .blog-post__adjacent-link:hover .blog-post__adjacent-title {
   color: var(--color-accent);
@@ -1058,6 +1059,8 @@ html[data-theme='dark'] .menu__link,
 }
 .member-settings-layer {
   width: min(420px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: auto;
 }
 .member-settings-layer__info {
   display: grid;
@@ -1092,6 +1095,19 @@ html[data-theme='dark'] .menu__link,
 .member-settings-layer__form {
   display: grid;
   gap: 12px;
+}
+.member-settings-layer__danger {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
+}
+.member-settings-layer__hint {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-muted);
 }
 .text-btn {background: none; border: 0; color: var(--color-text-muted); cursor: pointer; padding: 0; height: auto; text-shadow: none;}
 .text-btn:hover {color: var(--color-accent);}
@@ -1186,7 +1202,7 @@ html[data-theme='dark'] .menu__link,
 .comment-box__message {margin: 0 0 16px;}
 .comment-form {display: grid; gap: 12px; margin: 0 0 28px;}
 .comment-form__actions {display: flex; align-items: center; justify-content: space-between; gap: 12px;}
-.comment-form__user {font-size: 13px; color: var(--color-text-muted);}
+.comment-form__user {font-size: 13px; color: var(--color-text-muted); font-variant-numeric: tabular-nums;}
 .comment-guest {
   margin: 0 0 24px;
   padding: 14px 16px;
@@ -1200,20 +1216,7 @@ html[data-theme='dark'] .menu__link,
   font-size: 14px;
   line-height: 1.6;
   color: var(--color-text-muted);
-}
-.comment-guest__text a {
-  color: var(--color-text);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  text-decoration-color: rgba(0, 0, 0, 0.18);
-}
-.comment-guest__text a:hover {
-  color: var(--color-accent);
-  text-decoration-color: currentColor;
-}
-.comment-guest__sep {
-  margin: 0 6px;
-  color: var(--color-border);
+  text-align: center;
 }
 .comment-empty {
   margin: 0;
@@ -1258,7 +1261,8 @@ html[data-theme='dark'] .menu__link,
 .comment-item__actions {display: flex; gap: 10px; flex-shrink: 0;}
 .comment-item__content {margin: 0; white-space: pre-wrap; line-height: 1.7;}
 .comment-edit {display: grid; gap: 10px;}
-.comment-edit__actions {display: flex; justify-content: flex-end; gap: 8px;}
+.comment-edit__actions {display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;}
+.comment-edit__buttons {display: flex; justify-content: flex-end; gap: 8px; margin-left: auto;}
 .text-btn--danger:hover {color: #d92d20;}
 @media (max-width: 720px) {
   .comment-form__actions {flex-direction: column; align-items: stretch;}
@@ -1289,6 +1293,7 @@ html[data-theme='dark'] .menu__link,
 [data-theme='dark'] .blog-post__body--markdown .markdown-body {
   color: var(--color-text) !important;
   background-color: transparent !important;
+  color-scheme: dark;
 }
 
 [data-theme='dark'] .blog-post__body--markdown .markdown-body :is(
@@ -1345,9 +1350,19 @@ html[data-theme='dark'] .menu__link,
   border-left-color: var(--color-accent);
 }
 
+[data-theme='dark'] .blog-post__body--markdown .markdown-body table tr {
+  background-color: var(--color-bg-card);
+}
+
+[data-theme='dark'] .blog-post__body--markdown .markdown-body table tr:nth-child(2n) {
+  background-color: var(--color-bg-elevated);
+}
+
 [data-theme='dark'] .blog-post__body--markdown .markdown-body th,
 [data-theme='dark'] .blog-post__body--markdown .markdown-body td {
+  color: var(--color-text);
   border-color: var(--color-border);
+  background-color: transparent;
 }
 
 [data-theme='dark'] .blog-post__body--markdown .markdown-body th {

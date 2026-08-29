@@ -18,7 +18,7 @@ npm install
 npm run dev
 ```
 
-개발 서버: `http://localhost:8888`
+개발 서버: `http://localhost:5552`
 
 ## 프로젝트 구조
 

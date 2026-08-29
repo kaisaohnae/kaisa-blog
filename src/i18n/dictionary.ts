@@ -220,5 +220,25 @@ export const dictionary: Record<string, LocaleEntry> = {
     "ko": "변경에 실패했습니다.",
     "zh": "更改失败。",
     "hi": "परिवर्तन विफल।"
+  },
+  "Delete account": {
+    "ko": "회원 탈퇴",
+    "zh": "注销账号",
+    "hi": "खाता हटाएँ"
+  },
+  "Enter your password to permanently delete this account.": {
+    "ko": "비밀번호를 입력하면 회원 정보가 즉시 삭제됩니다.",
+    "zh": "输入密码后将立即删除账号信息。",
+    "hi": "पासवर्ड डालते ही खाता जानकारी हमेशा के लिए हट जाएगी।"
+  },
+  "Delete this account? This cannot be undone.": {
+    "ko": "탈퇴하면 회원 정보가 즉시 삭제되며 되돌릴 수 없습니다. 계속할까요?",
+    "zh": "注销后账号信息将立即删除且无法恢复。要继续吗？",
+    "hi": "खाता हटाने पर जानकारी तुरंत मिट जाएगी और वापस नहीं आएगी। जारी रखें?"
+  },
+  "Could not delete account.": {
+    "ko": "회원 탈퇴에 실패했습니다.",
+    "zh": "无法注销账号。",
+    "hi": "खाता हटाया नहीं जा सका।"
   }
 };

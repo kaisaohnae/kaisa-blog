@@ -73,7 +73,7 @@ export default function BlogPostViewPage({listHref = '/posts/'}: {listHref?: str
           </div>
           <h1 className="blog-post__title">{post.title}</h1>
           <PostContent content={post.content || ''} />
-          <CommentSection postNo={post.postNo} />
+          <CommentSection pathKey={post.slug} />
         </article>
       </div>
     </main>

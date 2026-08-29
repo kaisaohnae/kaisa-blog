@@ -7,9 +7,17 @@ import ManagerGridCrudBar from '@/components/manager/manager-grid-crud-bar';
 import {apiPost} from '@/config/api-config';
 import {KaisaSelect} from '@/ui-kit';
 
+const SITE_CODES = [
+  {value: '', label: '전체 사이트'},
+  {value: 'kaisa-blog', label: 'kaisa-blog'},
+  {value: 'kaisa-tool', label: 'kaisa-tool'},
+  {value: 'kaisa-fo', label: 'kaisa-fo'},
+] as const;
+
 type ToolRequestItem = {
   requestNo: number;
   parentRequestNo?: number | null;
+  siteCode: string;
   toolKey: string;
   nickname: string;
   content: string;
@@ -21,6 +29,7 @@ type ToolRequestItem = {
 };
 
 type ToolStat = {
+  siteCode: string;
   toolKey: string;
   totalCount: number;
   displayCount: number;
@@ -35,10 +44,15 @@ type AdminListResponse = {
   perPage: number;
 };
 
+function statValue(stat: ToolStat) {
+  return `${stat.siteCode}::${stat.toolKey}`;
+}
+
 export default function ManagerRequestsPage() {
   const gridRef = useRef<ManagerAgGridHandle>(null);
   const [list, setList] = useState<ToolRequestItem[]>([]);
   const [toolStats, setToolStats] = useState<ToolStat[]>([]);
+  const [siteCode, setSiteCode] = useState('');
   const [toolKey, setToolKey] = useState('');
   const [isDisplay, setIsDisplay] = useState<'ALL' | 'Y' | 'N'>('ALL');
   const [page, setPage] = useState(1);
@@ -53,6 +67,7 @@ export default function ManagerRequestsPage() {
       apiPost<AdminListResponse>(
         'tl/get-admin-request-list',
         {
+          siteCode: siteCode || undefined,
           toolKey: toolKey || undefined,
           isDisplay,
           page: nextPage,
@@ -77,34 +92,31 @@ export default function ManagerRequestsPage() {
         })
         .finally(() => setLoading(false));
     },
-    [toolKey, isDisplay],
+    [siteCode, toolKey, isDisplay],
   );
 
   useEffect(() => {
     load(1);
   }, [load]);
 
-  const updateDisplay = useCallback(
-    async (item: ToolRequestItem, next: string) => {
-      if (item.isDisplay === next) return;
-      setList(prev =>
-        prev.map(row => (row.requestNo === item.requestNo ? {...row, isDisplay: next} : row)),
+  const updateDisplay = useCallback(async (item: ToolRequestItem, next: string) => {
+    if (item.isDisplay === next) return;
+    setList(prev =>
+      prev.map(row => (row.requestNo === item.requestNo ? {...row, isDisplay: next} : row)),
+    );
+    try {
+      await apiPost(
+        'tl/set-request-list',
+        [{mode: 'U', requestNo: item.requestNo, isDisplay: next}],
+        'admin',
       );
-      try {
-        await apiPost(
-          'tl/set-request-list',
-          [{mode: 'U', requestNo: item.requestNo, isDisplay: next}],
-          'admin',
-        );
-      } catch {
-        setList(prev =>
-          prev.map(row => (row.requestNo === item.requestNo ? {...row, isDisplay: item.isDisplay} : row)),
-        );
-        window.alert('표시 상태 변경에 실패했습니다.');
-      }
-    },
-    [],
-  );
+    } catch {
+      setList(prev =>
+        prev.map(row => (row.requestNo === item.requestNo ? {...row, isDisplay: item.isDisplay} : row)),
+      );
+      window.alert('표시 상태 변경에 실패했습니다.');
+    }
+  }, []);
 
   const deleteSelected = async () => {
     const rows = (gridRef.current?.getSelectedRows() as ToolRequestItem[]) ?? [];
@@ -122,24 +134,49 @@ export default function ManagerRequestsPage() {
     }
   };
 
+  const applyPathFilter = (nextSite: string, nextKey: string) => {
+    setSiteCode(nextSite);
+    setToolKey(nextKey);
+  };
+
   const columnDefs = useMemo<ColDef<ToolRequestItem>[]>(
     () => [
       {field: 'requestNo', headerName: 'No', maxWidth: 90},
       {
         headerName: '유형',
         maxWidth: 90,
-        valueGetter: p => (p.data?.parentRequestNo ? '답글' : '요청'),
+        valueGetter: p => (p.data?.parentRequestNo ? '답글' : '댓글'),
+      },
+      {
+        field: 'siteCode',
+        headerName: '사이트',
+        minWidth: 120,
+        maxWidth: 150,
+        cellRenderer: (params: ICellRendererParams<ToolRequestItem>) => {
+          if (!params.data) return null;
+          const code = params.data.siteCode;
+          return (
+            <button type="button" className="text-btn" onClick={() => applyPathFilter(code, '')} title="이 사이트만 보기">
+              {code}
+            </button>
+          );
+        },
       },
       {
         field: 'toolKey',
-        headerName: '도구',
-        minWidth: 140,
+        headerName: '경로',
+        minWidth: 160,
         cellRenderer: (params: ICellRendererParams<ToolRequestItem>) => {
           if (!params.data) return null;
-          const key = params.data.toolKey;
+          const item = params.data;
           return (
-            <button type="button" className="text-btn" onClick={() => setToolKey(key)} title="이 도구만 보기">
-              {key}
+            <button
+              type="button"
+              className="text-btn"
+              onClick={() => applyPathFilter(item.siteCode, item.toolKey)}
+              title="이 경로만 보기"
+            >
+              {item.toolKey}
             </button>
           );
         },
@@ -185,23 +222,54 @@ export default function ManagerRequestsPage() {
     [updateDisplay],
   );
 
+  const pathSelectValue = siteCode && toolKey ? `${siteCode}::${toolKey}` : '';
+  const hasFilter = Boolean(siteCode || toolKey);
+
   return (
     <>
       <ManagerGridCrudBar
         total={totalCount}
         selected={selected}
-        hint="최신 요청 순 · 도구별 필터 · 표시/숨김 · 선택 삭제"
+        hint="최신 댓글 순 · 사이트/경로 필터 · 표시/숨김 · 선택 삭제"
         onDelete={deleteSelected}
         deleteLabel="선택 삭제"
       />
 
       <section className="ex1-panel" style={{marginBottom: 16}}>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center'}}>
-          <KaisaSelect uiSize="sm" value={toolKey} onChange={e => setToolKey(e.target.value)} aria-label="도구 필터">
-            <option value="">전체 도구</option>
+          <KaisaSelect
+            uiSize="sm"
+            value={siteCode}
+            onChange={e => {
+              setSiteCode(e.target.value);
+              setToolKey('');
+            }}
+            aria-label="사이트 필터"
+          >
+            {SITE_CODES.map(opt => (
+              <option key={opt.value || 'all'} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </KaisaSelect>
+          <KaisaSelect
+            uiSize="sm"
+            value={pathSelectValue}
+            onChange={e => {
+              const value = e.target.value;
+              if (!value) {
+                setToolKey('');
+                return;
+              }
+              const sep = value.indexOf('::');
+              applyPathFilter(value.slice(0, sep), value.slice(sep + 2));
+            }}
+            aria-label="경로 필터"
+          >
+            <option value="">전체 경로</option>
             {toolStats.map(stat => (
-              <option key={stat.toolKey} value={stat.toolKey}>
-                {stat.toolKey} ({stat.displayCount}/{stat.totalCount})
+              <option key={statValue(stat)} value={statValue(stat)}>
+                {stat.siteCode} / {stat.toolKey} ({stat.displayCount}/{stat.totalCount})
               </option>
             ))}
           </KaisaSelect>
@@ -215,8 +283,8 @@ export default function ManagerRequestsPage() {
             <option value="Y">표시만</option>
             <option value="N">숨김만</option>
           </KaisaSelect>
-          {toolKey ? (
-            <button type="button" className="text-btn" onClick={() => setToolKey('')}>
+          {hasFilter ? (
+            <button type="button" className="text-btn" onClick={() => applyPathFilter('', '')}>
               필터 해제
             </button>
           ) : null}
@@ -224,14 +292,14 @@ export default function ManagerRequestsPage() {
         {toolStats.length > 0 ? (
           <div style={{display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12}}>
             {toolStats.map(stat => {
-              const active = toolKey === stat.toolKey;
+              const active = siteCode === stat.siteCode && toolKey === stat.toolKey;
               return (
                 <button
-                  key={stat.toolKey}
+                  key={statValue(stat)}
                   type="button"
-                  onClick={() => setToolKey(active ? '' : stat.toolKey)}
+                  onClick={() => applyPathFilter(active ? '' : stat.siteCode, active ? '' : stat.toolKey)}
                   style={{
-                    border: '1px solid rgba(0,0,0,0.12)',
+                    border: '1px solid rgba(0, 0, 0, 0.12)',
                     borderRadius: 999,
                     padding: '4px 10px',
                     background: active ? '#1a1a18' : 'transparent',
@@ -240,7 +308,7 @@ export default function ManagerRequestsPage() {
                     fontSize: 12,
                   }}
                 >
-                  {stat.toolKey} · {stat.totalCount}
+                  {stat.siteCode} · {stat.toolKey} · {stat.totalCount}
                 </button>
               );
             })}
