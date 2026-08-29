@@ -6,7 +6,7 @@ import ManagerAgGrid, {type ManagerAgGridHandle} from '@/components/grid/manager
 import ManagerGridCrudBar from '@/components/manager/manager-grid-crud-bar';
 import {apiPost} from '@/config/api-config';
 import useAdminStore from '@/store/use-admin-store';
-import {Ex3Button, Ex3Field, Ex3Input, Ex3Select} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput, KaisaSelect} from '@/ui-kit';
 
 type AdminUser = {
   userId: string;
@@ -130,7 +130,7 @@ export default function ManagerUsersPage() {
           if (!params.data) return null;
           const isSelf = params.data.userId === admin?.userId;
           return (
-            <Ex3Select
+            <KaisaSelect
               uiSize="sm"
               value={params.data.userStateCode}
               disabled={isSelf}
@@ -139,7 +139,7 @@ export default function ManagerUsersPage() {
               <option value="A">활성</option>
               <option value="S">정지</option>
               <option value="D">탈퇴</option>
-            </Ex3Select>
+            </KaisaSelect>
           );
         },
       },
@@ -174,39 +174,39 @@ export default function ManagerUsersPage() {
       {showAddForm ? (
         <section className="ex1-panel manager-users-form">
           <div className="manager-users-form__grid">
-            <Ex3Field label="아이디" htmlFor="admin-user-id" required>
-              <Ex3Input id="admin-user-id" value={userId} onChange={(e) => setUserId(e.target.value)} />
-            </Ex3Field>
-            <Ex3Field label="이름" htmlFor="admin-user-name" required>
-              <Ex3Input id="admin-user-name" value={userName} onChange={(e) => setUserName(e.target.value)} />
-            </Ex3Field>
-            <Ex3Field label="이메일" htmlFor="admin-user-email">
-              <Ex3Input id="admin-user-email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            </Ex3Field>
-            <Ex3Field label="비밀번호" htmlFor="admin-user-pwd" required>
-              <Ex3Input
+            <KaisaField label="아이디" htmlFor="admin-user-id" required>
+              <KaisaInput id="admin-user-id" value={userId} onChange={(e) => setUserId(e.target.value)} />
+            </KaisaField>
+            <KaisaField label="이름" htmlFor="admin-user-name" required>
+              <KaisaInput id="admin-user-name" value={userName} onChange={(e) => setUserName(e.target.value)} />
+            </KaisaField>
+            <KaisaField label="이메일" htmlFor="admin-user-email">
+              <KaisaInput id="admin-user-email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </KaisaField>
+            <KaisaField label="비밀번호" htmlFor="admin-user-pwd" required>
+              <KaisaInput
                 id="admin-user-pwd"
                 type="password"
                 value={pwd}
                 onChange={(e) => setPwd(e.target.value)}
               />
-            </Ex3Field>
-            <Ex3Field label="상태" htmlFor="admin-user-state">
-              <Ex3Select
+            </KaisaField>
+            <KaisaField label="상태" htmlFor="admin-user-state">
+              <KaisaSelect
                 id="admin-user-state"
                 value={userStateCode}
                 onChange={(e) => setUserStateCode(e.target.value)}
               >
                 <option value="A">활성</option>
                 <option value="S">정지</option>
-              </Ex3Select>
-            </Ex3Field>
+              </KaisaSelect>
+            </KaisaField>
           </div>
           <div className="manager-users-form__actions">
-            <Ex3Button type="button" onClick={submitAdd} disabled={saving}>
+            <KaisaButton type="button" onClick={submitAdd} disabled={saving}>
               추가
-            </Ex3Button>
-            <Ex3Button
+            </KaisaButton>
+            <KaisaButton
               type="button"
               variant="secondary"
               onClick={() => {
@@ -216,7 +216,7 @@ export default function ManagerUsersPage() {
               disabled={saving}
             >
               취소
-            </Ex3Button>
+            </KaisaButton>
           </div>
           {error ? <p className="form-error">{error}</p> : null}
         </section>

@@ -5,7 +5,7 @@ import {createPortal} from 'react-dom';
 import {useRouter} from 'next/navigation';
 import {apiPost} from '@/config/api-config';
 import useAdminStore from '@/store/use-admin-store';
-import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput} from '@/ui-kit';
 
 function SettingsIcon() {
   return (
@@ -67,15 +67,15 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
   if (!open || typeof document === 'undefined') return null;
 
   return createPortal(
-    <div className="ex3k-overlay" role="presentation" onClick={onClose}>
+    <div className="kaisa-overlay" role="presentation" onClick={onClose}>
       <div
-        className="ex3k-dialog ex3k-dialog--popup manager-settings-layer"
+        className="kaisa-dialog kaisa-dialog--popup manager-settings-layer"
         role="dialog"
         aria-modal="true"
         aria-labelledby="manager-settings-title"
         onClick={(event) => event.stopPropagation()}
       >
-        <h3 id="manager-settings-title" className="ex3k-dialog__title">
+        <h3 id="manager-settings-title" className="kaisa-dialog__title">
           설정
         </h3>
         {admin ? (
@@ -98,11 +98,11 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
         ) : null}
         <h4 className="manager-settings-layer__section-title">비밀번호 변경</h4>
         <form className="manager-settings-layer__form" onSubmit={save}>
-          <Ex3Field label="현재 비밀번호" htmlFor="layer-cur-pwd" required>
-            <Ex3Input id="layer-cur-pwd" type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} required />
-          </Ex3Field>
-          <Ex3Field label="새 비밀번호" htmlFor="layer-new-pwd" required>
-            <Ex3Input
+          <KaisaField label="현재 비밀번호" htmlFor="layer-cur-pwd" required>
+            <KaisaInput id="layer-cur-pwd" type="password" value={pwd} onChange={(e) => setPwd(e.target.value)} required />
+          </KaisaField>
+          <KaisaField label="새 비밀번호" htmlFor="layer-new-pwd" required>
+            <KaisaInput
               id="layer-new-pwd"
               type="password"
               value={newPwd}
@@ -110,14 +110,14 @@ function ManagerSettingsLayer({open, onClose}: {open: boolean; onClose: () => vo
               minLength={6}
               required
             />
-          </Ex3Field>
+          </KaisaField>
           {message && <p className="muted">{message}</p>}
           {error && <p className="form-error">{error}</p>}
-          <div className="ex3k-dialog__actions">
-            <Ex3Button type="button" variant="ghost" onClick={onClose}>
+          <div className="kaisa-dialog__actions">
+            <KaisaButton type="button" variant="ghost" onClick={onClose}>
               닫기
-            </Ex3Button>
-            <Ex3Button type="submit">변경</Ex3Button>
+            </KaisaButton>
+            <KaisaButton type="submit">변경</KaisaButton>
           </div>
         </form>
       </div>

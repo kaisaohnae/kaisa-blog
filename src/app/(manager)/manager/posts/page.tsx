@@ -6,7 +6,7 @@ import type {ColDef, ICellRendererParams} from 'ag-grid-community';
 import ManagerAgGrid, {type ManagerAgGridHandle} from '@/components/grid/manager-ag-grid';
 import ManagerGridCrudBar from '@/components/manager/manager-grid-crud-bar';
 import {apiPost} from '@/config/api-config';
-import {Ex3Button, Ex3Toggle} from '@/ui-kit';
+import {KaisaButton, KaisaToggle} from '@/ui-kit';
 
 type Post = {
   postNo: number;
@@ -91,7 +91,7 @@ export default function ManagerPostsPage() {
               onClick={(e) => e.stopPropagation()}
               onMouseDown={(e) => e.stopPropagation()}
             >
-              <Ex3Toggle
+              <KaisaToggle
                 className="manager-posts-grid__toggle"
                 label="공개"
                 checked={post.isDisplay === 'Y'}
@@ -114,16 +114,16 @@ export default function ManagerPostsPage() {
           if (!params.data) return null;
           return (
             <div style={{display: 'flex', gap: 8, alignItems: 'center', height: '100%'}}>
-              <Ex3Button
+              <KaisaButton
                 variant="secondary"
                 uiSize="sm"
                 onClick={() => router.push(`/manager/posts/write/?postNo=${params.data!.postNo}`)}
               >
                 수정
-              </Ex3Button>
-              <Ex3Button variant="danger" uiSize="sm" onClick={() => removePosts([params.data!])}>
+              </KaisaButton>
+              <KaisaButton variant="danger" uiSize="sm" onClick={() => removePosts([params.data!])}>
                 삭제
-              </Ex3Button>
+              </KaisaButton>
             </div>
           );
         },

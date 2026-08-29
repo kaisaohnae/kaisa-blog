@@ -1,6 +1,6 @@
 'use client';
 
-import {Ex3Button} from '@/ui-kit';
+import {KaisaButton} from '@/ui-kit';
 
 type ManagerGridCrudBarProps = {
   total: number;
@@ -31,14 +31,14 @@ export default function ManagerGridCrudBar({
       {(onAdd || onDelete) && (
         <div className="ex1-grid-crud__actions">
           {onAdd ? (
-            <Ex3Button variant="secondary" uiSize="sm" onClick={onAdd}>
+            <KaisaButton variant="secondary" uiSize="sm" onClick={onAdd}>
               {addLabel}
-            </Ex3Button>
+            </KaisaButton>
           ) : null}
           {onDelete ? (
-            <Ex3Button variant="danger" uiSize="sm" onClick={onDelete} disabled={selected === 0}>
+            <KaisaButton variant="danger" uiSize="sm" onClick={onDelete} disabled={selected === 0}>
               {deleteLabel}
-            </Ex3Button>
+            </KaisaButton>
           ) : null}
         </div>
       )}

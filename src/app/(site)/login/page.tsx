@@ -7,7 +7,7 @@ import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-fi
 import {useT} from '@/i18n/locale-context';
 import {clearSavedMemberEmail, getSavedMemberEmail, saveMemberEmail} from '@/lib/auth-storage';
 import useMemberStore from '@/store/use-member-store';
-import {Ex3Button, Ex3Checkbox, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaCheckbox, KaisaField, KaisaInput} from '@/ui-kit';
 
 function LoginForm() {
   const router = useRouter();
@@ -57,11 +57,11 @@ function LoginForm() {
   return (
     <main className="blog-main">
       <div className="site-shell">
-        <form className="auth-card ex3-kit" onSubmit={onSubmit} autoComplete="on">
+        <form className="auth-card kaisa-kit" onSubmit={onSubmit} autoComplete="on">
           <p className="blog-hero__eyebrow">{t('Member')}</p>
           <h1>{t('Login')}</h1>
-          <Ex3Field label={t('Email')} htmlFor="login-email">
-            <Ex3Input
+          <KaisaField label={t('Email')} htmlFor="login-email">
+            <KaisaInput
               id="login-email"
               name="username"
               type="email"
@@ -70,9 +70,9 @@ function LoginForm() {
               onChange={e => setEmail(e.target.value)}
               required
             />
-          </Ex3Field>
-          <Ex3Field label={t('Password')} htmlFor="login-pwd">
-            <Ex3Input
+          </KaisaField>
+          <KaisaField label={t('Password')} htmlFor="login-pwd">
+            <KaisaInput
               id="login-pwd"
               name="password"
               type="password"
@@ -82,15 +82,15 @@ function LoginForm() {
               required
               minLength={6}
             />
-          </Ex3Field>
-          <Ex3Checkbox label={t('Save email')} checked={saveId} onChange={e => setSaveId(e.target.checked)} />
+          </KaisaField>
+          <KaisaCheckbox label={t('Save email')} checked={saveId} onChange={e => setSaveId(e.target.checked)} />
           {captchaRequired ? (
             <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
           ) : null}
           {error ? <p className="form-error">{t(error)}</p> : null}
-          <Ex3Button type="submit" fullWidth>
+          <KaisaButton type="submit" fullWidth>
             {t('Login')}
-          </Ex3Button>
+          </KaisaButton>
           <p className="auth-card__hint">
             {t('No account? ')}
             <Link href="/register/">{t('Register')}</Link>

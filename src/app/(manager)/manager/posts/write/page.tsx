@@ -10,7 +10,7 @@ import {
 } from '@/components/manager/category-tree-utils';
 import {apiPost} from '@/config/api-config';
 import {LoadingFallback} from '@/ui-components';
-import {Ex3Button, Ex3Field, Ex3Input, Ex3Select, Ex3Toggle} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput, KaisaSelect, KaisaToggle} from '@/ui-kit';
 
 type Category = FlatCategory;
 
@@ -104,8 +104,8 @@ function PostWriteForm() {
   return (
     <form className="ex1-panel post-write" onSubmit={save}>
       <div className="post-write__meta">
-        <Ex3Field label="제목" htmlFor="post-title" required>
-          <Ex3Input
+        <KaisaField label="제목" htmlFor="post-title" required>
+          <KaisaInput
             id="post-title"
             value={title}
             onChange={(e) => {
@@ -114,12 +114,12 @@ function PostWriteForm() {
             }}
             required
           />
-        </Ex3Field>
-        <Ex3Field label="슬러그" htmlFor="post-slug" required>
-          <Ex3Input id="post-slug" value={slug} onChange={(e) => setSlug(e.target.value)} required />
-        </Ex3Field>
-        <Ex3Field label="카테고리" htmlFor="post-category">
-          <Ex3Select id="post-category" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+        </KaisaField>
+        <KaisaField label="슬러그" htmlFor="post-slug" required>
+          <KaisaInput id="post-slug" value={slug} onChange={(e) => setSlug(e.target.value)} required />
+        </KaisaField>
+        <KaisaField label="카테고리" htmlFor="post-category">
+          <KaisaSelect id="post-category" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
             <option value="">선택</option>
             {categoryId && !categoryOptions.some((c) => c.id === categoryId) ? (
               <option value={categoryId}>선택된 카테고리 #{categoryId}</option>
@@ -129,21 +129,21 @@ function PostWriteForm() {
                 {c.label}
               </option>
             ))}
-          </Ex3Select>
-        </Ex3Field>
+          </KaisaSelect>
+        </KaisaField>
         <div className="post-write__display">
-          <Ex3Toggle
+          <KaisaToggle
             id="post-display"
             label="공개"
             checked={isDisplay === 'Y'}
             onChange={(e) => setIsDisplay(e.target.checked ? 'Y' : 'N')}
           />
         </div>
-        <Ex3Button type="submit">저장</Ex3Button>
+        <KaisaButton type="submit">저장</KaisaButton>
       </div>
-      <Ex3Field label="요약" htmlFor="post-excerpt">
-        <Ex3Input id="post-excerpt" value={excerpt} onChange={(e) => setExcerpt(e.target.value)} />
-      </Ex3Field>
+      <KaisaField label="요약" htmlFor="post-excerpt">
+        <KaisaInput id="post-excerpt" value={excerpt} onChange={(e) => setExcerpt(e.target.value)} />
+      </KaisaField>
       {ready ? (
         <PostEditor key={postNo || 'new'} value={content} onChange={setContent} />
       ) : (

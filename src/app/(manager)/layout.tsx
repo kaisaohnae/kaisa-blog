@@ -60,7 +60,7 @@ export default function ManagerLayout({children}: {children: React.ReactNode}) {
     return (
       <div className="site-layout">
         <Header />
-        <div className="site-layout__body ex3-kit">{children}</div>
+        <div className="site-layout__body kaisa-kit">{children}</div>
         <Footer />
       </div>
     );
@@ -108,7 +108,7 @@ export default function ManagerLayout({children}: {children: React.ReactNode}) {
       </aside>
       <div className="ex1-content">
         <ManagerTopActions />
-        <div className="ex1-main ex3-kit">{children}</div>
+        <div className="ex1-main kaisa-kit">{children}</div>
       </div>
     </div>
   );

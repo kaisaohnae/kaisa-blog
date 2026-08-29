@@ -2,7 +2,7 @@
 
 import {useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useState, type FormEvent} from 'react';
-import {Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaField, KaisaInput} from '@/ui-kit';
 
 type BlogSearchBarProps = {
   className?: string;
@@ -11,7 +11,7 @@ type BlogSearchBarProps = {
 
 export default function BlogSearchBar({
   className,
-  listBasePath = '/issues/',
+  listBasePath = '/posts/',
 }: BlogSearchBarProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -40,19 +40,19 @@ export default function BlogSearchBar({
 
   return (
     <form
-      className={['blog-search', 'ex3-kit', className].filter(Boolean).join(' ')}
+      className={['blog-search', 'kaisa-kit', className].filter(Boolean).join(' ')}
       onSubmit={submit}
       role="search"
     >
-      <Ex3Field label="글 검색" htmlFor="blog-search" className="blog-search__field">
-        <Ex3Input
+      <KaisaField label="글 검색" htmlFor="blog-search" className="blog-search__field">
+        <KaisaInput
           id="blog-search"
           type="search"
           uiSize="sm"
           value={query}
           onChange={(event) => setQuery(event.target.value)}
         />
-      </Ex3Field>
+      </KaisaField>
       <button
         type="button"
         className="blog-search__btn"

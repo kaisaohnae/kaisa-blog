@@ -17,7 +17,7 @@ type PostListResponse = {
   perPage?: number;
 };
 
-function BlogHomeContent({listBasePath = '/issues/'}: {listBasePath?: string}) {
+function BlogHomeContent({listBasePath = '/posts/'}: {listBasePath?: string}) {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('q')?.trim() || '';
   const categoryId = searchParams.get('categoryId')?.trim() || '';
@@ -114,9 +114,9 @@ function BlogHomeContent({listBasePath = '/issues/'}: {listBasePath?: string}) {
             />
           </div>
           {error && <p className="form-error">{error}</p>}
-          <section className="blog-list" aria-label="Issues">
+          <section className="blog-list" aria-label="Posts">
             {posts.map((post) => (
-              <BlogPostCard key={post.postNo} post={post} detailBasePath="/issues/view/" />
+              <BlogPostCard key={post.postNo} post={post} detailBasePath="/posts/view/" />
             ))}
             {!loading && !error && posts.length === 0 && <p className="muted empty-state">{emptyMessage}</p>}
           </section>
@@ -131,7 +131,7 @@ function BlogHomeContent({listBasePath = '/issues/'}: {listBasePath?: string}) {
   );
 }
 
-export default function BlogHomePage({listBasePath = '/issues/'}: {listBasePath?: string}) {
+export default function BlogHomePage({listBasePath = '/posts/'}: {listBasePath?: string}) {
   return (
     <Suspense fallback={<main className="blog-main" aria-busy="true" />}>
       <BlogHomeContent listBasePath={listBasePath} />

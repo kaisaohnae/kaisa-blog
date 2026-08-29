@@ -13,7 +13,7 @@ import {
 } from '@/components/manager/category-tree-utils';
 import '@/components/manager/manager-category.css';
 import {apiPost} from '@/config/api-config';
-import {Ex3Button, Ex3Field, Ex3Input, Ex3Select, Ex3Toggle} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput, KaisaSelect, KaisaToggle} from '@/ui-kit';
 
 type Category = FlatCategory;
 
@@ -273,9 +273,9 @@ export default function ManagerCategoriesPage() {
         <section className="ex1-panel manager-category-tree-panel">
           <div className="manager-category-tree-panel__head">
             <h2>카테고리 트리</h2>
-            <Ex3Button type="button" variant="secondary" onClick={startCreateRoot} disabled={saving}>
+            <KaisaButton type="button" variant="secondary" onClick={startCreateRoot} disabled={saving}>
               + 카테고리
-            </Ex3Button>
+            </KaisaButton>
           </div>
           <CategoryTreeBoard
             nodes={treeNodes}
@@ -292,15 +292,15 @@ export default function ManagerCategoriesPage() {
               <div className="manager-category-detail-panel__head">
                 <h2>{detailTitle}</h2>
                 {editingId && selectedId ? (
-                  <Ex3Button type="button" variant="secondary" onClick={startCreateChild} disabled={saving}>
+                  <KaisaButton type="button" variant="secondary" onClick={startCreateChild} disabled={saving}>
                     + 하위 추가
-                  </Ex3Button>
+                  </KaisaButton>
                 ) : null}
               </div>
 
               <div className="manager-category-detail-form">
-                <Ex3Field label="카테고리명" htmlFor="category-name" required>
-                  <Ex3Input
+                <KaisaField label="카테고리명" htmlFor="category-name" required>
+                  <KaisaInput
                     id="category-name"
                     value={categoryName}
                     onChange={(e) => {
@@ -311,9 +311,9 @@ export default function ManagerCategoriesPage() {
                     placeholder="예: 개발"
                     required
                   />
-                </Ex3Field>
-                <Ex3Field label="슬러그" htmlFor="category-slug" required>
-                  <Ex3Input
+                </KaisaField>
+                <KaisaField label="슬러그" htmlFor="category-slug" required>
+                  <KaisaInput
                     id="category-slug"
                     value={slug}
                     onChange={(e) => {
@@ -323,9 +323,9 @@ export default function ManagerCategoriesPage() {
                     placeholder="예: dev"
                     required
                   />
-                </Ex3Field>
-                <Ex3Field label="상위 카테고리" htmlFor="category-parent">
-                  <Ex3Select
+                </KaisaField>
+                <KaisaField label="상위 카테고리" htmlFor="category-parent">
+                  <KaisaSelect
                     id="category-parent"
                     value={parentCategoryId ?? ''}
                     onChange={(e) => {
@@ -340,10 +340,10 @@ export default function ManagerCategoriesPage() {
                         {option.label}
                       </option>
                     ))}
-                  </Ex3Select>
-                </Ex3Field>
+                  </KaisaSelect>
+                </KaisaField>
                 <div className="manager-category-detail-form__display">
-                  <Ex3Toggle
+                  <KaisaToggle
                     id="category-display"
                     label="공개"
                     checked={isDisplay === 'Y'}
@@ -353,17 +353,17 @@ export default function ManagerCategoriesPage() {
               </div>
 
               <div className="manager-category-detail-form__actions">
-                <Ex3Button type="button" onClick={submit} disabled={saving || !categoryName.trim()}>
+                <KaisaButton type="button" onClick={submit} disabled={saving || !categoryName.trim()}>
                   {editingId ? '저장' : '추가'}
-                </Ex3Button>
+                </KaisaButton>
                 {editingId ? (
-                  <Ex3Button type="button" variant="secondary" onClick={remove} disabled={saving}>
+                  <KaisaButton type="button" variant="secondary" onClick={remove} disabled={saving}>
                     삭제
-                  </Ex3Button>
+                  </KaisaButton>
                 ) : null}
-                <Ex3Button type="button" variant="secondary" onClick={resetForm} disabled={saving}>
+                <KaisaButton type="button" variant="secondary" onClick={resetForm} disabled={saving}>
                   취소
-                </Ex3Button>
+                </KaisaButton>
               </div>
             </>
           ) : (

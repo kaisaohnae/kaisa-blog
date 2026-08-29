@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {useRef, useState} from 'react';
 import {apiPost} from '@/config/api-config';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
-import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput} from '@/ui-kit';
 
 export default function ResetPasswordPage() {
   const router = useRouter();
@@ -87,12 +87,12 @@ export default function ResetPasswordPage() {
   return (
     <main className="blog-main">
       <div className="site-shell">
-        <form className="auth-card ex3-kit" onSubmit={onSubmit}>
+        <form className="auth-card kaisa-kit" onSubmit={onSubmit}>
           <p className="blog-hero__eyebrow">Member</p>
           <h1>비밀번호 찾기</h1>
           <p className="muted">가입 이메일 인증 후 새 비밀번호로 변경할 수 있습니다.</p>
-          <Ex3Field label="이메일" htmlFor="reset-email" required>
-            <Ex3Input
+          <KaisaField label="이메일" htmlFor="reset-email" required>
+            <KaisaInput
               id="reset-email"
               type="email"
               value={email}
@@ -100,19 +100,19 @@ export default function ResetPasswordPage() {
               required
               disabled={done}
             />
-          </Ex3Field>
+          </KaisaField>
           {!done ? (
             <>
               {captchaRequired ? (
                 <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
               ) : null}
-              <Ex3Button type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
+              <KaisaButton type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
                 인증번호 받기
-              </Ex3Button>
+              </KaisaButton>
               {certSent ? (
                 <>
-                  <Ex3Field label="인증번호 6자리" htmlFor="reset-cert" required>
-                    <Ex3Input
+                  <KaisaField label="인증번호 6자리" htmlFor="reset-cert" required>
+                    <KaisaInput
                       id="reset-cert"
                       value={certNumber}
                       onChange={(e) => setCertNumber(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -120,9 +120,9 @@ export default function ResetPasswordPage() {
                       maxLength={6}
                       required
                     />
-                  </Ex3Field>
-                  <Ex3Field label="새 비밀번호" htmlFor="reset-pwd" required>
-                    <Ex3Input
+                  </KaisaField>
+                  <KaisaField label="새 비밀번호" htmlFor="reset-pwd" required>
+                    <KaisaInput
                       id="reset-pwd"
                       type="password"
                       value={pwd}
@@ -130,9 +130,9 @@ export default function ResetPasswordPage() {
                       minLength={6}
                       required
                     />
-                  </Ex3Field>
-                  <Ex3Field label="새 비밀번호 확인" htmlFor="reset-pwd-confirm" required>
-                    <Ex3Input
+                  </KaisaField>
+                  <KaisaField label="새 비밀번호 확인" htmlFor="reset-pwd-confirm" required>
+                    <KaisaInput
                       id="reset-pwd-confirm"
                       type="password"
                       value={pwdConfirm}
@@ -140,7 +140,7 @@ export default function ResetPasswordPage() {
                       minLength={6}
                       required
                     />
-                  </Ex3Field>
+                  </KaisaField>
                 </>
               ) : null}
             </>
@@ -148,13 +148,13 @@ export default function ResetPasswordPage() {
           {hint && <p className="auth-card__notice">{hint}</p>}
           {error && <p className="form-error">{error}</p>}
           {!done ? (
-            <Ex3Button type="submit" fullWidth disabled={!certSent}>
+            <KaisaButton type="submit" fullWidth disabled={!certSent}>
               비밀번호 변경
-            </Ex3Button>
+            </KaisaButton>
           ) : (
-            <Ex3Button type="button" fullWidth onClick={() => router.push('/login/')}>
+            <KaisaButton type="button" fullWidth onClick={() => router.push('/login/')}>
               로그인으로 이동
-            </Ex3Button>
+            </KaisaButton>
           )}
           <p className="auth-card__hint">
             <Link href="/login/">로그인</Link>

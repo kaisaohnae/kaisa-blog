@@ -374,7 +374,7 @@
   gap: 12px;
 }
 
-.manager-users-form__grid .ex3k-field {
+.manager-users-form__grid .kaisa-field {
   margin: 0;
 }
 
@@ -441,7 +441,7 @@
   container-type: inline-size;
 }
 
-.ex1-panel:has(.ex3k-field) {
+.ex1-panel:has(.kaisa-field) {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -1224,11 +1224,11 @@
   height: 100%;
 }
 
-.manager-posts-grid__toggle.ex3k-toggle {
+.manager-posts-grid__toggle.kaisa-toggle {
   gap: 0;
 }
 
-.manager-posts-grid__toggle .ex3k-toggle__copy {
+.manager-posts-grid__toggle .kaisa-toggle__copy {
   position: absolute;
   width: 1px;
   height: 1px;

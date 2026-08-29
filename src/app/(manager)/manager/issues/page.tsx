@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 import {apiPost} from '@/config/api-config';
-import {Ex3Button} from '@/ui-kit';
+import {KaisaButton} from '@/ui-kit';
 
 type IssueNewsItem = {
   title: string;
@@ -229,11 +229,11 @@ export default function ManagerIssuesPage() {
         source="daum"
         onLoad={() => load('daum')}
       />
-      <div className="manager-issues__footer ex3-kit">
-        <Ex3Button onClick={handleCopyAll}>{copied ? '복사됨' : '전체 텍스트 복사'}</Ex3Button>
-        <Ex3Button onClick={handleRunBatch} disabled={batchRunning}>
+      <div className="manager-issues__footer kaisa-kit">
+        <KaisaButton onClick={handleCopyAll}>{copied ? '복사됨' : '전체 텍스트 복사'}</KaisaButton>
+        <KaisaButton onClick={handleRunBatch} disabled={batchRunning}>
           {batchRunning ? '실행 중...' : '배치실행'}
-        </Ex3Button>
+        </KaisaButton>
       </div>
       {batchError ? <p className="form-error manager-issues__batch-result">{batchError}</p> : null}
       {!batchError && batchMessage ? <p className="manager-issues__batch-result">{batchMessage}</p> : null}
@@ -254,9 +254,9 @@ function SourceCard({
 }) {
   return (
     <section className={`ex1-panel manager-issues__card manager-issues__card--${source}`}>
-      <div className="manager-issues__toolbar ex3-kit">
+      <div className="manager-issues__toolbar kaisa-kit">
         <h2>{title}</h2>
-        <Ex3Button onClick={onLoad}>조회</Ex3Button>
+        <KaisaButton onClick={onLoad}>조회</KaisaButton>
       </div>
       {state.error ? <p className="form-error">{state.error}</p> : null}
       <div className="manager-issues__box">
@@ -349,9 +349,9 @@ function GoogleTrendsCard({
   return (
     <>
       <section className="ex1-panel manager-issues__card manager-issues__card--google">
-        <div className="manager-issues__toolbar ex3-kit">
+        <div className="manager-issues__toolbar kaisa-kit">
           <h2>{title}</h2>
-          <Ex3Button onClick={handleLoad}>조회</Ex3Button>
+          <KaisaButton onClick={handleLoad}>조회</KaisaButton>
         </div>
         {trendsError ? <p className="form-error">{trendsError}</p> : null}
         <div className="manager-issues__box">

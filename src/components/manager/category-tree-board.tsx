@@ -6,7 +6,7 @@ import {
   CategoryFolderClosedIcon,
   CategoryFolderOpenIcon,
 } from './category-tree-icons';
-import {Ex3Toggle} from '@/ui-kit';
+import {KaisaToggle} from '@/ui-kit';
 import {
   canDropCategory,
   dropZone,
@@ -250,7 +250,7 @@ export default function CategoryTreeBoard({
                     onClick={(event) => event.stopPropagation()}
                     onMouseDown={(event) => event.stopPropagation()}
                   >
-                    <Ex3Toggle
+                    <KaisaToggle
                       className="manager-category-tree__display-toggle"
                       label="공개"
                       checked={node.isDisplay === 'Y'}

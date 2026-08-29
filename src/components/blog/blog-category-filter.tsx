@@ -32,7 +32,7 @@ export default function BlogCategoryFilter({
   categories,
   totalPostCount = 0,
   className,
-  listBasePath = '/issues/',
+  listBasePath = '/posts/',
 }: BlogCategoryFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();

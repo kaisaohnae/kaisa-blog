@@ -12,7 +12,7 @@ export type BlogListItem = {
 
 export default function BlogPostCard({
   post,
-  detailBasePath = '/issues/view/',
+  detailBasePath = '/posts/view/',
 }: {
   post: BlogListItem;
   detailBasePath?: string;

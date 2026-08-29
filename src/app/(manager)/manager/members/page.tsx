@@ -5,7 +5,7 @@ import type {ColDef, ICellRendererParams} from 'ag-grid-community';
 import ManagerAgGrid from '@/components/grid/manager-ag-grid';
 import ManagerGridCrudBar from '@/components/manager/manager-grid-crud-bar';
 import {apiPost} from '@/config/api-config';
-import {Ex3Select} from '@/ui-kit';
+import {KaisaSelect} from '@/ui-kit';
 
 type Member = {
   memberId: string;
@@ -52,7 +52,7 @@ export default function ManagerMembersPage() {
         cellRenderer: (params: ICellRendererParams<Member>) => {
           if (!params.data) return null;
           return (
-            <Ex3Select
+            <KaisaSelect
               uiSize="sm"
               value={params.data.memberStateCode}
               onChange={(e) => updateState(params.data!, e.target.value)}
@@ -60,7 +60,7 @@ export default function ManagerMembersPage() {
               <option value="A">활성</option>
               <option value="S">정지</option>
               <option value="D">탈퇴</option>
-            </Ex3Select>
+            </KaisaSelect>
           );
         },
       },

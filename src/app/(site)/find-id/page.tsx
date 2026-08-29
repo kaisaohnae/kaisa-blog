@@ -5,7 +5,7 @@ import {useRouter} from 'next/navigation';
 import {useRef, useState} from 'react';
 import {apiPost} from '@/config/api-config';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
-import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput} from '@/ui-kit';
 
 export default function FindIdPage() {
   const router = useRouter();
@@ -74,12 +74,12 @@ export default function FindIdPage() {
   return (
     <main className="blog-main">
       <div className="site-shell">
-        <form className="auth-card ex3-kit" onSubmit={onSubmit}>
+        <form className="auth-card kaisa-kit" onSubmit={onSubmit}>
           <p className="blog-hero__eyebrow">Member</p>
           <h1>아이디 찾기</h1>
           <p className="muted">가입 시 사용한 이메일로 인증 후, 로그인 아이디를 메일로 안내합니다.</p>
-          <Ex3Field label="이메일" htmlFor="find-id-email" required>
-            <Ex3Input
+          <KaisaField label="이메일" htmlFor="find-id-email" required>
+            <KaisaInput
               id="find-id-email"
               type="email"
               value={email}
@@ -87,18 +87,18 @@ export default function FindIdPage() {
               required
               disabled={done}
             />
-          </Ex3Field>
+          </KaisaField>
           {!done ? (
             <>
               {captchaRequired ? (
                 <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
               ) : null}
-              <Ex3Button type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
+              <KaisaButton type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
                 인증번호 받기
-              </Ex3Button>
+              </KaisaButton>
               {certSent ? (
-                <Ex3Field label="인증번호 6자리" htmlFor="find-id-cert" required>
-                  <Ex3Input
+                <KaisaField label="인증번호 6자리" htmlFor="find-id-cert" required>
+                  <KaisaInput
                     id="find-id-cert"
                     value={certNumber}
                     onChange={(e) => setCertNumber(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -106,20 +106,20 @@ export default function FindIdPage() {
                     maxLength={6}
                     required
                   />
-                </Ex3Field>
+                </KaisaField>
               ) : null}
             </>
           ) : null}
           {hint && <p className="auth-card__notice">{hint}</p>}
           {error && <p className="form-error">{error}</p>}
           {!done ? (
-            <Ex3Button type="submit" fullWidth disabled={!certSent}>
+            <KaisaButton type="submit" fullWidth disabled={!certSent}>
               아이디 메일로 받기
-            </Ex3Button>
+            </KaisaButton>
           ) : (
-            <Ex3Button type="button" fullWidth onClick={() => router.push('/login/')}>
+            <KaisaButton type="button" fullWidth onClick={() => router.push('/login/')}>
               로그인으로 이동
-            </Ex3Button>
+            </KaisaButton>
           )}
           <p className="auth-card__hint">
             <Link href="/login/">로그인</Link>

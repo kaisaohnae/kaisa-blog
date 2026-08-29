@@ -7,7 +7,7 @@ import {apiPost} from '@/config/api-config';
 import {isRecaptchaEnabled, RecaptchaField} from '@/components/auth/recaptcha-field';
 import {useT} from '@/i18n/locale-context';
 import useMemberStore from '@/store/use-member-store';
-import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput} from '@/ui-kit';
 
 function RegisterForm() {
   const router = useRouter();
@@ -104,11 +104,11 @@ function RegisterForm() {
   return (
     <main className="blog-main">
       <div className="site-shell">
-        <form className="auth-card ex3-kit" onSubmit={onSubmit}>
+        <form className="auth-card kaisa-kit" onSubmit={onSubmit}>
           <p className="blog-hero__eyebrow">{t('Member')}</p>
           <h1>{t('Register')}</h1>
-          <Ex3Field label={t('Email')} htmlFor="reg-email" required>
-            <Ex3Input
+          <KaisaField label={t('Email')} htmlFor="reg-email" required>
+            <KaisaInput
               id="reg-email"
               type="email"
               value={email}
@@ -116,21 +116,21 @@ function RegisterForm() {
               required
               disabled={certSent}
             />
-          </Ex3Field>
+          </KaisaField>
           {!certSent ? (
             <>
               {captchaRequired ? (
                 <RecaptchaField key={captchaKey} hidden={Boolean(captcha)} onChange={setCaptcha} />
               ) : null}
-              <Ex3Button type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
+              <KaisaButton type="button" variant="secondary" onClick={sendCert} disabled={!canSendCert}>
                 {t('Send verification code')}
-              </Ex3Button>
+              </KaisaButton>
             </>
           ) : null}
           {certSent ? (
             <>
-              <Ex3Field label={t('6-digit code')} htmlFor="reg-cert" required>
-                <Ex3Input
+              <KaisaField label={t('6-digit code')} htmlFor="reg-cert" required>
+                <KaisaInput
                   id="reg-cert"
                   value={certNumber}
                   onChange={e => setCertNumber(e.target.value.replace(/\D/g, '').slice(0, 6))}
@@ -138,24 +138,24 @@ function RegisterForm() {
                   maxLength={6}
                   required
                 />
-              </Ex3Field>
+              </KaisaField>
               <p className="auth-card__notice">
                 {t('If you request a new code, the previous one will no longer work. ')}
                 <button type="button" className="text-btn" onClick={resendCert}>
                   {t('Resend')}
                 </button>
               </p>
-              <Ex3Field label={t('Nickname')} htmlFor="reg-nickname" required>
-                <Ex3Input
+              <KaisaField label={t('Nickname')} htmlFor="reg-nickname" required>
+                <KaisaInput
                   id="reg-nickname"
                   value={memberName}
                   onChange={e => setMemberName(e.target.value)}
                   maxLength={50}
                   required
                 />
-              </Ex3Field>
-              <Ex3Field label={t('Password')} htmlFor="reg-pwd" required>
-                <Ex3Input
+              </KaisaField>
+              <KaisaField label={t('Password')} htmlFor="reg-pwd" required>
+                <KaisaInput
                   id="reg-pwd"
                   type="password"
                   value={pwd}
@@ -163,9 +163,9 @@ function RegisterForm() {
                   minLength={6}
                   required
                 />
-              </Ex3Field>
-              <Ex3Field label={t('Confirm password')} htmlFor="reg-pwd-confirm" required>
-                <Ex3Input
+              </KaisaField>
+              <KaisaField label={t('Confirm password')} htmlFor="reg-pwd-confirm" required>
+                <KaisaInput
                   id="reg-pwd-confirm"
                   type="password"
                   value={pwdConfirm}
@@ -173,14 +173,14 @@ function RegisterForm() {
                   minLength={6}
                   required
                 />
-              </Ex3Field>
+              </KaisaField>
             </>
           ) : null}
           {hint ? <p className="auth-card__notice">{t(hint)}</p> : null}
           {error ? <p className="form-error">{t(error)}</p> : null}
-          <Ex3Button type="submit" fullWidth disabled={!certSent}>
+          <KaisaButton type="submit" fullWidth disabled={!certSent}>
             {t('Sign up')}
-          </Ex3Button>
+          </KaisaButton>
           <p className="auth-card__hint">
             {t('Already have an account? ')}
             <Link href="/login/">{t('Login')}</Link>

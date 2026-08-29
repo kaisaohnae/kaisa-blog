@@ -17,7 +17,7 @@ type Post = {
   category?: {categoryName?: string};
 };
 
-export default function BlogPostViewPage({listHref = '/issues/'}: {listHref?: string}) {
+export default function BlogPostViewPage({listHref = '/posts/'}: {listHref?: string}) {
   const searchParams = useSearchParams();
   const slug = searchParams.get('slug') || '';
   const [post, setPost] = useState<Post | null>(null);

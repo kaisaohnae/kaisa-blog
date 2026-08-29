@@ -13,11 +13,6 @@ const NAV = [
     labelKey: 'Posts',
     match: (path: string) => path === '/' || path.startsWith('/posts'),
   },
-  {
-    href: '/issues/',
-    labelKey: 'Issues',
-    match: (path: string) => path.startsWith('/issues'),
-  },
 ] as const;
 
 export default function Header() {

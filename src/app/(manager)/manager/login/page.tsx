@@ -4,7 +4,7 @@ import {useRouter} from 'next/navigation';
 import {useEffect, useState} from 'react';
 import {clearSavedManagerId, getSavedManagerId, saveManagerId} from '@/lib/auth-storage';
 import useAdminStore from '@/store/use-admin-store';
-import {Ex3Button, Ex3Checkbox, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaCheckbox, KaisaField, KaisaInput} from '@/ui-kit';
 
 export default function ManagerLoginPage() {
   const router = useRouter();
@@ -39,8 +39,8 @@ export default function ManagerLoginPage() {
       <form className="auth-card" onSubmit={onSubmit} autoComplete="on">
         <p className="blog-hero__eyebrow">Manager</p>
         <h1>관리자 로그인</h1>
-        <Ex3Field label="아이디" htmlFor="manager-id">
-          <Ex3Input
+        <KaisaField label="아이디" htmlFor="manager-id">
+          <KaisaInput
             id="manager-id"
             name="username"
             autoComplete="username"
@@ -48,9 +48,9 @@ export default function ManagerLoginPage() {
             onChange={(e) => setUserId(e.target.value)}
             required
           />
-        </Ex3Field>
-        <Ex3Field label="비밀번호" htmlFor="manager-pwd">
-          <Ex3Input
+        </KaisaField>
+        <KaisaField label="비밀번호" htmlFor="manager-pwd">
+          <KaisaInput
             id="manager-pwd"
             name="password"
             type="password"
@@ -59,16 +59,16 @@ export default function ManagerLoginPage() {
             onChange={(e) => setPwd(e.target.value)}
             required
           />
-        </Ex3Field>
-        <Ex3Checkbox
+        </KaisaField>
+        <KaisaCheckbox
           label="아이디 저장"
           checked={saveId}
           onChange={(e) => setSaveId(e.target.checked)}
         />
         {error && <p className="form-error">{error}</p>}
-        <Ex3Button type="submit" fullWidth>
+        <KaisaButton type="submit" fullWidth>
           로그인
-        </Ex3Button>
+        </KaisaButton>
       </form>
     </main>
   );

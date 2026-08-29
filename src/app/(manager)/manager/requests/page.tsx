@@ -5,7 +5,7 @@ import type {ColDef, ICellRendererParams} from 'ag-grid-community';
 import ManagerAgGrid, {type ManagerAgGridHandle} from '@/components/grid/manager-ag-grid';
 import ManagerGridCrudBar from '@/components/manager/manager-grid-crud-bar';
 import {apiPost} from '@/config/api-config';
-import {Ex3Select} from '@/ui-kit';
+import {KaisaSelect} from '@/ui-kit';
 
 type ToolRequestItem = {
   requestNo: number;
@@ -163,14 +163,14 @@ export default function ManagerRequestsPage() {
           const item = params.data;
           return (
             <div onClick={e => e.stopPropagation()} onMouseDown={e => e.stopPropagation()}>
-              <Ex3Select
+              <KaisaSelect
                 uiSize="sm"
                 value={item.isDisplay}
                 onChange={e => void updateDisplay(item, e.target.value)}
               >
                 <option value="Y">표시</option>
                 <option value="N">숨김</option>
-              </Ex3Select>
+              </KaisaSelect>
             </div>
           );
         },
@@ -197,15 +197,15 @@ export default function ManagerRequestsPage() {
 
       <section className="ex1-panel" style={{marginBottom: 16}}>
         <div style={{display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center'}}>
-          <Ex3Select uiSize="sm" value={toolKey} onChange={e => setToolKey(e.target.value)} aria-label="도구 필터">
+          <KaisaSelect uiSize="sm" value={toolKey} onChange={e => setToolKey(e.target.value)} aria-label="도구 필터">
             <option value="">전체 도구</option>
             {toolStats.map(stat => (
               <option key={stat.toolKey} value={stat.toolKey}>
                 {stat.toolKey} ({stat.displayCount}/{stat.totalCount})
               </option>
             ))}
-          </Ex3Select>
-          <Ex3Select
+          </KaisaSelect>
+          <KaisaSelect
             uiSize="sm"
             value={isDisplay}
             onChange={e => setIsDisplay(e.target.value as 'ALL' | 'Y' | 'N')}
@@ -214,7 +214,7 @@ export default function ManagerRequestsPage() {
             <option value="ALL">전체 상태</option>
             <option value="Y">표시만</option>
             <option value="N">숨김만</option>
-          </Ex3Select>
+          </KaisaSelect>
           {toolKey ? (
             <button type="button" className="text-btn" onClick={() => setToolKey('')}>
               필터 해제

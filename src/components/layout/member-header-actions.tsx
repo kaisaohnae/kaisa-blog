@@ -5,7 +5,7 @@ import {createPortal} from 'react-dom';
 import {apiPost} from '@/config/api-config';
 import {useT} from '@/i18n/locale-context';
 import type {MemberInfo} from '@/store/use-member-store';
-import {Ex3Button, Ex3Field, Ex3Input} from '@/ui-kit';
+import {KaisaButton, KaisaField, KaisaInput} from '@/ui-kit';
 
 function SettingsIcon() {
   return (
@@ -82,15 +82,15 @@ function MemberSettingsLayer({
   if (!open || typeof document === 'undefined') return null;
 
   return createPortal(
-    <div className="ex3k-overlay" role="presentation" onClick={onClose}>
+    <div className="kaisa-overlay" role="presentation" onClick={onClose}>
       <div
-        className="ex3k-dialog ex3k-dialog--popup member-settings-layer"
+        className="kaisa-dialog kaisa-dialog--popup member-settings-layer"
         role="dialog"
         aria-modal="true"
         aria-labelledby="member-settings-title"
         onClick={event => event.stopPropagation()}
       >
-        <h3 id="member-settings-title" className="ex3k-dialog__title">
+        <h3 id="member-settings-title" className="kaisa-dialog__title">
           {t('Account settings')}
         </h3>
         <dl className="member-settings-layer__info">
@@ -105,11 +105,11 @@ function MemberSettingsLayer({
         </dl>
         <form className="member-settings-layer__form" onSubmit={save}>
           <p className="member-settings-layer__section">{t('Change password')}</p>
-          <Ex3Field label={t('Current password')} htmlFor="member-cur-pwd" required>
-            <Ex3Input id="member-cur-pwd" type="password" value={pwd} onChange={e => setPwd(e.target.value)} required />
-          </Ex3Field>
-          <Ex3Field label={t('New password')} htmlFor="member-new-pwd" required>
-            <Ex3Input
+          <KaisaField label={t('Current password')} htmlFor="member-cur-pwd" required>
+            <KaisaInput id="member-cur-pwd" type="password" value={pwd} onChange={e => setPwd(e.target.value)} required />
+          </KaisaField>
+          <KaisaField label={t('New password')} htmlFor="member-new-pwd" required>
+            <KaisaInput
               id="member-new-pwd"
               type="password"
               value={newPwd}
@@ -117,9 +117,9 @@ function MemberSettingsLayer({
               minLength={6}
               required
             />
-          </Ex3Field>
-          <Ex3Field label={t('Confirm new password')} htmlFor="member-new-pwd-confirm" required>
-            <Ex3Input
+          </KaisaField>
+          <KaisaField label={t('Confirm new password')} htmlFor="member-new-pwd-confirm" required>
+            <KaisaInput
               id="member-new-pwd-confirm"
               type="password"
               value={newPwdConfirm}
@@ -127,14 +127,14 @@ function MemberSettingsLayer({
               minLength={6}
               required
             />
-          </Ex3Field>
+          </KaisaField>
           {message ? <p className="auth-card__notice">{t(message)}</p> : null}
           {error ? <p className="form-error">{t(error)}</p> : null}
-          <div className="ex3k-dialog__actions">
-            <Ex3Button type="button" variant="ghost" onClick={onClose}>
+          <div className="kaisa-dialog__actions">
+            <KaisaButton type="button" variant="ghost" onClick={onClose}>
               {t('Close')}
-            </Ex3Button>
-            <Ex3Button type="submit">{t('Change')}</Ex3Button>
+            </KaisaButton>
+            <KaisaButton type="submit">{t('Change')}</KaisaButton>
           </div>
         </form>
       </div>

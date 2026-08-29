@@ -1,7 +1,7 @@
 'use client';
 
 import {useEffect, useMemo, useState} from 'react';
-import {Ex3Button, Ex3Textarea} from '@/ui-kit';
+import {KaisaButton, KaisaTextarea} from '@/ui-kit';
 import {apiPost} from '@/config/api-config';
 import useMemberStore from '@/store/use-member-store';
 
@@ -182,20 +182,20 @@ export default function CommentSection({postNo}: {postNo: number}) {
         </div>
 
         {isEditing ? (
-          <div className="comment-edit ex3-kit">
-            <Ex3Textarea
+          <div className="comment-edit kaisa-kit">
+            <KaisaTextarea
               value={editingContent}
               onChange={(e) => setEditingContent(e.target.value)}
               rows={3}
               disabled={isBusy}
             />
             <div className="comment-edit__actions">
-              <Ex3Button variant="secondary" uiSize="sm" onClick={cancelEdit} disabled={isBusy}>
+              <KaisaButton variant="secondary" uiSize="sm" onClick={cancelEdit} disabled={isBusy}>
                 취소
-              </Ex3Button>
-              <Ex3Button uiSize="sm" onClick={() => saveEdit(item.commentNo)} disabled={isBusy || !editingContent.trim()}>
+              </KaisaButton>
+              <KaisaButton uiSize="sm" onClick={() => saveEdit(item.commentNo)} disabled={isBusy || !editingContent.trim()}>
                 저장
-              </Ex3Button>
+              </KaisaButton>
             </div>
           </div>
         ) : (
@@ -203,8 +203,8 @@ export default function CommentSection({postNo}: {postNo: number}) {
         )}
 
         {isReplying ? (
-          <div className="comment-reply-form ex3-kit">
-            <Ex3Textarea
+          <div className="comment-reply-form kaisa-kit">
+            <KaisaTextarea
               value={replyContent}
               onChange={(e) => setReplyContent(e.target.value)}
               placeholder="답글을 입력해 주세요"
@@ -212,12 +212,12 @@ export default function CommentSection({postNo}: {postNo: number}) {
               disabled={isBusy}
             />
             <div className="comment-edit__actions">
-              <Ex3Button variant="secondary" uiSize="sm" onClick={cancelReply} disabled={isBusy}>
+              <KaisaButton variant="secondary" uiSize="sm" onClick={cancelReply} disabled={isBusy}>
                 취소
-              </Ex3Button>
-              <Ex3Button uiSize="sm" onClick={() => submitReply(item.commentNo)} disabled={isBusy || !replyContent.trim()}>
+              </KaisaButton>
+              <KaisaButton uiSize="sm" onClick={() => submitReply(item.commentNo)} disabled={isBusy || !replyContent.trim()}>
                 답글 등록
-              </Ex3Button>
+              </KaisaButton>
             </div>
           </div>
         ) : null}
@@ -235,8 +235,8 @@ export default function CommentSection({postNo}: {postNo: number}) {
       {!hydrated ? (
         <div className="comment-guest comment-guest--loading" aria-hidden />
       ) : member ? (
-        <div className="comment-form ex3-kit">
-          <Ex3Textarea
+        <div className="comment-form kaisa-kit">
+          <KaisaTextarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="댓글을 남겨 주세요"
@@ -244,9 +244,9 @@ export default function CommentSection({postNo}: {postNo: number}) {
           />
           <div className="comment-form__actions">
             <span className="comment-form__user">{member.memberName}님으로 작성 중</span>
-            <Ex3Button onClick={submit} disabled={!content.trim()}>
+            <KaisaButton onClick={submit} disabled={!content.trim()}>
               등록
-            </Ex3Button>
+            </KaisaButton>
           </div>
         </div>
       ) : (
