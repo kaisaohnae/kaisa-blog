@@ -90,3 +90,60 @@
     grid-template-columns: 1fr 1fr;
   }
 }
+
+[data-theme='dark'] .post-editor {
+  background: var(--color-bg-card);
+  border-color: var(--color-border);
+}
+
+[data-theme='dark'] .post-editor .bytemd {
+  background: var(--color-bg-card);
+  color: var(--color-text);
+}
+
+[data-theme='dark'] .post-editor .bytemd-toolbar {
+  background: var(--color-bg-elevated);
+  border-bottom-color: var(--color-border);
+  color: var(--color-text);
+}
+
+[data-theme='dark'] .post-editor .bytemd-toolbar-icon {
+  color: var(--color-text);
+}
+
+[data-theme='dark'] .post-editor .CodeMirror {
+  background: #16161a;
+  color: #c9d1d9;
+}
+
+[data-theme='dark'] .post-editor .CodeMirror-gutters {
+  background: #16161a;
+  border-right-color: var(--color-border);
+}
+
+[data-theme='dark'] .post-editor .CodeMirror-cursor {
+  border-left-color: #c9d1d9;
+}
+
+[data-theme='dark'] .post-editor .CodeMirror-selected {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .post-editor .bytemd-split .bytemd-editor {
+  border-right-color: var(--color-border);
+}
+
+[data-theme='dark'] .post-editor .bytemd-preview {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+[data-theme='dark'] .post-editor .bytemd-status {
+  background: var(--color-bg-elevated);
+  border-top-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+[data-theme='dark'] .post-editor .bytemd-preview blockquote {
+  color: var(--color-text-muted);
+}
