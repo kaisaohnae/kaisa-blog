@@ -112,6 +112,11 @@ function BlogHomeContent({listBasePath = '/posts/'}: {listBasePath?: string}) {
               totalPostCount={totalPostCount}
               listBasePath={base}
             />
+            {keyword && posts.length > 0 && (
+              <p className="blog-search__summary">
+                <strong>&quot;{keyword}&quot;</strong> 검색 결과 <strong>{posts.length}</strong>건
+              </p>
+            )}
           </div>
           {error && <p className="form-error">{error}</p>}
           <section className="blog-list" aria-label="Posts">
