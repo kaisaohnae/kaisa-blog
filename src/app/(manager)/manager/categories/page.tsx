@@ -46,6 +46,7 @@ export default function ManagerCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [treeNodes, setTreeNodes] = useState<CategoryTreeNode[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [isCreating, setIsCreating] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [categoryName, setCategoryName] = useState('');
@@ -85,6 +86,7 @@ export default function ManagerCategoriesPage() {
     resetForm();
     setIsCreating(true);
     setSelectedId(null);
+    setSelectedIds([]);
     setError('');
     setMessage('');
   };
@@ -98,8 +100,9 @@ export default function ManagerCategoriesPage() {
     setMessage('');
   };
 
-  const selectNode = (node: CategoryTreeNode) => {
+  const selectNode = (node: CategoryTreeNode, nextSelectedIds: string[]) => {
     setSelectedId(node.id);
+    setSelectedIds(nextSelectedIds);
     setIsCreating(false);
     setEditingId(Number(node.id));
     setCategoryName(node.label);
@@ -110,6 +113,12 @@ export default function ManagerCategoriesPage() {
     setSlugTouched(true);
     setError('');
     setMessage('');
+  };
+
+  const clearSelection = () => {
+    setSelectedId(null);
+    setSelectedIds([]);
+    resetForm();
   };
 
   const saveOrder = async (nextNodes: CategoryTreeNode[], source = categories) => {
@@ -241,6 +250,7 @@ export default function ManagerCategoriesPage() {
       await apiPost('bl/set-category-list', [{mode: 'D', categoryId: editingId}], 'admin');
       resetForm();
       setSelectedId(null);
+      setSelectedIds([]);
       setMessage('카테고리가 삭제되었습니다.');
       await load();
     } catch (e: any) {
@@ -279,8 +289,9 @@ export default function ManagerCategoriesPage() {
           </div>
           <CategoryTreeBoard
             nodes={treeNodes}
-            selectedId={selectedId}
+            selectedIds={selectedIds}
             onSelect={selectNode}
+            onClearSelection={clearSelection}
             onChange={onTreeChange}
             onDisplayChange={(node, checked) => void updateDisplay(node, checked)}
           />

@@ -12,13 +12,14 @@ import {
   dropZone,
   hasCategoryChildren,
   isFolder,
-  moveCategoryNode,
+  moveCategoryNodes,
+  selectedCategoryRoots,
   type CategoryDropPos,
   type CategoryTreeNode,
 } from './category-tree-utils';
 
 type DragPayload = {
-  nodeId: string;
+  nodeIds: string[];
 };
 
 type FlatRow = {
@@ -57,8 +58,9 @@ function isLeavingRow(event: DragEvent<HTMLElement>) {
 
 type CategoryTreeBoardProps = {
   nodes: CategoryTreeNode[];
-  selectedId: string | null;
-  onSelect: (node: CategoryTreeNode) => void;
+  selectedIds: string[];
+  onSelect: (node: CategoryTreeNode, selectedIds: string[]) => void;
+  onClearSelection: () => void;
   onChange: (nodes: CategoryTreeNode[]) => void;
   onDisplayChange?: (node: CategoryTreeNode, checked: boolean) => void;
   emptyText?: string;
@@ -66,22 +68,25 @@ type CategoryTreeBoardProps = {
 
 export default function CategoryTreeBoard({
   nodes,
-  selectedId,
+  selectedIds,
   onSelect,
+  onClearSelection,
   onChange,
   onDisplayChange,
   emptyText = '등록된 카테고리가 없습니다.',
 }: CategoryTreeBoardProps) {
   const [collapsed, setCollapsed] = useState<Set<string>>(() => new Set());
-  const [draggingId, setDraggingId] = useState<string | null>(null);
+  const [draggingIds, setDraggingIds] = useState<string[]>([]);
   const [over, setOver] = useState<{id: string; pos: CategoryDropPos} | null>(null);
   const activeDragRef = useRef<DragPayload | null>(null);
   const draggedRef = useRef(false);
+  const selectionAnchorRef = useRef<string | null>(null);
+  const handledModifierMouseDownRef = useRef<string | null>(null);
 
   const rows = useMemo(() => flatten(nodes, collapsed), [collapsed, nodes]);
 
   const finishDrop = (payload: DragPayload, targetId: string, pos: CategoryDropPos) => {
-    const next = moveCategoryNode(nodes, payload.nodeId, targetId, pos, 'reparent');
+    const next = moveCategoryNodes(nodes, payload.nodeIds, targetId, pos, 'reparent');
     if (!next) return;
     if (pos === 'inside') {
       setCollapsed((current) => {
@@ -95,7 +100,7 @@ export default function CategoryTreeBoard({
 
   const clearDrag = () => {
     activeDragRef.current = null;
-    setDraggingId(null);
+    setDraggingIds([]);
     setOver(null);
     window.setTimeout(() => {
       draggedRef.current = false;
@@ -105,13 +110,29 @@ export default function CategoryTreeBoard({
   const onDragStart = (event: DragEvent<HTMLSpanElement>, node: CategoryTreeNode) => {
     event.stopPropagation();
     draggedRef.current = true;
-    const payload: DragPayload = {nodeId: node.id};
+    const nodeIds = selectedIds.includes(node.id) ? selectedCategoryRoots(nodes, selectedIds) : [node.id];
+    if (!selectedIds.includes(node.id)) {
+      selectionAnchorRef.current = node.id;
+      onSelect(node, [node.id]);
+    }
+    const payload: DragPayload = {nodeIds};
     activeDragRef.current = payload;
     event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text/plain', node.id);
+    event.dataTransfer.setData('text/plain', nodeIds.join(','));
     window.requestAnimationFrame(() => {
-      setDraggingId(node.id);
+      setDraggingIds(nodeIds);
     });
+  };
+
+  const canDropPayload = (payload: DragPayload, targetId: string, pos: CategoryDropPos) => {
+    const sourceIds = selectedCategoryRoots(nodes, payload.nodeIds);
+    return (
+      sourceIds.length > 0 &&
+      !sourceIds.includes(targetId) &&
+      sourceIds.every((sourceId) =>
+        canDropCategory({mode: 'reparent', nodes, sourceId, targetId, pos}),
+      )
+    );
   };
 
   const onDragOverRow = (event: DragEvent<HTMLDivElement>, node: CategoryTreeNode) => {
@@ -121,7 +142,7 @@ export default function CategoryTreeBoard({
     if (!payload) return;
 
     const pos = readDropPos(event, true);
-    if (!canDropCategory({mode: 'reparent', nodes, sourceId: payload.nodeId, targetId: node.id, pos})) {
+    if (!canDropPayload(payload, node.id, pos)) {
       event.dataTransfer.dropEffect = 'none';
       setOver((current) => (current?.id === node.id ? null : current));
       return;
@@ -141,7 +162,7 @@ export default function CategoryTreeBoard({
     }
 
     const pos = readDropPos(event, true);
-    if (!canDropCategory({mode: 'reparent', nodes, sourceId: payload.nodeId, targetId: node.id, pos})) {
+    if (!canDropPayload(payload, node.id, pos)) {
       clearDrag();
       return;
     }
@@ -167,9 +188,34 @@ export default function CategoryTreeBoard({
     });
   };
 
-  const handleSelect = (node: CategoryTreeNode) => {
+  const handleSelect = (event: MouseEvent<HTMLDivElement>, node: CategoryTreeNode) => {
     if (draggedRef.current) return;
-    onSelect(node);
+    const rowIds = rows.map((row) => row.node.id);
+    let nextIds: string[];
+
+    if (event.shiftKey && selectionAnchorRef.current) {
+      const from = rowIds.indexOf(selectionAnchorRef.current);
+      const to = rowIds.indexOf(node.id);
+      nextIds = from >= 0 && to >= 0 ? rowIds.slice(Math.min(from, to), Math.max(from, to) + 1) : [node.id];
+    } else if (event.altKey) {
+      const selected = new Set(selectedIds);
+      if (selected.has(node.id)) selected.delete(node.id);
+      else selected.add(node.id);
+      nextIds = rowIds.filter((id) => selected.has(id));
+      selectionAnchorRef.current = node.id;
+    } else {
+      nextIds = [node.id];
+      selectionAnchorRef.current = node.id;
+    }
+
+    if (!nextIds.length) {
+      onClearSelection();
+      return;
+    }
+
+    const activeId = nextIds.includes(node.id) ? node.id : nextIds[nextIds.length - 1];
+    const activeNode = rows.find((row) => row.node.id === activeId)?.node ?? node;
+    onSelect(activeNode, nextIds);
   };
 
   return (
@@ -178,6 +224,7 @@ export default function CategoryTreeBoard({
         className="manager-category-tree__list"
         role="tree"
         aria-label="카테고리"
+        aria-multiselectable
         onDragOver={onDragOverList}
       >
         {rows.length ? (
@@ -196,11 +243,11 @@ export default function CategoryTreeBoard({
                 key={node.id}
                 role="treeitem"
                 aria-expanded={hasChildren ? expanded : undefined}
-                aria-selected={selectedId === node.id}
+                aria-selected={selectedIds.includes(node.id)}
                 className={[
                   'manager-category-tree__row',
-                  selectedId === node.id && 'manager-category-tree__row--selected',
-                  draggingId === node.id && 'manager-category-tree__row--dragging',
+                  selectedIds.includes(node.id) && 'manager-category-tree__row--selected',
+                  draggingIds.includes(node.id) && 'manager-category-tree__row--dragging',
                   dropPos && `manager-category-tree__row--${dropPos}`,
                 ]
                   .filter(Boolean)
@@ -213,7 +260,20 @@ export default function CategoryTreeBoard({
                   }
                 }}
                 onDrop={(event) => onDropRow(event, node)}
-                onClick={() => handleSelect(node)}
+                onMouseDown={(event) => {
+                  // Browser drag handles can swallow a later click with Alt held.
+                  // Select on press as well, then consume that matching click below.
+                  if (!event.altKey && !event.shiftKey) return;
+                  handledModifierMouseDownRef.current = node.id;
+                  handleSelect(event, node);
+                }}
+                onClick={(event) => {
+                  if (handledModifierMouseDownRef.current === node.id) {
+                    handledModifierMouseDownRef.current = null;
+                    return;
+                  }
+                  handleSelect(event, node);
+                }}
               >
                 {dropPos ? <span className="manager-category-tree__drop-hint">{DROP_HINT[dropPos]}</span> : null}
                 <div className="manager-category-tree__inner">
@@ -235,7 +295,7 @@ export default function CategoryTreeBoard({
                   <span
                     className="manager-category-tree__handle"
                     draggable
-                    aria-label={`${node.label} 이동`}
+                    aria-label={`${node.label}${draggingIds.length > 1 ? ` 포함 ${draggingIds.length}개` : ''} 이동`}
                     onDragStart={(event) => onDragStart(event, node)}
                     onDragEnd={clearDrag}
                   />

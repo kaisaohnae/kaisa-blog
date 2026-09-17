@@ -1,10 +1,18 @@
 export type LocaleEntry = Partial<Record<'ko' | 'zh' | 'hi', string>>;
 
 export const dictionary: Record<string, LocaleEntry> = {
+  "Works": { ko: "작업" },
+  "Games": { ko: "게임" },
+  "Tools": { ko: "툴" },
   "Login": {
     "ko": "로그인",
     "zh": "登录",
     "hi": "लॉगिन"
+  },
+  "Blog": {
+    "ko": "블로그",
+    "zh": "博客",
+    "hi": "ब्लॉग"
   },
   "Posts": {
     "ko": "포스트",

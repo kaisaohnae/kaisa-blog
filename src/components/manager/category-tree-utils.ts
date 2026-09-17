@@ -186,6 +186,54 @@ export function moveCategoryNode(
   return normalizeCategoryTreeKinds(inserted);
 }
 
+/**
+ * Keeps only the top-level nodes from a selection. Moving a parent already
+ * moves all of its descendants, so including them again would duplicate the
+ * operation and can produce an invalid tree.
+ */
+export function selectedCategoryRoots(nodes: CategoryTreeNode[], selectedIds: string[]) {
+  const selected = new Set(selectedIds);
+  return flattenCategoryTree(nodes)
+    .map((row) => row.id)
+    .filter(
+      (id) =>
+        selected.has(id) &&
+        !selectedIds.some((selectedId) => selectedId !== id && isCategoryDescendant(nodes, selectedId, id)),
+    );
+}
+
+/** Moves selected root nodes as one group while preserving their tree order. */
+export function moveCategoryNodes(
+  nodes: CategoryTreeNode[],
+  sourceIds: string[],
+  targetId: string,
+  pos: CategoryDropPos,
+  mode: CategoryTreeMode = 'reparent',
+  maxDepth?: number,
+): CategoryTreeNode[] | null {
+  const roots = selectedCategoryRoots(nodes, sourceIds);
+  if (!roots.length || roots.includes(targetId)) return null;
+
+  if (
+    !roots.every((sourceId) =>
+      canDropCategory({mode, nodes, sourceId, targetId, pos, maxDepth}),
+    )
+  ) {
+    return null;
+  }
+
+  // Inserting every node after the same target reverses the order, so apply
+  // that direction from the end. Before/inside insertion keeps this order.
+  const orderedIds = pos === 'after' ? [...roots].reverse() : roots;
+  let next = nodes;
+  for (const sourceId of orderedIds) {
+    const moved = moveCategoryNode(next, sourceId, targetId, pos, mode, maxDepth);
+    if (!moved) return null;
+    next = moved;
+  }
+  return next;
+}
+
 export function dropZone(ratio: number, allowInside: boolean): CategoryDropPos {
   if (allowInside) {
     if (ratio < 0.22) return 'before';
