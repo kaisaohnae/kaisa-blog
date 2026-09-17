@@ -2,4 +2,4 @@ User-Agent: *
 Allow: /
 Disallow: /manager/
 
-Sitemap: https://blog.kaisa.co.kr/sitemap.xml
+Sitemap: http://localhost:8687/sitemap.xml
