@@ -7,8 +7,12 @@ export default function LayoutSub({children}: Readonly<{children: React.ReactNod
   const [isReady, setReady] = useState(false);
 
   return (
-    <Suspense>
-      <div id="content">{isReady && children}</div>
+    // Static export renders this boundary as its fallback (SiteValidator reads search params),
+    // so the fallback must hold the page height or the footer jumps up under the header.
+    <Suspense fallback={<div id="content" className="content--pending" aria-busy="true" />}>
+      <div id="content" className={isReady ? undefined : 'content--pending'} aria-busy={isReady ? undefined : true}>
+        {isReady && children}
+      </div>
       <SiteValidator onReady={() => setReady(true)} />
     </Suspense>
   );
